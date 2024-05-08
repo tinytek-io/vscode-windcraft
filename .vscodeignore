@@ -1,14 +1,13 @@
-.vscode/**
-.vscode-test/**
-out/**
-node_modules/**
-src/**
-.gitignore
-.yarnrc
-webpack.config.js
-vsc-extension-quickstart.md
-**/tsconfig.json
-**/.eslintrc.json
-**/*.map
-**/*.ts
-**/.vscode-test.*
+# Ignore everything
+*
+**
+*/**
+
+# But not these files...
+!dist/
+!webview/dist/
+!package.json
+!README.md
+!LICENSE
+!.github/FUNDING.yml
+!images/
