@@ -119,13 +119,20 @@
       }
     },
     "views": {
-      "explorer": [
+      "windcraftView": [
         {
-          "icon": "images/logo/windcraft-icon.svg",
-          "type": "webview",
           "id": "windcraft.tailwindView",
           "name": "WindCraft",
-          "contextualTitle": "WindCraft"
+          "type": "webview"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "windcraftView",
+          "title": "WindCraft",
+          "icon": "images/logo/windcraft-icon.svg"
         }
       ]
     },

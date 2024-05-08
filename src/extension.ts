@@ -60,6 +60,6 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-export function deactivate({ subscriptions }: vscode.ExtensionContext) {
-  subscriptions.forEach((subscription) => subscription.dispose());
+export function deactivate(context: vscode.ExtensionContext) {
+  // context.subscriptions.forEach((subscription) => subscription.dispose());
 }

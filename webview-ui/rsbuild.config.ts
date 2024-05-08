@@ -6,6 +6,9 @@ const port = 8090;
 
 export default defineConfig({
   plugins: [pluginReact()],
+  output: {
+    filenameHash: false,
+  },
   server: {
     port,
   },

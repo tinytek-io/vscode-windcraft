@@ -5,7 +5,7 @@
 
 # But not these files...
 !dist/
-!webview/dist/
+!webview-ui/dist/
 !package.json
 !README.md
 !LICENSE
