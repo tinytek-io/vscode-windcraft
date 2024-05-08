@@ -6,10 +6,6 @@ WindCraft is a small tool for visually editing Tailwind CSS classes. It aims to 
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
 ![Flex Layout](images/feature/windcraft-01.gif)
 
 > Tip: Tailwind CSS classes are added to the element as you edit the properties. You can see the classes added in the class attribute of the element.
