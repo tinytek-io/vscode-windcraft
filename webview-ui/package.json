@@ -1,0 +1,24 @@
+{
+  "name": "webview-ui",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "@vscode/webview-ui-toolkit": "^1.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.0.1",
+    "tailwindcss": "^4.0.0-alpha.14"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^0.5.5",
+    "@rsbuild/plugin-react": "^0.5.5",
+    "@types/react": "^18.2.71",
+    "@types/react-dom": "^18.2.22",
+    "typescript": "^5.4.2"
+  }
+}

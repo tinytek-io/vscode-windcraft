@@ -1,0 +1,209 @@
+.resizing {
+  cursor: col-resize !important;
+}
+
+.icon,
+.btn {
+  padding: 2px;
+  border: 1px;
+  border-radius: 2px;
+}
+
+/*
+vscode-icon-foreground
+*/
+
+.btn {
+  border-color: var(--vscode-button-border);
+  cursor: pointer;
+  /* background: var(--vscode-button-secondaryBackground); */
+  color: var(--vscode-button-secondaryForeground);
+}
+
+.btn:hover {
+  outline: 1px solid var(--vscode-button-secondaryHoverBackground);
+  outline-offset: 2px;
+}
+
+.btn.selected {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+
+.btn.disabled {
+  color: var(--vscode-button-secondaryForeground);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn.changed {
+  color: var(--vscode-editorInfo-foreground);
+}
+
+.icon-button {
+  margin: -2px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  stroke: var(--vscode-editorWidget-border);
+}
+
+.icon-button.selected {
+  stroke-width: 4px;
+  stroke: var(--vscode-button-secondaryForeground);
+}
+
+.icon-button.changed {
+  stroke: var(--vscode-focusBorder);
+  stroke-width: 4px;
+}
+
+.icon-button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.flex-grid.changed {
+  color: var(--vscode-editorInfo-foreground);
+}
+
+/** Select */
+.select {
+  appearance: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--vscode-input-foreground);
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  height: 16px;
+  width: 100%;
+  padding-right: 21px; /* pr 2px + 19px for appearance */
+}
+
+.select:hover {
+  appearance: auto;
+  padding-right: 2px;
+}
+
+.disabled .select {
+  cursor: not-allowed;
+}
+
+.select-container {
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.select-container:hover {
+  outline: 1px solid var(--vscode-button-secondaryHoverBackground);
+}
+
+.select:focus {
+  outline: none;
+}
+
+.select-icon {
+  padding: 2px;
+}
+
+.select-container.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.select-container.disabled:hover {
+  color: var(--vscode-input-foreground);
+  appearance: none;
+}
+
+.select-container.changed > * {
+  color: var(--vscode-editorInfo-foreground);
+}
+
+.select-resize-handle {
+  /* cursor: col-resize; */
+}
+
+.constraints-container {
+}
+
+.list-item:focus {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: 0px;
+  border-radius: 2px;
+}
+
+.input {
+  color: var(--vscode-input-foreground);
+}
+
+div.number-input {
+  cursor: pointer;
+  background: transparent;
+  color: var(--vscode-input-foreground);
+  border: none;
+  padding: 2px 4px;
+  font-size: 12px;
+  height: 16px;
+  outline-offset: 2px;
+  outline: none;
+  border-radius: 2px;
+}
+
+div.number-input:focus {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: 2px;
+}
+
+div.number-input:hover {
+  outline: 1px solid var(--vscode-button-secondaryHoverBackground);
+  outline-offset: 2px;
+}
+
+input.number-input {
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: var(--vscode-input-foreground);
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  outline: none;
+  border-radius: 2px;
+}
+
+input.number-input::-webkit-inner-spin-button,
+input.number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input.number-input.changed {
+  color: var(--vscode-editorInfo-foreground);
+}
+
+.color-input {
+  appearance: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--vscode-input-foreground);
+  border: none;
+  padding: 2px 4px;
+  font-size: 12px;
+  height: 16px;
+  border-radius: 2px;
+}
+
+.color-input:hover {
+  outline: 1px solid var(--vscode-button-secondaryHoverBackground);
+  outline-offset: 2px;
+  appearance: none;
+}
+
+.color-input:focus {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: 2px;
+}
+
+.color-input .changed {
+  color: var(--vscode-editorInfo-foreground);
+}

@@ -1,0 +1,26 @@
+# Local
+.DS_Store
+*.local
+*.log*
+
+# Dist
+node_modules
+dist/
+out/
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# VS Code Extension
+.vscode-test/
+*.vsix
+
+# Mac OS
+.DS_Store
+
+# General
+.env
+.env.local
+TODO.md

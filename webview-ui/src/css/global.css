@@ -1,0 +1,19 @@
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+
+  /* VS Code font */
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  font-weight: var(--vscode-font-size);
+
+  color: red;
+  background: blue;
+  /* VS Code colors */
+  color: var(--vscode-sideBarTitle-foreground);
+  background: var(--vscode-sideBar-background);
+}
