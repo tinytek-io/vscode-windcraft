@@ -7,6 +7,10 @@ const port = 8090;
 export default defineConfig({
   plugins: [pluginReact()],
   output: {
+    distPath: {
+      root: "../../dist/webview-ui",
+    },
+    cleanDistPath: true,
     filenameHash: false,
   },
   server: {

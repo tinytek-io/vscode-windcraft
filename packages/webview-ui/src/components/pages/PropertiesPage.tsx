@@ -17,7 +17,7 @@ export function PropertiesPage() {
   const { position } = usePosition();
 
   return (
-    <main className="select-none">
+    <>
       <AlignmentSection />
 
       <VSCodeDivider />
@@ -66,7 +66,7 @@ export function PropertiesPage() {
 
       <VSCodeDivider />
 
-    </main>
+    </>
   );
 }
 
