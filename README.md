@@ -1,4 +1,4 @@
-<img src="images/logo/windcraft-logo-text.webp">
+<img src="docs/images/logo/windcraft-logo-text.webp">
 
 # WindCraft
 
@@ -6,7 +6,7 @@ WindCraft is a small tool for visually editing Tailwind CSS classes. It aims to 
 
 ## Features
 
-![Flex Layout](images/feature/windcraft-01.gif)
+![Flex Layout](docs/images/feature/windcraft-01.gif)
 
 > Tip: Tailwind CSS classes are added to the element as you edit the properties. You can see the classes added in the class attribute of the element.
 
