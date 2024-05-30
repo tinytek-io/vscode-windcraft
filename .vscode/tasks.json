@@ -6,7 +6,8 @@
 		{
 			"label": "Extension Dev",
 			"type": "npm",
-			"script": "watch",
+			"script": "dev",
+			"path": "packages/extension",
 			"problemMatcher": "$ts-webpack-watch",
 			"isBackground": true,
 			"presentation": {
@@ -14,29 +15,29 @@
 				"group": "watchers"
 			},
 			"group": {
-				"kind": "build",
+				"kind": "build"
 			}
 		},
 		{
 			"label": "Webview UI Dev",
 			"type": "npm",
 			"script": "dev",
-			// "problemMatcher": "$ts-webpack-watch",
+			"path": "packages/webview-ui",
 			"problemMatcher": [
 				{
 					"base": "$ts-webpack-watch",
 					"owner": "RSPack",
-					"fileLocation": "absolute",				
+					"fileLocation": "absolute",
 					"background": {
 						"activeOnStart": true,
 						"beginsPattern": {
-							"regexp": "Rsbuild v",
+							"regexp": "Rsbuild v"
 						},
 						"endsPattern": {
 							"regexp": "Client compiled in"
 						}
 					}
-				},
+				}
 			],
 			"isBackground": true,
 			"presentation": {
@@ -44,10 +45,22 @@
 				"group": "watchers"
 			},
 			"group": {
-				"kind": "build",
+				"kind": "build"
+			}
+		},
+		{
+			"label": "TS Plugin Dev",
+			"type": "npm",
+			"script": "dev",
+			"path": "packages/ts-plugin",
+			"problemMatcher": "$tsc-watch",
+			"isBackground": true,
+			"presentation": {
+				"reveal": "never",
+				"group": "watchers"
 			},
-			"options": {
-				"cwd": "${workspaceFolder}/webview-ui"
+			"group": {
+				"kind": "build"
 			}
 		},
 		{
@@ -74,6 +87,7 @@
 			"dependsOn": [
 				"Extension Dev",
 				"Webview UI Dev",
+				"TS Plugin Dev"
 			],
 			"group": {
 				"kind": "build",

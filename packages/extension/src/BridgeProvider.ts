@@ -186,19 +186,25 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     const localServer = "localhost:8090";
 
     // The CSS file from the React build output
-    const stylesUri = getUri(webview, this._extensionUri, [
-      "webview-ui",
-      "dist",
-      "static",
-      "css",
-      "index.css",
-    ]);
+    const stylesUri = production
+      ? getUri(webview, this._extensionUri, [
+          "..",
+          "..",
+          "dist",
+          "webview-ui",
+          "static",
+          "css",
+          "index.css",
+        ])
+      : `http://${localServer}/static/css/index.css`;
 
     // The JS file from the React build output
     const scriptUri = production
       ? getUri(webview, this._extensionUri, [
-          "webview-ui",
+          "..",
+          "..",
           "dist",
+          "webview-ui",
           "static",
           "js",
           "index.js",

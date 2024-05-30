@@ -45,18 +45,22 @@
     "windcraft",
     "design"
   ],
-  "main": "./dist/extension.js",
+  "main": "../../dist/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "dev": "webpack --watch",
-    "build": "webpack --mode production --devtool hidden-source-map",
+    "compile": "rspack",
+    "dev": "rspack --watch",
+    "build": "rspack --mode production --devtool hidden-source-map",
     "package": "npm run build:webview && npm run build",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "vscode-test"
+  },
+  "dependencies": {
+    "get-port": "^7.1.0",
+    "windcraft-ts-plugin": "workspace:*"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
@@ -66,12 +70,7 @@
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
     "@vscode/test-cli": "^0.0.8",
-    "@vscode/test-electron": "^2.3.9",
-    "eslint": "^8.57.0",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.3.3",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4"
+    "@vscode/test-electron": "^2.3.9"
   },
   "activationEvents": [
     "onWebviewPanel:windcraft.componentView"
@@ -83,6 +82,13 @@
           "command": "windcraft.showPreview",
           "when": "editorLangId == typescriptreact",
           "alt": "windcraft.showPreviewToSide",
+          "group": "navigation",
+          "icon": "./images/logo/windcraft-icon.svg"
+        },
+        {
+          "command": "windcraft.showTailwindView",
+          "when": "editorLangId == typescriptreact && !view.windcraft.tailwindView.visible",
+          "alt": "windcraft.showTailwindView",
           "group": "navigation",
           "icon": "./images/logo/windcraft-icon.svg"
         }
@@ -133,21 +139,21 @@
         "mac": "alt+v"
       }
     ],
-    "views": {
-      "windcraftView": [
-        {
-          "id": "windcraft.tailwindView",
-          "name": "WindCraft",
-          "type": "webview"
-        }
-      ]
-    },
     "viewsContainers": {
       "activitybar": [
         {
           "id": "windcraftView",
           "title": "WindCraft",
           "icon": "images/logo/windcraft-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "windcraftView": [
+        {
+          "id": "windcraft.tailwindView",
+          "name": "WindCraft",
+          "type": "webview"
         }
       ]
     },
@@ -163,6 +169,15 @@
         "title": "WindCraft: Show Component Editor to the Side",
         "category": "WindCraft React Component Editor",
         "icon": "$(preview)"
+      },
+      {
+        "command": "windcraft.showTailwindView",
+        "title": "WindCraft: Show Tailwind Editor",
+        "category": "WindCraft Tailwind Editor",
+        "icon": {
+          "light": "./images/logo/windcraft-light-icon.svg",
+          "dark": "./images/logo/windcraft-dark-icon.svg"
+        }
       },
       {
         "command": "windcraft.clearTailwindStyles",
@@ -184,6 +199,39 @@
           "description": "Tailwind CSS theme css file path"
         }
       }
-    }
+    },
+    "typescriptServerPlugins": [
+      {
+        "name": "windcraft-ts-plugin",
+        "enableForWorkspaceTypeScriptVersions": true,
+        "languages": ["typescript", "typescriptreact"]
+      }
+    ],
+    "walkthroughs": [
+      {
+        "id": "windcraft-walkthrough",
+        "title": "WindCraft",
+        "description": "Welcome to WindCraft - Your visual crafting table. Boost your productivity with these WindCraft features",
+        "steps": [
+          {
+            "id": "tailwind-css-editor",
+            "title": "Tailwind CSS Editor",
+            "description": "Open the functional CSS editor for working with Tailwind CSS\n[Open WindCraft](command:windcraft.showTailwindView)",
+            "media": {
+              "image": "media/image.png",
+              "altText": "Empty image"
+            }
+          },
+          {
+            "id": "changesetting",
+            "title": "Change Setting",
+            "description": "This step will change a setting and check off when the setting has changed\n[Change Setting](command:getting-started-sample.changeSetting)",
+            "media": {
+              "markdown": "media/markdown.md"
+            }
+          }
+        ]
+      }
+    ]
   }
 }
