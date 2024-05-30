@@ -26,7 +26,7 @@ type AsyncFunction = (...args: any[]) => Promise<any>;
 
 export class Bridge<
   M extends Record<string, F>,
-  F extends AsyncFunction = AsyncFunction
+  F extends AsyncFunction = AsyncFunction,
 > {
   private readonly vsCodeApi: WebviewApi<unknown> | undefined;
   public readonly remoteMethods: M;
@@ -104,6 +104,7 @@ export interface Position {
 export type Range = [Position, Position];
 
 type MethodMap = {
+  isReady: () => Promise<void>;
   setClassName: (className: string) => Promise<string | undefined>;
 };
 

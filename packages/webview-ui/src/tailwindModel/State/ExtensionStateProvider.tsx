@@ -191,6 +191,10 @@ export function ExtensionStateProvider({
     };
   }, [dispatch, clearTailwindStyles]);
 
+  useEffect(() => {
+    bridge.remoteMethods.isReady();
+  }, []);
+
   const value = useMemo(
     () => ({
       styleState,

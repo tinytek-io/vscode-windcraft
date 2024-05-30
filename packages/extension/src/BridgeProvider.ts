@@ -17,6 +17,8 @@ export type UpdateMessage = {
   selectionPosition: Position;
 };
 
+type OnReadyCallback = () => void;
+
 export class BridgeProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = "windcraft.tailwindView";
 
@@ -25,6 +27,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
   private _currentSelection: string | undefined;
   private _currentClassName: "class" | "className" = "class";
   private _highlightedClassName = ["!outline-blue-500", "!outline-2"];
+  private _onReadyCallback?: OnReadyCallback = undefined;
 
   constructor(private readonly _extensionUri: vscode.Uri) {}
 
@@ -43,12 +46,21 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     };
 
     new ExtensionBridge(webviewView, {
+      isReady: async () => {
+        if (this._onReadyCallback != null) {
+          this._onReadyCallback();
+        }
+      },
       setClassName: async (className: string) => {
         return this.updateSelectionClassName(className);
       },
     });
 
     webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
+  }
+
+  onReady(onReadyCallback: OnReadyCallback) {
+    this._onReadyCallback = onReadyCallback;
   }
 
   public async updateSelectionClassName(className: string) {

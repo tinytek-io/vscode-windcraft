@@ -22,6 +22,12 @@ export async function activate(context: vscode.ExtensionContext) {
       componentServerWs
     );
 
+
+  provider.onReady(async () => {
+    console.log("BridgeProvider is ready");
+    await updateSelection();
+  });
+
   decorator.loadConfig();
   decorator.setActiveEditor(vscode.window.activeTextEditor);
 
