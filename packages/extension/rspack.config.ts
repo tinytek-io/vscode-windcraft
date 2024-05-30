@@ -1,4 +1,5 @@
 import type { Configuration } from "@rspack/cli";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import * as path from "path";
 
 const extensionConfig: Configuration = {
@@ -42,5 +43,7 @@ const extensionConfig: Configuration = {
   infrastructureLogging: {
     level: "log", // enables logging required for problem matchers
   },
+  // @ts-ignore
+  plugins: [new ForkTsCheckerWebpackPlugin()],
 };
 module.exports = [extensionConfig];

@@ -1,11 +1,23 @@
 import { defineConfig } from "@rsbuild/core";
 import { pluginReact } from "@rsbuild/plugin-react";
+import { pluginTypeCheck } from "@rsbuild/plugin-type-check";
 
 const host = "localhost";
 const port = 8090;
 
 export default defineConfig({
-  plugins: [pluginReact()],
+  plugins: [
+    // @ts-ignore
+    pluginTypeCheck({
+      forkTsCheckerOptions: {
+        async: true,
+      },
+    }),
+    pluginReact(),
+  ],
+  entry: {
+    main: "./src/index.tsx",
+  },
   output: {
     distPath: {
       root: "../../dist/webview-ui",
@@ -14,6 +26,7 @@ export default defineConfig({
     filenameHash: false,
   },
   server: {
+    strictPort: true,
     port,
   },
   dev: {

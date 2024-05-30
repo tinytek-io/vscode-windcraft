@@ -1,6 +1,6 @@
 
 export function debounce(fn: Function, delay: number) {
-  let timeout: NodeJS.Timeout | null = null;
+  let timeout: Timer | null = null;
   return function (...args: any[]) {
     if (timeout) {
       clearTimeout(timeout);

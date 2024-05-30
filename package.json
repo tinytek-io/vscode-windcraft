@@ -14,14 +14,16 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@rsbuild/core": "^0.6.15",
-    "@rsbuild/plugin-react": "^0.6.15",
-    "@rspack/core": "^0.6.5",
+    "@rsbuild/core": "^0.7.1",
+    "@rsbuild/plugin-react": "^0.7.1",
+    "@rsbuild/plugin-type-check": "^0.7.1",
+    "@rspack/core": "^0.7.0",
+    "fork-ts-checker-webpack-plugin": "^9.0.2",
     "prettier": "^3.2.5",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "@rspack/cli": "^0.6.5",
+    "@rspack/cli": "^0.7.0",
     "eslint": "^9.3.0",
     "typescript": "^5.4.5"
   }
