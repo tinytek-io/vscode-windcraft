@@ -6,6 +6,12 @@
 .flex-col {
   flex-direction: column;
 }
+.grow {
+  flex-grow: 1;
+}
+.grow-0 {
+  flex-grow: 0;
+}
 
 .border {
   border: 1px solid var(--vscode-editorWidget-border);
@@ -482,8 +488,23 @@
   transform: rotate(180deg);
 }
 
+.overflow-auto {
+  overflow: auto;
+}
 .overflow-hidden {
   overflow: hidden;
+}
+.overflow-x-auto {
+  overflow-x: auto;
+}
+.overflow-y-auto {
+  overflow-y: auto;
+}
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+.overflow-y-hidden {
+  overflow-y: hidden;
 }
 
 .cursor-pointer {

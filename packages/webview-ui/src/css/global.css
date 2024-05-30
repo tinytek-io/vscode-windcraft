@@ -11,8 +11,6 @@ body,
   font-size: var(--vscode-font-size);
   font-weight: var(--vscode-font-size);
 
-  color: red;
-  background: blue;
   /* VS Code colors */
   color: var(--vscode-sideBarTitle-foreground);
   background: var(--vscode-sideBar-background);
