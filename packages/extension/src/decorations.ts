@@ -1,6 +1,6 @@
 import { DecorationRangeBehavior, window } from "vscode";
 
-export function SelectedDecorationType() {
+export function CurrentDecorationType() {
   return window.createTextEditorDecorationType({
     rangeBehavior: DecorationRangeBehavior.ClosedOpen,
     // backgroundColor: "var(--vscode-editor-selectionBackground)",
@@ -10,7 +10,7 @@ export function SelectedDecorationType() {
   });
 }
 
-export function UnselectedDecorationType() {
+export function ScopeDecorationType() {
   return window.createTextEditorDecorationType({
     // backgroundColor: "var(--vscode-editor-inactiveSelectionBackground)",
     border: "1px solid var(--vscode-interactive-inactiveCodeBorder)",

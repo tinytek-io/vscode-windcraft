@@ -2,5 +2,5 @@ import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvi
 
 export function useHasSelection() {
   const { styleState } = useExtensionState();
-  return styleState.rawSelection !== null;
+  return styleState.currentClassName !== null;
 }

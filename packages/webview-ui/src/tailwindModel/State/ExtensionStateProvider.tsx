@@ -13,6 +13,16 @@ import { bridge } from "../../utilities/Bridge";
 import { ColorName, parseColorName } from "../../types/color";
 import { OptionalTailwindStyle, CurrentAppliedType, KeySuffixMap, UIValue, TailwindSuffix } from "../../types/general";
 
+type ExtensionMessageTypes = {
+  type: "INITIALIZE_SELECTION",
+  currentClassName: string,
+  scopeClassNames: string[],
+} | {
+  type: "CLEAR_SELECTION",
+} | {
+  type: "CLEAR_TAILWIND_STYLES",
+};
+
 export interface ExtensionState {
   styleState: StyleState;
 }
@@ -95,7 +105,10 @@ export function ExtensionStateProvider({
       if (result !== undefined) {
         dispatch({
           type: "CODE_SELECTION",
-          payload: result,
+          payload: {
+            currentClassName: result,
+            scopeClassNames: null,
+          },
         });
       } else {
         console.error("Error setting class name");
@@ -156,14 +169,17 @@ export function ExtensionStateProvider({
 
   useEffect(() => {
     function handleSelectionChange(event: MessageEvent<any>) {
-      const message = event.data; // The json data that the extension sent
+      const message = event.data as ExtensionMessageTypes; // The json data that the extension sent
       switch (message.type) {
         case "INITIALIZE_SELECTION": {
-          console.log(`Initialized selection: "${message.value}"`);
+          console.log(`Initialized selection:`, message);
           try {
             dispatch({
               type: "CODE_SELECTION",
-              payload: message.value,
+              payload: {
+                currentClassName: message.currentClassName,
+                scopeClassNames: message.scopeClassNames,
+              },
             });
           } catch (error) {
             console.error("Error parsing selection update payload", error);

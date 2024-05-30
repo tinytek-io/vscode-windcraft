@@ -1,5 +1,7 @@
+import { TextDocument } from "vscode";
 import { ClassNamesResult } from "../ast/ClassNames/getClassNames";
 import { waitForTypeScriptServer } from "./waitForTypeScriptServer";
+import { classNamesPosition } from "./classNameFile";
 
 export type EventListener = () => void;
 export type EventType = "programCompile";
@@ -50,16 +52,26 @@ export class TypeScriptServerApi {
     });
   }
 
-  public async getClassNames(fileName: string, position: number) {
-    return this.post("/classnames", {
+  public async getClassNames(
+    fileName: string,
+    position: number,
+    document: TextDocument
+  ) {
+    const classNamesResult = (await this.post("/classnames", {
       fileName,
       position,
-    }) as Promise<ClassNamesResult | undefined>;
+    })) as ClassNamesResult | undefined;
+
+    if (!classNamesResult) {
+      return undefined;
+    }
+
+    return classNamesPosition(classNamesResult, document);
   }
 
   private startProgramCompileEventLoop() {
     const loop = async () => {
-      try {        
+      try {
         // Wait for the program to compile
         await this.post("/program-compile-event", {});
       } catch (error) {

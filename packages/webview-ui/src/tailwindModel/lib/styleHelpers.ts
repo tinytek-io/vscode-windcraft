@@ -68,6 +68,12 @@ export function createStyleState(className: string): StyleStateResult {
   };
 }
 
+export function createScopedStyleState(
+  scopeClassNames: string[]
+): TailwindStyle[][] {
+  return scopeClassNames.map(createStyleState).map((s) => s.tailwindStyles);
+}
+
 export function createClassName(styleState: StyleStateResult): string {
   // TODO: Compress and sort tailwind styles
   return sortClassList(
@@ -125,6 +131,23 @@ export function sortAppliedTailwindStylesByModifier(
     return -1;
   }
   return 0;
+}
+
+export function scopeTailwindStylesFilter(
+  modifierState: TailwindModifierState
+): (s: TailwindStyle) => boolean {
+  return (s) => {
+    if (s.includes(":")) {
+      // This is a modifier state and all states should be applied
+      // And if the current device mode is a subset of the applied device mode
+      return (
+        isAppliedTailwindStyle(modifierState, s) &&
+        isDeviceAppliedTailwindStyle(modifierState, s)
+      );
+    }
+
+    return true;
+  };
 }
 
 /**

@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { getNonce } from "./utilities/getNonce";
 import { getUri } from "./utilities/getUri";
 import { ExtensionBridge } from "./bridge";
+import { ClassNamePosition } from "windcraft-ts-plugin/client/classNameFile";
 
 export interface Position {
   line: number;
@@ -92,18 +93,16 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     return className;
   }
 
-  public async initializeSelection(data: {
-    currentSelection: string | undefined;
-    selectionPosition: vscode.Position;
-  }) {
+  public async initializeSelection({className, literalRange}: ClassNamePosition, scopeClassNames: string[]) {
     if (this._view) {
       // Initialize internal state
-      this._currentSelection = data.currentSelection;
-      this._selectionPosition = data.selectionPosition;
+      this._currentSelection = className;
+      this._selectionPosition = literalRange.start;
       // Initialize selection value
       this._view.webview.postMessage({
         type: "INITIALIZE_SELECTION",
-        value: this._currentSelection,
+        currentClassName: this._currentSelection,
+        scopeClassNames, 
       });
     }
   }

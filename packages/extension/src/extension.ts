@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { Decorator, Selection } from "./decorator";
+import { Decorator } from "./decorator";
 import { Settings } from "./configuration";
 import { BridgeProvider } from "./BridgeProvider";
 import { WindCraftVisualComponentEditorProvider } from "./component-server/WindCraftVisualComponentEditorProvider";
@@ -35,50 +35,29 @@ export async function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      const classNames = await typeScriptServerApi.getClassNames(
+      const classNamesFile = await typeScriptServerApi.getClassNames(
         document.fileName,
-        document.offsetAt(selection.active)
+        document.offsetAt(selection.active),
+        document
       );
-      console.info("TypeScript Server Response:", classNames);
+      console.info("TypeScript Server Response:", classNamesFile);
 
-      if (!classNames) {
+      if (!classNamesFile) {
         return;
       }
 
-      const currentClassName =
-        classNames.classNames[classNames.classNames.length - 1];
-      console.info("Current Class Name:", currentClassName);
+      console.info("Current Class Name:", classNamesFile.current);
 
-      const currentSelection: Selection | undefined =
-        currentClassName != null
-          ? {
-              currentSelection: currentClassName.className,
-              selectionPosition: document.positionAt(
-                currentClassName.position.start + 1
-              ),
-            }
-          : undefined;
-
-      if (!currentSelection) {
+      if (!classNamesFile.current) {
         await provider.clearSelection();
-        decorator.updateDecorations([], []);
+        decorator.clearDecorations();
         return;
       }
-      await provider.initializeSelection(currentSelection);
+      await provider.initializeSelection(classNamesFile.current, classNamesFile.scope.map((c) => c.className));
 
-      const ranges = classNames.classNames.map(
-        (c) =>
-          new vscode.Range(
-            document.positionAt(c.position.start),
-            document.positionAt(c.position.end)
-          )
-      );
+      decorator.updateDecorations(classNamesFile.current, classNamesFile.scope);
 
-      const selectedRanges = [ranges.pop()!];
-
-      decorator.updateDecorations(selectedRanges, ranges);
-
-      return classNames;
+      return classNamesFile;
     }
   };
 

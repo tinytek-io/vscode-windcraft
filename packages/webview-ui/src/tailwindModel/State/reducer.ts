@@ -6,17 +6,21 @@ import {
   TailwindValue,
   addStylesToCurrent,
   appliedTailwindStylesFilter,
+  createScopedStyleState,
   createStyleState,
   currentTailwindStylesFilter,
   getTailwindValue,
   removeStylesFromCurrent,
+  scopeTailwindStylesFilter,
 } from "../lib/styleHelpers";
 import { Action } from "./actions";
 
 export interface StyleState {
-  rawSelection: string | null;
+  currentClassName: string | null;
+  scopeClassNames: string[];
   customStyles: CustomStyle[];
   tailwindStyles: TailwindStyle[];
+  scopeTailwindStyles: TailwindStyle[][];
   // Modifier state selection
   modifierState: string;
   // Filtered styles based on modifier state
@@ -37,9 +41,11 @@ export interface FlexLayout {
 
 export function createInitialState(): StyleState {
   return {
-    rawSelection: null,
+    currentClassName: null,
+    scopeClassNames: [],
     customStyles: [],
     tailwindStyles: [],
+    scopeTailwindStyles: [],
     modifierState: "",
     currentTailwindStyles: [],
     appliedTailwindStyles: [],
@@ -55,9 +61,14 @@ export function reducer(state: StyleState, action: Action): StyleState {
       return createInitialState();
     }
     case "CODE_SELECTION": {
-      const oldSelectionValue = action.payload;
+      const currentClassName = action.payload.currentClassName;
+      const scopeClassNames =
+        action.payload.scopeClassNames || state.scopeClassNames || [];
+
+      const scopeTailwindStyles = createScopedStyleState(scopeClassNames);
+
       const { customStyles, tailwindStyles } =
-        createStyleState(oldSelectionValue);
+        createStyleState(currentClassName);
       const currentTailwindStyles = getCurrentTailwindStyles(
         state.modifierState,
         tailwindStyles
@@ -65,18 +76,28 @@ export function reducer(state: StyleState, action: Action): StyleState {
 
       const appliedTailwindStyles = getAppliedTailwindStyles(
         state.modifierState,
-        tailwindStyles
+        tailwindStyles,
+        scopeTailwindStyles
       );
 
       const bothTailwindStyles = [
         ...currentTailwindStyles,
         ...appliedTailwindStyles,
       ];
+
+      console.log(action.type, {
+        modifierState: state.modifierState,
+        currentTailwindStyles,
+        appliedTailwindStyles,
+        scopeTailwindStyles
+      });
       return {
         ...state,
-        rawSelection: oldSelectionValue,
+        currentClassName,
+        scopeClassNames,
         customStyles,
         tailwindStyles,
+        scopeTailwindStyles,
         currentTailwindStyles,
         appliedTailwindStyles,
         bothTailwindStyles,
@@ -112,12 +133,20 @@ export function reducer(state: StyleState, action: Action): StyleState {
 
       const appliedTailwindStyles = getAppliedTailwindStyles(
         modifierState,
-        state.tailwindStyles
+        state.tailwindStyles,
+        state.scopeTailwindStyles
       );
       const bothTailwindStyles = [
         ...currentTailwindStyles,
         ...appliedTailwindStyles,
       ];
+
+      console.log(action.type, {
+        modifierState,
+        currentTailwindStyles,
+        appliedTailwindStyles,
+        scopeTailwindStyles: state.scopeTailwindStyles
+      });
       return {
         ...state,
         modifierState,
@@ -145,11 +174,17 @@ function getCurrentTailwindStyles(
 
 function getAppliedTailwindStyles(
   modifierState: string,
-  tailwindStyles: TailwindStyle[]
+  tailwindStyles: TailwindStyle[],
+  scopeTailwindStyles: TailwindStyle[][]
 ): TailwindStyle[] {
+  const mergedTailwindStyles = [
+    ...tailwindStyles.filter(appliedTailwindStylesFilter(modifierState)),
+    ...scopeTailwindStyles.flat().filter(scopeTailwindStylesFilter(modifierState)),
+  ];
+
   return uniqueArray(
     sortClassList(
-      tailwindStyles.filter(appliedTailwindStylesFilter(modifierState))
+      mergedTailwindStyles
     ).map(getTailwindValue)
   ).toReversed();
 }

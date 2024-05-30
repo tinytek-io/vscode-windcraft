@@ -10,7 +10,10 @@ export type Action =
 
 export interface CodeSelection {
   type: "CODE_SELECTION";
-  payload: string;
+  payload: {
+    currentClassName: string,
+    scopeClassNames: string[] | null,
+  };
 }
 
 export interface CodeDeselection {

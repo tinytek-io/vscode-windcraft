@@ -1,8 +1,6 @@
 import { Range, TextEditor, Position } from "vscode";
-import {
-  UnselectedDecorationType,
-  SelectedDecorationType,
-} from "./decorations";
+import { ScopeDecorationType, CurrentDecorationType } from "./decorations";
+import { ClassNamePosition } from "windcraft-ts-plugin/client/classNameFile";
 
 const enabledLanguages = [
   "javascript",
@@ -11,37 +9,37 @@ const enabledLanguages = [
   "typescriptreact",
 ];
 
-export type Selection = {
-  selectionPosition: Position;
-  currentSelection: string | undefined;
-};
-
 export class Decorator {
   activeEditor: TextEditor | null = null;
 
-  selectedDecorationType = SelectedDecorationType();
-  unselectedDecorationType = UnselectedDecorationType();
-
-  unselectedRanges: Range[] = [];
-  selectedRanges: Range[] = [];
+  currentDecorationType = CurrentDecorationType();
+  scopeDecorationType = ScopeDecorationType();
 
   setActiveEditor(textEditor: TextEditor | undefined) {
     if (!textEditor) {
       return;
     }
     this.activeEditor = textEditor;
-    this.updateDecorations([], []);
+    this.clearDecorations();
   }
 
   loadConfig() {
-    this.selectedDecorationType.dispose();
-    this.unselectedDecorationType.dispose();
-    this.selectedDecorationType = SelectedDecorationType();
-    this.unselectedDecorationType = UnselectedDecorationType();
-    this.updateDecorations([], []);
+    this.currentDecorationType.dispose();
+    this.scopeDecorationType.dispose();
+    this.currentDecorationType = CurrentDecorationType();
+    this.scopeDecorationType = ScopeDecorationType();
+    this.clearDecorations();
   }
 
-  updateDecorations(selectedRanges: Range[], unselectedRanges: Range[]) {
+  clearDecorations() {
+    this.activeEditor?.setDecorations(this.currentDecorationType, []);
+    this.activeEditor?.setDecorations(this.scopeDecorationType, []);
+  }
+
+  updateDecorations(
+    current: ClassNamePosition | undefined,
+    scope: ClassNamePosition[]
+  ) {
     if (!this.activeEditor) {
       return;
     }
@@ -49,17 +47,21 @@ export class Decorator {
       return;
     }
 
-    this.selectedRanges = selectedRanges;
-    this.unselectedRanges = unselectedRanges;
-
     // Activate the decorations
     this.activeEditor.setDecorations(
-      this.selectedDecorationType,
-      this.selectedRanges
+      this.currentDecorationType,
+      current
+        ? [
+            {
+              range: current.range,
+              hoverMessage: "Current WindCraft selection",
+            },
+          ]
+        : []
     );
     this.activeEditor.setDecorations(
-      this.unselectedDecorationType,
-      this.unselectedRanges
+      this.scopeDecorationType,
+      scope.map((c) => ({ range: c.range }))
     );
   }
 }
