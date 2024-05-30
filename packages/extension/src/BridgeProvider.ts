@@ -25,8 +25,6 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
   private _view?: vscode.WebviewView;
   private _selectionPosition: vscode.Position | null = null;
   private _currentSelection: string | undefined;
-  private _currentClassName: "class" | "className" = "class";
-  private _highlightedClassName = ["!outline-blue-500", "!outline-2"];
   private _onReadyCallback?: OnReadyCallback = undefined;
 
   constructor(private readonly _extensionUri: vscode.Uri) {}
@@ -70,7 +68,6 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     if (selectionPosition == null || currentSelection == null) {
       throw new Error("Selection not initialized");
     }
-    const newSelectionValue = `${this._currentClassName}="${className}"`;
 
     const oldRange = new vscode.Range(
       selectionPosition,
@@ -81,7 +78,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     );
 
     const result = await vscode.window.activeTextEditor?.edit((editBuilder) => {
-      editBuilder.replace(oldRange, newSelectionValue);
+      editBuilder.replace(oldRange, className);
     });
 
     if (!result) {
@@ -89,29 +86,10 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
       return;
     }
 
-    this._currentSelection = newSelectionValue;
+    this._currentSelection = className;
 
     // Update the selection state
     return className;
-  }
-
-  private getCurrentSelectionWithoutHighlight() {
-    const { value } = getClassNameFromSelection(this._currentSelection);
-    if (!value) {
-      return;
-    }
-    return value
-      .split(" ")
-      .filter((v) => !this._highlightedClassName.includes(v))
-      .join(" ");
-  }
-
-  private getCurrentSelectionWithHighlight() {
-    const value = this.getCurrentSelectionWithoutHighlight();
-    if (!value) {
-      return;
-    }
-    return [value, ...this._highlightedClassName].filter(Boolean).join(" ");
   }
 
   public async initializeSelection(data: {
@@ -119,34 +97,13 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     selectionPosition: vscode.Position;
   }) {
     if (this._view) {
-      const { type, value } = getClassNameFromSelection(data.currentSelection);
-
-      // Remove blue outline from previous selection
-      /*if (
-        this._currentSelection &&
-        this._selectionPosition &&
-        this._currentClassName
-      ) {
-        await this.updateSelectionClassName(
-          this.getCurrentSelectionWithoutHighlight() ?? ""
-        );
-      }
-      */
-
       // Initialize internal state
-      this._currentClassName = type;
       this._currentSelection = data.currentSelection;
       this._selectionPosition = data.selectionPosition;
-
-      // Add blue outline to new selection
-      /*await this.updateSelectionClassName(
-        this.getCurrentSelectionWithHighlight() ?? ""
-      );*/
-
       // Initialize selection value
       this._view.webview.postMessage({
         type: "INITIALIZE_SELECTION",
-        value: getClassNameFromSelection(this._currentSelection).value,
+        value: this._currentSelection,
       });
     }
   }
@@ -156,11 +113,6 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
       // Nothing to clear
       return;
     }
-    // Remove blue outline from previous selection
-    /*await this.updateSelectionClassName(
-      this.getCurrentSelectionWithoutHighlight() ?? ""
-    );
-    */
 
     // Clear internal state
     this._currentSelection = undefined;
@@ -236,19 +188,4 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
       </html>
     `;
   }
-}
-
-function getClassNameFromSelection(selection: string | undefined): {
-  type: "class" | "className";
-  value?: string;
-} {
-  if (selection?.startsWith('className="')) {
-    return { type: "className", value: selection.slice(11, -1) };
-  }
-
-  if (selection?.startsWith('class="')) {
-    return { type: "class", value: selection.slice(7, -1) };
-  }
-
-  return { type: "class" };
 }

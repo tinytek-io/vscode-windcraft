@@ -10,7 +10,6 @@ import {
   currentTailwindStylesFilter,
   getTailwindValue,
   removeStylesFromCurrent,
-  sortAppliedTailwindStylesByModifier,
 } from "../lib/styleHelpers";
 import { Action } from "./actions";
 
