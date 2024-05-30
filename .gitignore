@@ -24,3 +24,4 @@ out/
 .env
 .env.local
 TODO.md
+log.txt
