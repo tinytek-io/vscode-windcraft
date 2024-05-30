@@ -9,16 +9,13 @@ root.render(
   <React.StrictMode>
     <ExtensionStateProvider>
       <main className="select-none flex flex-col h-full">
-        <App />
-        <div className="flex flex-col" style={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-        }}>
+        <div className="flex flex-col grow overflow-y-auto overflow-x-hidden">
+          <App />
+        </div>
+        <div className="flex flex-col grow-0">
           <VSCodeDivider />
           <div className="flex items-center justify-between p-4">
-            Unlicensed freemium version <VSCodeButton>Buy</VSCodeButton>
+            <VSCodeButton className="w-full" disabled title="Extension is currently in beta">Unlicensed</VSCodeButton>
           </div>
         </div>
       </main>
