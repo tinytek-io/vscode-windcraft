@@ -158,6 +158,12 @@ export async function activate(context: vscode.ExtensionContext) {
     })
   );
 
+  context.subscriptions.push(
+    vscode.commands.registerCommand("windcraft.showTailwindView", async () => {
+      await vscode.commands.executeCommand(`${BridgeProvider.viewType}.focus`);
+    })
+  );
+
   // Register the view provider
 
   context.subscriptions.push(
