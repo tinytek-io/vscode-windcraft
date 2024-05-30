@@ -1,15 +1,19 @@
 import * as vscode from "vscode";
-import { Decorator } from "./decorator";
+import { Decorator, Selection } from "./decorator";
 import { Settings } from "./configuration";
 import { BridgeProvider } from "./BridgeProvider";
 import { WindCraftVisualComponentEditorProvider } from "./component-server/WindCraftVisualComponentEditorProvider";
-import { activateTypeScript, getTypeScriptSymbols } from "./typescript";
+import { createTypeScriptServer } from "windcraft-ts-plugin/client/createTypeScriptServer";
 
 const componentServerHttp = `http://localhost:5173`;
 const componentServerWs = `ws://localhost:5173`;
 
 export async function activate(context: vscode.ExtensionContext) {
-  await activateTypeScript(context);
+  console.info("WindCraft extension is now active!!");
+
+  const typeScriptServerApi = await createTypeScriptServer();
+
+  console.info(`TypeScript Server Port: ${typeScriptServerApi?.port ?? "N/A"}`);
 
   let nextDocumentId = 1;
   // Register the decorator
@@ -22,6 +26,68 @@ export async function activate(context: vscode.ExtensionContext) {
       componentServerWs
     );
 
+  const updateSelection = async () => {
+    if (typeScriptServerApi) {
+      const { document, selection } = vscode.window.activeTextEditor ?? {};
+
+      if (!document || !selection) {
+        console.error("No document selection");
+        return;
+      }
+
+      const classNames = await typeScriptServerApi.getClassNames(
+        document.fileName,
+        document.offsetAt(selection.active)
+      );
+      console.info("TypeScript Server Response:", classNames);
+
+      if (!classNames) {
+        return;
+      }
+
+      const currentClassName =
+        classNames.classNames[classNames.classNames.length - 1];
+      console.info("Current Class Name:", currentClassName);
+
+      const currentSelection: Selection | undefined =
+        currentClassName != null
+          ? {
+              currentSelection: currentClassName.className,
+              selectionPosition: document.positionAt(
+                currentClassName.position.start
+              ),
+            }
+          : undefined;
+
+      if (!currentSelection) {
+        await provider.clearSelection();
+        decorator.updateDecorations([], []);
+        return;
+      }
+      await provider.initializeSelection(currentSelection);
+
+      const ranges = classNames.classNames.map(
+        (c) =>
+          new vscode.Range(
+            document.positionAt(c.position.start),
+            document.positionAt(c.position.end)
+          )
+      );
+
+      const selectedRanges = [ranges.pop()!];
+
+      decorator.updateDecorations(selectedRanges, ranges);
+
+      return classNames;
+    }
+  };
+
+  if (typeScriptServerApi) {
+    typeScriptServerApi.addEventListener("programCompile", async () => {
+      console.info("Program Compiled Event...");
+      await updateSelection();
+    });
+  }
 
   provider.onReady(async () => {
     console.log("BridgeProvider is ready");
@@ -30,6 +96,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   decorator.loadConfig();
   decorator.setActiveEditor(vscode.window.activeTextEditor);
+  await updateSelection();
 
   context.subscriptions.push(
     vscode.window.onDidChangeActiveTextEditor(() => {
@@ -39,24 +106,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.window.onDidChangeTextEditorSelection(async () => {
-      await getTypeScriptSymbols();
-      decorator.updateDecorations();
-      if (
-        decorator.unselectedRanges.length + decorator.selectedRanges.length >
-        0
-      ) {
-        const selectionRange = decorator.selectedRanges[0];
-        if (!selectionRange) {
-          await provider.clearSelection();
-          return;
-        }
-        await provider.initializeSelection({
-          selectionPosition: selectionRange.start,
-          currentSelection: decorator
-            .getActiveEditor()
-            ?.document.getText(selectionRange),
-        });
-      }
+      await updateSelection();
     })
   );
 
