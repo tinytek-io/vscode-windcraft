@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ES2023"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "useDefineForClassFields": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "outDir": "dist",
+    "declaration": true,
+    "declarationDir": "dist"
+  },
+  "include": [
+      "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/test",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
+}

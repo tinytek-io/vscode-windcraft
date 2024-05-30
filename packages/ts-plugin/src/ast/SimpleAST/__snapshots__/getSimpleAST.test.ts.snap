@@ -1,0 +1,561 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SimpleASTService getSimpleAST for test project 001 should return SimpleAST for "button" 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "kind": "ExportKeyword",
+          "position": {
+            "end": 6,
+            "start": 0,
+          },
+        },
+        {
+          "kind": "Identifier",
+          "position": {
+            "end": 23,
+            "start": 12,
+          },
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "kind": "Identifier",
+                  "position": {
+                    "end": 37,
+                    "start": 30,
+                  },
+                },
+                {
+                  "children": [
+                    {
+                      "kind": "VoidKeyword",
+                      "position": {
+                        "end": 49,
+                        "start": 45,
+                      },
+                    },
+                  ],
+                  "kind": "FunctionType",
+                  "position": {
+                    "end": 49,
+                    "start": 39,
+                  },
+                },
+              ],
+              "kind": "PropertySignature",
+              "position": {
+                "end": 49,
+                "start": 30,
+              },
+            },
+            {
+              "children": [
+                {
+                  "kind": "Identifier",
+                  "position": {
+                    "end": 60,
+                    "start": 52,
+                  },
+                },
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "kind": "Identifier",
+                          "position": {
+                            "end": 67,
+                            "start": 62,
+                          },
+                        },
+                        {
+                          "kind": "Identifier",
+                          "position": {
+                            "end": 77,
+                            "start": 68,
+                          },
+                        },
+                      ],
+                      "kind": "FirstNode",
+                      "position": {
+                        "end": 77,
+                        "start": 62,
+                      },
+                    },
+                  ],
+                  "kind": "TypeReference",
+                  "position": {
+                    "end": 77,
+                    "start": 62,
+                  },
+                },
+              ],
+              "kind": "PropertySignature",
+              "position": {
+                "end": 77,
+                "start": 52,
+              },
+            },
+          ],
+          "kind": "TypeLiteral",
+          "position": {
+            "end": 79,
+            "start": 26,
+          },
+        },
+      ],
+      "kind": "TypeAliasDeclaration",
+      "position": {
+        "end": 79,
+        "start": 0,
+      },
+    },
+    {
+      "children": [
+        {
+          "kind": "ExportKeyword",
+          "position": {
+            "end": 87,
+            "start": 81,
+          },
+        },
+        {
+          "kind": "Identifier",
+          "position": {
+            "end": 103,
+            "start": 97,
+          },
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "kind": "Identifier",
+                      "position": {
+                        "end": 113,
+                        "start": 106,
+                      },
+                    },
+                  ],
+                  "kind": "BindingElement",
+                  "position": {
+                    "end": 113,
+                    "start": 106,
+                  },
+                },
+                {
+                  "children": [
+                    {
+                      "kind": "Identifier",
+                      "position": {
+                        "end": 123,
+                        "start": 115,
+                      },
+                    },
+                  ],
+                  "kind": "BindingElement",
+                  "position": {
+                    "end": 123,
+                    "start": 115,
+                  },
+                },
+              ],
+              "kind": "ObjectBindingPattern",
+              "position": {
+                "end": 125,
+                "start": 104,
+              },
+            },
+            {
+              "children": [
+                {
+                  "kind": "Identifier",
+                  "position": {
+                    "end": 138,
+                    "start": 127,
+                  },
+                },
+              ],
+              "kind": "TypeReference",
+              "position": {
+                "end": 138,
+                "start": 127,
+              },
+            },
+          ],
+          "kind": "Parameter",
+          "position": {
+            "end": 138,
+            "start": 104,
+          },
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "kind": "Identifier",
+                              "position": {
+                                "end": 164,
+                                "start": 158,
+                              },
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "kind": "Identifier",
+                                      "position": {
+                                        "end": 174,
+                                        "start": 165,
+                                      },
+                                    },
+                                    {
+                                      "kind": "StringLiteral",
+                                      "name": "flex",
+                                      "position": {
+                                        "end": 181,
+                                        "start": 175,
+                                      },
+                                    },
+                                  ],
+                                  "kind": "JsxAttribute",
+                                  "name": "className",
+                                  "position": {
+                                    "end": 181,
+                                    "start": 165,
+                                  },
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "kind": "Identifier",
+                                      "position": {
+                                        "end": 189,
+                                        "start": 182,
+                                      },
+                                    },
+                                    {
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "position": {
+                                            "end": 198,
+                                            "start": 191,
+                                          },
+                                        },
+                                      ],
+                                      "kind": "JsxExpression",
+                                      "position": {
+                                        "end": 199,
+                                        "start": 190,
+                                      },
+                                    },
+                                  ],
+                                  "kind": "JsxAttribute",
+                                  "name": "onClick",
+                                  "position": {
+                                    "end": 199,
+                                    "start": 182,
+                                  },
+                                },
+                              ],
+                              "kind": "JsxAttributes",
+                              "position": {
+                                "end": 199,
+                                "start": 165,
+                              },
+                            },
+                          ],
+                          "kind": "JsxOpeningElement",
+                          "position": {
+                            "end": 200,
+                            "start": 157,
+                          },
+                        },
+                        {
+                          "kind": "JsxText",
+                          "position": {
+                            "end": 207,
+                            "start": 207,
+                          },
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "position": {
+                                    "end": 211,
+                                    "start": 208,
+                                  },
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "children": [
+                                        {
+                                          "kind": "Identifier",
+                                          "position": {
+                                            "end": 221,
+                                            "start": 212,
+                                          },
+                                        },
+                                        {
+                                          "kind": "StringLiteral",
+                                          "name": "flex flex-col",
+                                          "position": {
+                                            "end": 237,
+                                            "start": 222,
+                                          },
+                                        },
+                                      ],
+                                      "kind": "JsxAttribute",
+                                      "name": "className",
+                                      "position": {
+                                        "end": 237,
+                                        "start": 212,
+                                      },
+                                    },
+                                  ],
+                                  "kind": "JsxAttributes",
+                                  "position": {
+                                    "end": 237,
+                                    "start": 212,
+                                  },
+                                },
+                              ],
+                              "kind": "JsxOpeningElement",
+                              "position": {
+                                "end": 238,
+                                "start": 207,
+                              },
+                            },
+                            {
+                              "kind": "JsxText",
+                              "position": {
+                                "end": 242,
+                                "start": 238,
+                              },
+                            },
+                            {
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "position": {
+                                    "end": 247,
+                                    "start": 244,
+                                  },
+                                },
+                              ],
+                              "kind": "JsxClosingElement",
+                              "position": {
+                                "end": 248,
+                                "start": 242,
+                              },
+                            },
+                          ],
+                          "kind": "JsxElement",
+                          "name": "div",
+                          "position": {
+                            "end": 248,
+                            "start": 207,
+                          },
+                        },
+                        {
+                          "kind": "JsxText",
+                          "position": {
+                            "end": 255,
+                            "start": 255,
+                          },
+                        },
+                        {
+                          "children": [
+                            {
+                              "kind": "Identifier",
+                              "position": {
+                                "end": 259,
+                                "start": 256,
+                              },
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "kind": "Identifier",
+                                      "position": {
+                                        "end": 263,
+                                        "start": 260,
+                                      },
+                                    },
+                                    {
+                                      "kind": "StringLiteral",
+                                      "name": "test",
+                                      "position": {
+                                        "end": 270,
+                                        "start": 264,
+                                      },
+                                    },
+                                  ],
+                                  "kind": "JsxAttribute",
+                                  "name": "src",
+                                  "position": {
+                                    "end": 270,
+                                    "start": 260,
+                                  },
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "kind": "Identifier",
+                                      "position": {
+                                        "end": 280,
+                                        "start": 271,
+                                      },
+                                    },
+                                    {
+                                      "kind": "StringLiteral",
+                                      "name": "w-full",
+                                      "position": {
+                                        "end": 289,
+                                        "start": 281,
+                                      },
+                                    },
+                                  ],
+                                  "kind": "JsxAttribute",
+                                  "name": "className",
+                                  "position": {
+                                    "end": 289,
+                                    "start": 271,
+                                  },
+                                },
+                              ],
+                              "kind": "JsxAttributes",
+                              "position": {
+                                "end": 289,
+                                "start": 260,
+                              },
+                            },
+                          ],
+                          "kind": "JsxSelfClosingElement",
+                          "name": "img",
+                          "position": {
+                            "end": 292,
+                            "start": 255,
+                          },
+                        },
+                        {
+                          "kind": "JsxText",
+                          "position": {
+                            "end": 299,
+                            "start": 299,
+                          },
+                        },
+                        {
+                          "children": [
+                            {
+                              "kind": "Identifier",
+                              "position": {
+                                "end": 308,
+                                "start": 300,
+                              },
+                            },
+                          ],
+                          "kind": "JsxExpression",
+                          "position": {
+                            "end": 309,
+                            "start": 299,
+                          },
+                        },
+                        {
+                          "kind": "JsxText",
+                          "position": {
+                            "end": 314,
+                            "start": 314,
+                          },
+                        },
+                        {
+                          "children": [
+                            {
+                              "kind": "Identifier",
+                              "position": {
+                                "end": 322,
+                                "start": 316,
+                              },
+                            },
+                          ],
+                          "kind": "JsxClosingElement",
+                          "position": {
+                            "end": 323,
+                            "start": 314,
+                          },
+                        },
+                      ],
+                      "kind": "JsxElement",
+                      "name": "button",
+                      "position": {
+                        "end": 323,
+                        "start": 157,
+                      },
+                    },
+                  ],
+                  "kind": "ParenthesizedExpression",
+                  "position": {
+                    "end": 327,
+                    "start": 151,
+                  },
+                },
+              ],
+              "kind": "ReturnStatement",
+              "position": {
+                "end": 328,
+                "start": 144,
+              },
+            },
+          ],
+          "kind": "Block",
+          "position": {
+            "end": 330,
+            "start": 140,
+          },
+        },
+      ],
+      "kind": "FunctionDeclaration",
+      "name": "Button",
+      "position": {
+        "end": 330,
+        "start": 81,
+      },
+    },
+    {
+      "kind": "EndOfFileToken",
+      "position": {
+        "end": 330,
+        "start": 330,
+      },
+    },
+  ],
+  "kind": "SourceFile",
+  "position": {
+    "end": 330,
+    "start": 0,
+  },
+}
+`;
