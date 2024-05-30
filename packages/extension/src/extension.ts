@@ -54,7 +54,7 @@ export async function activate(context: vscode.ExtensionContext) {
           ? {
               currentSelection: currentClassName.className,
               selectionPosition: document.positionAt(
-                currentClassName.position.start
+                currentClassName.position.start + 1
               ),
             }
           : undefined;
