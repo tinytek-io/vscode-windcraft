@@ -29,7 +29,7 @@ This extension contributes the following settings:
 
 Preview release of WindCraft - a visual Tailwind CSS editor.
 
-### 0.0.2
+### 0.0.3
 
 TypeScript Language Server Plugin version 🚀
 
