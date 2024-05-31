@@ -8,7 +8,9 @@
     "preview": "npm run preview --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "check:link": "npm run check:link --workspaces --if-present",
-    "check:format": "npm run check:format --workspaces --if-present"
+    "check:format": "npm run check:format --workspaces --if-present",
+    "tail:log": "tail -f ./packages/ts-plugin/log.txt",
+    "package": "npm install && npm run build && vsce package --pre-release"
   },
   "workspaces": [
     "packages/ts-plugin",
