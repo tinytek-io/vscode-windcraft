@@ -1,17 +1,22 @@
 {
   "name": "windcraft-ts-plugin",
   "version": "0.0.1",
-  "main": "dist/index.js",
+  "main": "./plugin.export.js",
   "exports": {
-    ".": "./dist/index.js",
-    "./ast/*": "./dist/ast/*.js",
-    "./client/*": "./dist/client/*.js",
+    ".": "./plugin.export.js",
+    "./ast/*": "./dist/client/ast/*.js",
+    "./client/*": "./dist/client/client/*.js",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "tsc -p . -w",
-    "build": "rm -rf ./dist && tsc -p .",
-    "check:types": "tsc -p . --noEmit"
+    "dev": "npm run dev:client & npm run dev:server && npm run dryrun",
+    "dev:client": "tsc -p . -w",
+    "dev:server": "rspack --watch",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "rm -rf ./dist && tsc -p .",
+    "build:server": "rspack --mode production",
+    "check:types": "tsc -p . --noEmit",
+    "dryrun": "node ./plugin.dryrun.js"
   },
   "devDependencies": {
     "@types/bun": "latest",

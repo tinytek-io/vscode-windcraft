@@ -11,9 +11,9 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "outDir": "dist",
+    "outDir": "dist/client",
     "declaration": true,
-    "declarationDir": "dist"
+    "declarationDir": "dist/client"
   },
   "include": [
       "src"

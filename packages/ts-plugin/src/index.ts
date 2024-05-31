@@ -1,5 +1,4 @@
 import type * as ts from "typescript/lib/tsserverlibrary";
-
 import express from "express";
 import * as http from "http";
 import type { PluginConfiguration } from "./PluginConfiguration";
@@ -74,4 +73,4 @@ const factory: ts.server.PluginModuleFactory = (mod) => {
   };
 };
 
-export = factory;
+export default factory;
