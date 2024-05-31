@@ -57,16 +57,23 @@ export class TypeScriptServerApi {
     position: number,
     document: TextDocument
   ) {
-    const classNamesResult = (await this.post("/classnames", {
-      fileName,
-      position,
-    })) as ClassNamesResult | undefined;
-
-    if (!classNamesResult) {
-      return undefined;
+    console.log("getClassNames", fileName, position);
+    try {      
+      const classNamesResult = (await this.post("/classnames", {
+        fileName,
+        position,
+      })) as ClassNamesResult | undefined;
+  
+      if (!classNamesResult || !classNamesResult.classNames) {
+        console.error("Error in getClassNames: No class names found");
+        return undefined;
+      }
+  
+      return classNamesPosition(classNamesResult, document);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "An unknown error occurred";
+      console.error(`Error in getClassNames: ${message}`);
     }
-
-    return classNamesPosition(classNamesResult, document);
   }
 
   private startProgramCompileEventLoop() {
