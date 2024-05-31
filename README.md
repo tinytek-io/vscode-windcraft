@@ -29,31 +29,26 @@ This extension contributes the following settings:
 
 Preview release of WindCraft - a visual Tailwind CSS editor.
 
-### 0.0.1
+### 0.0.2
 
-Initial release of the extension! 🚀
+TypeScript Language Server Plugin version 🚀
 
-Sections added:
-* Dynamics - for state modifiers like device modes / theme mode / hover / focus / active / disabled etc.
-* Element - for element properties like position / size / rotation / border / overflow etc.
-* Flex Layout - for flexbox layout properties
-* Layer - Mex Blend  / Opacity / Visibility
-* Constraints - for layout top / bottom / left / right / center etc. for positioning elements
-* Text - for text properties like font size / font weight / font style / text color etc.
-* Background - for background properties like background color
-* Border - for border properties like border color / border width / border radius etc.
-* Layer Effects - for shadow / blur / spread / opacity / color etc.
-* Backdrop Effects - for shadow / blur / spread / opacity / color etc.
+This release adds TypeScript Language Server Plugin support to WindCraft. This brings the initial improvement of adding cascading classes details in the editor. On the longer term this will unlock more features.
 
-Added debug mode 🐞 adding red outline on the element
+![WindCraft TypeScript Language Server Plugin](docs/images/feature/0.0.2/windcraft-ts-plugin.gif)
+
+Placeholder for unlicensed users to get a license key have been added. This is a temporary measure to allow users to continue using WindCraft while we work on the licensing system - we are evaluating ways for users to support the development of this tool.
+
+Added a WindCraft button for tsx files to open the WindCraft editor. Hopefully this will make it easier for users to open the editor.
+
+![WindCraft Button](docs/images/feature/0.0.2/windcraft-open.gif)
 
 ### Next Release
 
-* Iron out more bugs
+* Add preview mode to see the changes in real-time
+* Add tooltips on all buttons and inputs to help users understand what each button does
+* Improve accessibility and usability of the editor
 * Add support for design system tokens
-* Improve accessibility
-* Improve performance
-* Improve the class names added to the element
 
 ---
 
