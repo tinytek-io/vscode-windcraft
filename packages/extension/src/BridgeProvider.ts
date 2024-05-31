@@ -93,7 +93,10 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     return className;
   }
 
-  public async initializeSelection({className, literalRange}: ClassNamePosition, scopeClassNames: string[]) {
+  public async initializeSelection(
+    { className, literalRange }: ClassNamePosition,
+    scopeClassNames: string[]
+  ) {
     if (this._view) {
       // Initialize internal state
       this._currentSelection = className;
@@ -102,7 +105,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
       this._view.webview.postMessage({
         type: "INITIALIZE_SELECTION",
         currentClassName: this._currentSelection,
-        scopeClassNames, 
+        scopeClassNames,
       });
     }
   }
@@ -139,8 +142,6 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     // The CSS file from the React build output
     const stylesUri = production
       ? getUri(webview, this._extensionUri, [
-          "..",
-          "..",
           "dist",
           "webview-ui",
           "static",
@@ -152,8 +153,6 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     // The JS file from the React build output
     const scriptUri = production
       ? getUri(webview, this._extensionUri, [
-          "..",
-          "..",
           "dist",
           "webview-ui",
           "static",
@@ -166,8 +165,8 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     const nonce = getNonce();
 
     const csp = production
-      ? `default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';`
-      : `default-src 'none'; style-src ${webview.cspSource} http://${localServer} 'unsafe-inline'; script-src 'nonce-${nonce}' ${webview.cspSource} http://${localServer}; connect-src 'self' ws://${localServer} http://${localServer};`;
+      ? `default-src 'none'; style-src ${webview.cspSource} 'nonce-${nonce}'; script-src 'nonce-${nonce}';`
+      : `default-src 'none'; style-src ${webview.cspSource} http://${localServer} 'unsafe-inline' 'nonce-${nonce}'; script-src 'nonce-${nonce}' ${webview.cspSource} http://${localServer}; connect-src 'self' ws://${localServer} http://${localServer};`;
 
     // Tip: Install the es6-string-html VS Code extension to enable code highlighting below
     return /*html*/ `
@@ -176,6 +175,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
         <head>
           <title>WindCraft</title>
           <meta charset="UTF-8" />
+          <meta property="csp-nonce" content="${nonce}" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta http-equiv="Content-Security-Policy" content="${csp}">
           <link rel="stylesheet" type="text/css" href="${stylesUri}">
