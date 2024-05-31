@@ -1,3 +1,9 @@
+export class TypeScriptStartError extends Error {
+  constructor() {
+    super("Failed to start TypeScript Server");
+  }
+}
+
 export async function waitForTypeScriptServer(port: number) {
   const maxAttempts = 10;
   const delay = 300;
@@ -17,6 +23,6 @@ export async function waitForTypeScriptServer(port: number) {
     attempt++;
   }
   if (!success) {
-    throw new Error("Failed to start TypeScript Server");
+    throw new TypeScriptStartError();
   }
 }

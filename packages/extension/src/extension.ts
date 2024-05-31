@@ -8,10 +8,26 @@ import { createTypeScriptServer } from "windcraft-ts-plugin/client/createTypeScr
 const componentServerHttp = `http://localhost:5173`;
 const componentServerWs = `ws://localhost:5173`;
 
+async function getTypeScriptServerApi() {
+  try {
+    const api = await createTypeScriptServer();
+    await api?.ensureReady();
+    return api;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "An unknown error occurred";
+     vscode.window.showErrorMessage(`WindCraft extension failed to activate: ${message}`);
+  }
+}
+
 export async function activate(context: vscode.ExtensionContext) {
   console.info("WindCraft extension is now active!!");
 
-  const typeScriptServerApi = await createTypeScriptServer();
+  const typeScriptServerApi = await getTypeScriptServerApi();
+
+  if (typeScriptServerApi == null) {
+    console.error("TypeScript Server API is not available, cannot activate WindCraft extension.");
+    return;
+  }
 
   console.info(`TypeScript Server Port: ${typeScriptServerApi?.port ?? "N/A"}`);
 

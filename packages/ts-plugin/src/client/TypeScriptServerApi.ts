@@ -1,7 +1,8 @@
 import { TextDocument } from "vscode";
-import { ClassNamesResult } from "../ast/ClassNames/getClassNames";
-import { waitForTypeScriptServer } from "./waitForTypeScriptServer";
+import { ClassNamesResult, classNamesResultSchema } from "../ast/ClassNames/getClassNames";
+import { TypeScriptStartError, waitForTypeScriptServer } from "./waitForTypeScriptServer";
 import { classNamesPosition } from "./classNameFile";
+import { ZodError } from "zod";
 
 export type EventListener = () => void;
 export type EventType = "programCompile";
@@ -39,7 +40,7 @@ export class TypeScriptServerApi {
   /**
    * Ensure that the TypeScript server is ready to accept requests.
    */
-  private async ensureReady() {
+  public async ensureReady() {
     if (!this._ensureReadyPromise) {
       this._ensureReadyPromise = waitForTypeScriptServer(this.port);
     }
@@ -57,22 +58,27 @@ export class TypeScriptServerApi {
     position: number,
     document: TextDocument
   ) {
-    console.log("getClassNames", fileName, position);
     try {      
-      const classNamesResult = (await this.post("/classnames", {
+      const result = classNamesResultSchema.safeParse(await this.post("/classnames", {
         fileName,
         position,
-      })) as ClassNamesResult | undefined;
-  
-      if (!classNamesResult || !classNamesResult.classNames) {
-        console.error("Error in getClassNames: No class names found");
-        return undefined;
+      }));
+
+      if (!result.success) {
+        throw result.error;
       }
-  
-      return classNamesPosition(classNamesResult, document);
+
+      return classNamesPosition(result.data, document);
     } catch (error) {
-      const message = error instanceof Error ? error.message : "An unknown error occurred";
-      console.error(`Error in getClassNames: ${message}`);
+      if (error instanceof TypeScriptStartError) {
+        throw error;
+      } else if (error instanceof ZodError) {
+        console.error(`Error in getClassNames: ${error.errors}`);
+      } else if (error instanceof Error) {
+        console.error(`Error in getClassNames: ${error.message}`);
+      } else {
+        console.error("Error in getClassNames", error);
+      }
     }
   }
 

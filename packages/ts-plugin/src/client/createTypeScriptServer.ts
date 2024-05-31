@@ -34,14 +34,14 @@ export async function createTypeScriptServer(): Promise<TypeScriptServerApi | un
   // Get the TS extension
   const tsExtension = extensions.getExtension(TYPESCRIPT_EXTENSION_ID);
   if (!tsExtension) {
-    return;
+    throw new Error("WindCraft TS Plugin: TypeScript extension is not available");
   }
 
   await tsExtension.activate();
 
   const api = tsExtension.exports?.getAPI(0) as ApiV0 | undefined;
   if (!api) {
-    return;
+    throw new Error("WindCraft TS Plugin: TypeScript API is not available");
   }
 
   if (api.configurePlugin == null) {
