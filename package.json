@@ -1,31 +1,243 @@
 {
-  "name": "wind-craft",
+  "name": "windcraft",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
-    "dev": "bun --filter '*' dev",
-    "build": "bun --filter '*' build",
-    "preview": "bun --filter '*' preview",
-    "test": "bun --filter '*' test",
-    "check:link": "bun --filter '*' check:link",
-    "check:format": "bun --filter '*' check:format"
+    "dev": "npm run dev --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "preview": "npm run preview --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "check:link": "npm run check:link --workspaces --if-present",
+    "check:format": "npm run check:format --workspaces --if-present"
   },
   "workspaces": [
-    "packages/*"
+    "packages/ts-plugin",
+    "packages/webview-ui",
+    "packages/extension"
   ],
+  "dependencies": {
+    "windcraft-ts-plugin": "*",
+    "zod": "^3.23.8"
+  },
   "devDependencies": {
     "@rsbuild/core": "^0.7.1",
     "@rsbuild/plugin-react": "^0.7.1",
     "@rsbuild/plugin-type-check": "^0.7.1",
+    "@rspack/cli": "^0.7.0",
     "@rspack/core": "^0.7.0",
+    "eslint": "^9.3.0",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "prettier": "^3.2.5",
+    "typescript": "^5.4.5",
     "ts-node": "^10.9.2"
   },
-  "dependencies": {
-    "@rspack/cli": "^0.7.0",
-    "eslint": "^9.3.0",
-    "typescript": "^5.4.5",
-    "zod": "^3.23.8"
+  "displayName": "WindCraft",
+  "preview": true,
+  "publisher": "tinytek-io",
+  "description": "Your visual crafting table",
+  "logo": "docs/images/logo/windcraft-logo-05.webp",
+  "icon": "docs/images/logo/windcraft-logo-05.webp",
+  "license": "MIT",
+  "author": {
+    "name": "TinyTek.io team"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tinytek-io/windcraft"
+  },
+  "bugs": {
+    "url": "https://github.com/tinytek-io/windcraft/issues"
+  },
+  "pricing": "Trial",
+  "sponsor": {
+    "url": "https://github.com/sponsors/tinytek-io"
+  },
+  "engines": {
+    "vscode": "^1.87.0"
+  },
+  "galleryBanner": {
+    "color": "#F2F2F2",
+    "theme": "light"
+  },
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "tailwind",
+    "css",
+    "design",
+    "ui",
+    "windcraft",
+    "design"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onWebviewPanel:windcraft.componentView"
+  ],
+  "extensionDependencies": [
+    "vscode.typescript-language-features"
+  ],
+  "contributes": {
+    "menus": {
+      "editor/title": [
+        {
+          "command": "windcraft.showPreview",
+          "when": "editorLangId == typescriptreact",
+          "alt": "windcraft.showPreviewToSide",
+          "group": "navigation",
+          "icon": "./images/logo/windcraft-icon.svg"
+        },
+        {
+          "command": "windcraft.showTailwindView",
+          "when": "editorLangId == typescriptreact && !view.windcraft.tailwindView.visible",
+          "alt": "windcraft.showTailwindView",
+          "group": "navigation",
+          "icon": "./images/logo/windcraft-icon.svg"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "windcraft.clearTailwindStyles",
+          "group": "navigation",
+          "when": "view == windcraft.tailwindView"
+        }
+      ]
+    },
+    "customEditors": [
+      {
+        "viewType": "windcraft.componentView",
+        "displayName": "WindCraft Component Editor",
+        "priority": "option",
+        "selector": [
+          {
+            "filenamePattern": "*.tsx"
+          }
+        ]
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "windcraft.alignLeft",
+        "mac": "alt+a"
+      },
+      {
+        "command": "windcraft.alignRight",
+        "mac": "alt+d"
+      },
+      {
+        "command": "windcraft.alignTop",
+        "mac": "alt+w"
+      },
+      {
+        "command": "windcraft.alignBottom",
+        "mac": "alt+s"
+      },
+      {
+        "command": "windcraft.alignCenterHorizontal",
+        "mac": "alt+h"
+      },
+      {
+        "command": "windcraft.alignCenterVertical",
+        "mac": "alt+v"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "windcraftView",
+          "title": "WindCraft",
+          "icon": "./images/logo/windcraft-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "windcraftView": [
+        {
+          "id": "windcraft.tailwindView",
+          "name": "WindCraft",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "windcraft.showPreview",
+        "title": "WindCraft: Show Component Editor",
+        "category": "WindCraft React Component Editor",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "windcraft.showPreviewToSide",
+        "title": "WindCraft: Show Component Editor to the Side",
+        "category": "WindCraft React Component Editor",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "windcraft.showTailwindView",
+        "title": "WindCraft: Show Tailwind Editor",
+        "category": "WindCraft Tailwind Editor",
+        "icon": {
+          "light": "./images/logo/windcraft-light-icon.svg",
+          "dark": "./images/logo/windcraft-dark-icon.svg"
+        }
+      },
+      {
+        "command": "windcraft.clearTailwindStyles",
+        "category": "WindCraft",
+        "title": "Clear Tailwind styles",
+        "icon": "$(clear-all)"
+      }
+    ],
+    "configuration": {
+      "title": "WindCraft Settings",
+      "properties": {
+        "windcraft.themeFile": {
+          "order": 1,
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Tailwind CSS theme css file path"
+        }
+      }
+    },
+    "typescriptServerPlugins": [
+      {
+        "name": "windcraft-ts-plugin",
+        "enableForWorkspaceTypeScriptVersions": true,
+        "languages": ["typescript", "typescriptreact"]
+      }
+    ],
+    "walkthroughs": [
+      {
+        "id": "windcraft-walkthrough",
+        "title": "WindCraft",
+        "description": "Welcome to WindCraft - Your visual crafting table. Boost your productivity with these WindCraft features",
+        "steps": [
+          {
+            "id": "tailwind-css-editor",
+            "title": "Tailwind CSS Editor",
+            "description": "Open the functional CSS editor for working with Tailwind CSS\n[Open WindCraft](command:windcraft.showTailwindView)",
+            "media": {
+              "image": "media/image.png",
+              "altText": "Empty image"
+            }
+          },
+          {
+            "id": "changesetting",
+            "title": "Change Setting",
+            "description": "This step will change a setting and check off when the setting has changed\n[Change Setting](command:getting-started-sample.changeSetting)",
+            "media": {
+              "markdown": "media/markdown.md"
+            }
+          }
+        ]
+      }
+    ]
   }
 }
