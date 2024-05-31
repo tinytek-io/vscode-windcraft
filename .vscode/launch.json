@@ -27,6 +27,17 @@
 			"outFiles": [
 				"${workspaceFolder}/dist/**/*.js"
 			]
+		},
+		{
+			"name": "Run Extension windcraft-0.0.2 folder",
+			"type": "extensionHost",
+			"request": "launch",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceFolder}/windcraft-0.0.2/extension"
+			],
+			"outFiles": [
+				"${workspaceFolder}/windcraft-0.0.2/extension/dist/**/*.js"
+			]
 		}
 	]
 }
