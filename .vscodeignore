@@ -5,9 +5,12 @@
 
 # But not these files...
 !dist/
-!webview-ui/dist/
 !package.json
 !README.md
 !LICENSE
 !.github/FUNDING.yml
 !images/
+!docs/images/logo/
+
+# Keep the windcraft-ts-plugin folder
+!node_modules/windcraft-ts-plugin/
