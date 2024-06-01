@@ -29,15 +29,23 @@
 			]
 		},
 		{
-			"name": "Run Extension windcraft-0.0.2 folder",
+			"name": "Run Extension windcraft folder",
 			"type": "extensionHost",
 			"request": "launch",
 			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}/windcraft-0.0.2/extension"
+				"--extensionDevelopmentPath=${workspaceFolder}/${input:folderName}/extension"
 			],
 			"outFiles": [
-				"${workspaceFolder}/windcraft-0.0.2/extension/dist/**/*.js"
+				"${workspaceFolder}/${input:folderName}/extension/dist/**/*.js"
 			]
 		}
+	],
+	"inputs": [
+		{
+      "id": "folderName",
+      "type": "promptString",
+      "description": "Name of the unzipped extension folder",
+      "default": "windcraft-0.0.2"
+    }
 	]
 }
