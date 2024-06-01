@@ -137,6 +137,10 @@ export function scopeTailwindStylesFilter(
   modifierState: TailwindModifierState
 ): (s: TailwindStyle) => boolean {
   return (s) => {
+    if (isCascadedTailwindStyle(s) === false) {
+      // This style should not be inherited
+      return false;
+    }
     if (s.includes(":")) {
       // This is a modifier state and all states should be applied
       // And if the current device mode is a subset of the applied device mode
@@ -233,6 +237,34 @@ export function isAppliedTailwindStyle(
     .split(":")
     .filter((s) => !deviceModes.includes(s)) // Ignore device modes
     .every((state) => appliedState.includes(state));
+}
+
+/**
+ * Check if a tailwind style is cascaded or not.
+ * Some styles should not be inherited from parent elements.
+ *
+ * e.g. "flex" should not be inherited
+ */
+export function isCascadedTailwindStyle(tailwindStyle: TailwindStyle): boolean {
+  const value = getTailwindValue(tailwindStyle);
+  // Match on prefix
+  if (
+    ["flex", "rotate", "gap", "p", "w", "h", "rounded", "top", "bottom", "left", "right", "inset", "overflow"].find((prefix) =>
+      value.startsWith(`${prefix}-`)
+    )
+  ) {
+    return false;
+  }
+  // Match on exact value
+  if (
+    ["flex", "rounded", "absolute", "relative", "fixed", "sticky"].find(
+      (exact) => value === exact
+    )
+  ) {
+    return false;
+  }
+
+  return true;
 }
 
 /**
