@@ -1,5 +1,5 @@
-import { Range, TextEditor, Position } from "vscode";
-import { ScopeDecorationType, CurrentDecorationType } from "./decorations";
+import { Range, TextEditor, Position, DecorationOptions } from "vscode";
+import { ScopeDecorationType, CurrentDecorationType, CurrentEmptyDecorationType } from "./decorations";
 import { ClassNamePosition } from "windcraft-ts-plugin/client/classNameFile";
 
 const enabledLanguages = [
@@ -13,6 +13,7 @@ export class Decorator {
   activeEditor: TextEditor | null = null;
 
   currentDecorationType = CurrentDecorationType();
+  currentEmptyDecorationType = CurrentEmptyDecorationType();
   scopeDecorationType = ScopeDecorationType();
 
   setActiveEditor(textEditor: TextEditor | undefined) {
@@ -25,14 +26,17 @@ export class Decorator {
 
   loadConfig() {
     this.currentDecorationType.dispose();
+    this.currentEmptyDecorationType.dispose();
     this.scopeDecorationType.dispose();
     this.currentDecorationType = CurrentDecorationType();
+    this.currentEmptyDecorationType = CurrentEmptyDecorationType();
     this.scopeDecorationType = ScopeDecorationType();
     this.clearDecorations();
   }
 
   clearDecorations() {
     this.activeEditor?.setDecorations(this.currentDecorationType, []);
+    this.activeEditor?.setDecorations(this.currentEmptyDecorationType, []);
     this.activeEditor?.setDecorations(this.scopeDecorationType, []);
   }
 
@@ -47,10 +51,24 @@ export class Decorator {
       return;
     }
 
+    // Check if the current class name is empty / className is not set
+    const emptyClassName = (current?.className === "" && current.position.start === current.position.end);
+
     // Activate the decorations
     this.activeEditor.setDecorations(
       this.currentDecorationType,
-      current
+      current && !emptyClassName
+        ? [
+            {
+              range: current.range,
+              hoverMessage: "Current WindCraft selection",
+            },
+          ]
+        : []
+    );
+    this.activeEditor.setDecorations(
+      this.currentEmptyDecorationType,
+      current && emptyClassName
         ? [
             {
               range: current.range,

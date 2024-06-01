@@ -10,6 +10,22 @@ export function CurrentDecorationType() {
   });
 }
 
+export function CurrentEmptyDecorationType() {
+  return window.createTextEditorDecorationType({
+    rangeBehavior: DecorationRangeBehavior.ClosedOpen,
+    // backgroundColor: "var(--vscode-editor-selectionBackground)",
+    border: "1px solid var(--vscode-interactive-activeCodeBorder)",
+    borderRadius: "2px",
+    cursor: "pointer",
+    before: {
+      contentText: ' className="',
+    },
+    after: {
+      contentText: '"',
+    },
+  });
+}
+
 export function ScopeDecorationType() {
   return window.createTextEditorDecorationType({
     // backgroundColor: "var(--vscode-editor-inactiveSelectionBackground)",

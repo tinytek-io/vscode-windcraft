@@ -68,6 +68,8 @@ export function getClassNames(
       (typescript.isJsxSelfClosingElement(node) && node) ||
       undefined;
 
+    let foundClassName = false;
+
     /**
      * Find the class name attribute and extract the class names.
      */
@@ -79,6 +81,7 @@ export function getClassNames(
         jsxAttribute.forEachChild((className) => {
           // For now we only support string literals as class names.
           if (typescript.isStringLiteral(className)) {
+            foundClassName = true;
             classNamesResult.classNames.push({
               className: className.text,
               position: {
@@ -90,6 +93,18 @@ export function getClassNames(
         });
       }
     });
+
+    if (jsxElement && foundClassName === false) {
+      const endPosition = jsxElement.getEnd() - 1;
+      // If class name attribute is not found, add an empty class name.
+      classNamesResult.classNames.push({
+        className: "",
+        position: {
+          start: endPosition,
+          end: endPosition,
+        },
+      });
+    }
 
     // Continue walking the tree.
     node.forEachChild(nodeWalker);
