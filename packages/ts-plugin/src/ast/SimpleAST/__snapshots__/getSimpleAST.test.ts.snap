@@ -471,24 +471,64 @@ exports[`SimpleASTService getSimpleAST for test project 001 should return Simple
                         {
                           "children": [
                             {
-                              "kind": "Identifier",
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "position": {
+                                    "end": 303,
+                                    "start": 300,
+                                  },
+                                },
+                                {
+                                  "kind": "JsxAttributes",
+                                  "position": {
+                                    "end": 303,
+                                    "start": 303,
+                                  },
+                                },
+                              ],
+                              "kind": "JsxOpeningElement",
                               "position": {
-                                "end": 308,
-                                "start": 300,
+                                "end": 304,
+                                "start": 299,
+                              },
+                            },
+                            {
+                              "kind": "JsxText",
+                              "position": {
+                                "end": 317,
+                                "start": 304,
+                              },
+                            },
+                            {
+                              "children": [
+                                {
+                                  "kind": "Identifier",
+                                  "position": {
+                                    "end": 322,
+                                    "start": 319,
+                                  },
+                                },
+                              ],
+                              "kind": "JsxClosingElement",
+                              "position": {
+                                "end": 323,
+                                "start": 317,
                               },
                             },
                           ],
-                          "kind": "JsxExpression",
+                          "kind": "JsxElement",
+                          "name": "div",
                           "position": {
-                            "end": 309,
+                            "end": 323,
                             "start": 299,
                           },
                         },
                         {
                           "kind": "JsxText",
                           "position": {
-                            "end": 314,
-                            "start": 314,
+                            "end": 330,
+                            "start": 330,
                           },
                         },
                         {
@@ -496,43 +536,66 @@ exports[`SimpleASTService getSimpleAST for test project 001 should return Simple
                             {
                               "kind": "Identifier",
                               "position": {
-                                "end": 322,
-                                "start": 316,
+                                "end": 339,
+                                "start": 331,
+                              },
+                            },
+                          ],
+                          "kind": "JsxExpression",
+                          "position": {
+                            "end": 340,
+                            "start": 330,
+                          },
+                        },
+                        {
+                          "kind": "JsxText",
+                          "position": {
+                            "end": 345,
+                            "start": 345,
+                          },
+                        },
+                        {
+                          "children": [
+                            {
+                              "kind": "Identifier",
+                              "position": {
+                                "end": 353,
+                                "start": 347,
                               },
                             },
                           ],
                           "kind": "JsxClosingElement",
                           "position": {
-                            "end": 323,
-                            "start": 314,
+                            "end": 354,
+                            "start": 345,
                           },
                         },
                       ],
                       "kind": "JsxElement",
                       "name": "button",
                       "position": {
-                        "end": 323,
+                        "end": 354,
                         "start": 157,
                       },
                     },
                   ],
                   "kind": "ParenthesizedExpression",
                   "position": {
-                    "end": 327,
+                    "end": 358,
                     "start": 151,
                   },
                 },
               ],
               "kind": "ReturnStatement",
               "position": {
-                "end": 328,
+                "end": 359,
                 "start": 144,
               },
             },
           ],
           "kind": "Block",
           "position": {
-            "end": 330,
+            "end": 361,
             "start": 140,
           },
         },
@@ -540,21 +603,21 @@ exports[`SimpleASTService getSimpleAST for test project 001 should return Simple
       "kind": "FunctionDeclaration",
       "name": "Button",
       "position": {
-        "end": 330,
+        "end": 361,
         "start": 81,
       },
     },
     {
       "kind": "EndOfFileToken",
       "position": {
-        "end": 330,
-        "start": 330,
+        "end": 361,
+        "start": 361,
       },
     },
   ],
   "kind": "SourceFile",
   "position": {
-    "end": 330,
+    "end": 361,
     "start": 0,
   },
 }

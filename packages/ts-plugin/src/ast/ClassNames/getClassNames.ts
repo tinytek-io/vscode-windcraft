@@ -1,7 +1,6 @@
 import type * as ts from "typescript/lib/tsserverlibrary";
 import { z } from "zod";
 import { JsxAST } from "../ComponentAST/JsxAST";
-import { log } from "../../lib/log";
 
 export const classNameSchema = z.object({
   position: JsxAST.positionSchema,

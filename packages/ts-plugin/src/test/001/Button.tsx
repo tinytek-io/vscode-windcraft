@@ -8,6 +8,7 @@ export function Button({ onClick, children }: ButtonProps) {
     <button className="flex" onClick={onClick}>
       <div className="flex flex-col">test</div>
       <img src="test" className="w-full" />
+      <div>empty element</div>
       {children}
     </button>
   );
