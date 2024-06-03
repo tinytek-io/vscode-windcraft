@@ -20,6 +20,11 @@ export type UpdateMessage = {
 
 type OnReadyCallback = () => void;
 
+export type UpdateClassNameCallback = (
+  className: string | undefined,
+  range: vscode.Range
+) => void;
+
 export class BridgeProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = "windcraft.tailwindView";
 
@@ -27,6 +32,8 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
   private _selectionPosition: vscode.Position | null = null;
   private _currentSelection: string | undefined;
   private _onReadyCallback?: OnReadyCallback = undefined;
+
+  private _updateClassNameCallback: UpdateClassNameCallback | undefined;
 
   constructor(private readonly _extensionUri: vscode.Uri) {}
 
@@ -62,24 +69,55 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     this._onReadyCallback = onReadyCallback;
   }
 
-  public async updateSelectionClassName(className: string) {
-    const selectionPosition = this._selectionPosition;
-    const currentSelection = this._currentSelection;
+  onUpdateClassName(callback: UpdateClassNameCallback | undefined) {
+    this._updateClassNameCallback = callback;
+  }
 
-    if (selectionPosition == null || currentSelection == null) {
+  private async updateSelectionClassName(className: string) {
+    if (this._selectionPosition == null) {
       throw new Error("Selection not initialized");
     }
 
-    const oldRange = new vscode.Range(
-      selectionPosition,
+    const currentSelection = this._currentSelection;
+
+    const currentRange = new vscode.Range(
+      this._selectionPosition,
       new vscode.Position(
-        selectionPosition.line,
-        selectionPosition.character + currentSelection.length
+        this._selectionPosition.line,
+        this._selectionPosition.character + (currentSelection?.length ?? 0)
       )
     );
 
     const result = await vscode.window.activeTextEditor?.edit((editBuilder) => {
-      editBuilder.replace(oldRange, className);
+      const literalStringRange = new vscode.Range(
+        new vscode.Position(
+          currentRange.start.line,
+          currentRange.start.character - 1
+        ),
+        new vscode.Position(currentRange.end.line, currentRange.end.character + 1)
+      );
+
+      const literalString =
+        vscode.window.activeTextEditor?.document.getText(literalStringRange);
+
+      const message = `Replacing ${literalString} with "${className}" - "${currentSelection}" -> "${className}"`;
+      if (/["'`]$/.test(literalString ?? "")) {
+        // Verify that the current selection is a literal string e.g. ["flex flex-row"]
+        if (currentSelection === className) {
+          // Warn about no change
+          console.warn(message);
+        }
+        editBuilder.replace(currentRange, className);
+        try {
+          this._updateClassNameCallback?.(className, currentRange);
+        } catch (error) {
+          throw new Error(`Error updateClassNameCallback: ${error}`);
+        }
+      } else {
+        // Log error for invalid selection e.g. ["flex flex-row]
+        // TODO: Fixing this issue requires a more complex solution
+        console.error(message);
+      }
     });
 
     if (!result) {

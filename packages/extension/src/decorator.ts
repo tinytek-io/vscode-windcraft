@@ -34,12 +34,54 @@ export class Decorator {
     this.clearDecorations();
   }
 
+  /**
+   * Update the class name decoration only
+   */
+  updateClassName(newClassName: string | undefined, newRange: Range | undefined) {
+    if (!this.activeEditor) {
+      return;
+    }
+    if (!enabledLanguages.includes(this.activeEditor.document.languageId)) {
+      return;
+    }
+
+    // Check if the current class name is empty / className is not set
+    const emptyClassName = (newClassName === "" && newRange?.start.compareTo(newRange.end) === 0);
+
+    // Activate the decorations
+    this.activeEditor.setDecorations(
+      this.currentDecorationType,
+      newRange && !emptyClassName
+        ? [
+            {
+              range: newRange,
+              hoverMessage: "Current WindCraft selection",
+            },
+          ]
+        : []
+    );
+    this.activeEditor.setDecorations(
+      this.currentEmptyDecorationType,
+      newRange && emptyClassName
+        ? [
+            {
+              range: newRange,
+              hoverMessage: "Current WindCraft selection",
+            },
+          ]
+        : []
+    );
+  }
+
   clearDecorations() {
     this.activeEditor?.setDecorations(this.currentDecorationType, []);
     this.activeEditor?.setDecorations(this.currentEmptyDecorationType, []);
     this.activeEditor?.setDecorations(this.scopeDecorationType, []);
   }
 
+  /**
+   * Update the scope decorations and the current class name decoration
+   */
   updateDecorations(
     current: ClassNamePosition | undefined,
     scope: ClassNamePosition[]
@@ -51,32 +93,8 @@ export class Decorator {
       return;
     }
 
-    // Check if the current class name is empty / className is not set
-    const emptyClassName = (current?.className === "" && current.position.start === current.position.end);
+    this.updateClassName(current?.className, current?.range);
 
-    // Activate the decorations
-    this.activeEditor.setDecorations(
-      this.currentDecorationType,
-      current && !emptyClassName
-        ? [
-            {
-              range: current.range,
-              hoverMessage: "Current WindCraft selection",
-            },
-          ]
-        : []
-    );
-    this.activeEditor.setDecorations(
-      this.currentEmptyDecorationType,
-      current && emptyClassName
-        ? [
-            {
-              range: current.range,
-              hoverMessage: "Current WindCraft selection",
-            },
-          ]
-        : []
-    );
     this.activeEditor.setDecorations(
       this.scopeDecorationType,
       scope.map((c) => ({ range: c.range }))
