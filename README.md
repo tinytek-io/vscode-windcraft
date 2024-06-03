@@ -29,19 +29,14 @@ This extension contributes the following settings:
 
 Preview release of WindCraft - a visual Tailwind CSS editor.
 
-### 0.0.3
+### 0.0.4
 
-TypeScript Language Server Plugin version 🚀
+* Enable WindCraft to add the `ClassName` property to JSX elements in TypeScript files.
+* Added additional decorator for showing the empty className attribute in JSX elements.
+* Fixed issue when scroll updating values in the editor, updates are now more accurate.
+* Fixed issue where some classNames in scope should not be inherited by the child elements e.g. "flex" class should not be inherited by the child elements.
 
-This release adds TypeScript Language Server Plugin support to WindCraft. This brings the initial improvement of adding cascading classes details in the editor. On the longer term this will unlock more features.
-
-![WindCraft TypeScript Language Server Plugin](docs/images/feature/0.0.2/windcraft-ts-plugin.gif)
-
-Placeholder for unlicensed users to get a license key have been added. This is a temporary measure to allow users to continue using WindCraft while we work on the licensing system - we are evaluating ways for users to support the development of this tool.
-
-Added a WindCraft button for tsx files to open the WindCraft editor. Hopefully this will make it easier for users to open the editor.
-
-![WindCraft Button](docs/images/feature/0.0.2/windcraft-open.gif)
+![Add ClassName](docs/images/feature/windcraft-add-classname.gif)
 
 ### Next Release
 

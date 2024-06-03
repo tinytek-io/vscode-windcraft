@@ -4,6 +4,20 @@ All notable changes to the "windcraft" extension will be documented in this file
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+### 0.0.3
+
+TypeScript Language Server Plugin version 🚀
+
+This release adds TypeScript Language Server Plugin support to WindCraft. This brings the initial improvement of adding cascading classes details in the editor. On the longer term this will unlock more features.
+
+![WindCraft TypeScript Language Server Plugin](docs/images/feature/0.0.2/windcraft-ts-plugin.gif)
+
+Placeholder for unlicensed users to get a license key have been added. This is a temporary measure to allow users to continue using WindCraft while we work on the licensing system - we are evaluating ways for users to support the development of this tool.
+
+Added a WindCraft button for tsx files to open the WindCraft editor. Hopefully this will make it easier for users to open the editor.
+
+![WindCraft Button](docs/images/feature/0.0.2/windcraft-open.gif)
+
 ### 0.0.1
 
 Initial release of the extension! 🚀
