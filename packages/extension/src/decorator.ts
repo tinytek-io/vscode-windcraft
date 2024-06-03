@@ -46,7 +46,7 @@ export class Decorator {
     }
 
     // Check if the current class name is empty / className is not set
-    const emptyClassName = (newClassName === "" && newRange?.start.compareTo(newRange.end) === 0);
+    const emptyClassName = (newClassName == null && newRange?.start.compareTo(newRange.end) === 0);
 
     // Activate the decorations
     this.activeEditor.setDecorations(

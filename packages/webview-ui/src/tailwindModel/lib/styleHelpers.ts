@@ -58,8 +58,8 @@ export interface StyleStateResult {
   tailwindStyles: TailwindStyle[];
 }
 
-export function createStyleState(className: string): StyleStateResult {
-  const styles = className.split(" ");
+export function createStyleState(className: string | undefined): StyleStateResult {
+  const styles = className?.split(" ") ?? [];
   return {
     customStyles: styles.filter((style) => !isTailwindStyle(style)),
     tailwindStyles: DecompressTailwindStyles(

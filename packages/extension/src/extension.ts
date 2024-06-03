@@ -108,7 +108,7 @@ export async function activate(context: vscode.ExtensionContext) {
     }
     await provider.initializeSelection(
       classNamesFile.current,
-      classNamesFile.scope.map((c) => c.className)
+      classNamesFile.scope.map((c) => c.className ?? "")
     );
 
     decorator.updateDecorations(classNamesFile.current, classNamesFile.scope);

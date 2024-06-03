@@ -4,7 +4,7 @@ import { JsxAST } from "../ComponentAST/JsxAST";
 
 export const classNameSchema = z.object({
   position: JsxAST.positionSchema,
-  className: z.string(),
+  className: z.string().optional(),
 });
 
 export type ClassName = z.infer<typeof classNameSchema>;
@@ -97,7 +97,7 @@ export function getClassNames(
       const endPosition = jsxElement.getEnd() - 1;
       // If class name attribute is not found, add an empty class name.
       classNamesResult.classNames.push({
-        className: "",
+        className: undefined,
         position: {
           start: endPosition,
           end: endPosition,
