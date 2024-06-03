@@ -32,7 +32,7 @@ export const classNames: Record<string, ClassName> = {
     },
   },
   emptyDiv: {
-    className: "",
+    className: undefined,
     position: {
       start: 303,
       end: 303,
