@@ -73,7 +73,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     this._updateClassNameCallback = callback;
   }
 
-  private async updateSelectionClassName(className: string) {
+  private async updateSelectionClassName(className: string, quote: string = '"') {
     if (this._selectionPosition == null) {
       throw new Error("Selection not initialized");
     }
@@ -94,14 +94,30 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
           currentRange.start.line,
           currentRange.start.character - 1
         ),
-        new vscode.Position(currentRange.end.line, currentRange.end.character + 1)
+        new vscode.Position(
+          currentRange.end.line,
+          currentRange.end.character + 1
+        )
       );
 
       const literalString =
         vscode.window.activeTextEditor?.document.getText(literalStringRange);
 
       const message = `Replacing ${literalString} with "${className}" - "${currentSelection}" -> "${className}"`;
-      if (/["'`]$/.test(literalString ?? "")) {
+      if (
+        currentSelection == null &&
+        currentRange.start.isEqual(currentRange.end)
+      ) {
+        const insertPosition = new vscode.Position(
+          currentRange.start.line,
+          currentRange.start.character + 1
+        );
+
+        // If there is no selection, insert the class name
+        editBuilder.insert(insertPosition, ` className=${quote}${className}${quote}`);
+        // Note: We don't need to call the updateClassNameCallback here
+        // depend on the TypeScript server to update the class name.
+      } else if (/["'`]$/.test(literalString ?? "")) {
         // Verify that the current selection is a literal string e.g. ["flex flex-row"]
         if (currentSelection === className) {
           // Warn about no change
@@ -109,6 +125,9 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
         }
         editBuilder.replace(currentRange, className);
         try {
+          // Call the updateClassNameCallback to update the class name decoration
+          // This resembles optimistic updates as waiting for the TypeScript server
+          // response can take a while
           this._updateClassNameCallback?.(className, currentRange);
         } catch (error) {
           throw new Error(`Error updateClassNameCallback: ${error}`);
