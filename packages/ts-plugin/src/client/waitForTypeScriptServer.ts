@@ -5,7 +5,7 @@ export class TypeScriptStartError extends Error {
 }
 
 export async function waitForTypeScriptServer(port: number) {
-  const maxAttempts = 10;
+  const maxAttempts = 30;
   const delay = 300;
   let attempt = 0;
   let success = false;
