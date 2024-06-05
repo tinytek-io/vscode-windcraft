@@ -4,6 +4,15 @@ All notable changes to the "windcraft" extension will be documented in this file
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+### 0.0.4
+
+* Enable WindCraft to add the `ClassName` property to JSX elements in TypeScript files.
+* Added additional decorator for showing the empty className attribute in JSX elements.
+* Fixed issue when scroll updating values in the editor, updates are now more accurate.
+* Fixed issue where some classNames in scope should not be inherited by the child elements e.g. "flex" class should not be inherited by the child elements.
+
+![Add ClassName](docs/images/feature/windcraft-add-classname.gif)
+
 ### 0.0.3
 
 TypeScript Language Server Plugin version 🚀
