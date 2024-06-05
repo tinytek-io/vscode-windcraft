@@ -78,7 +78,7 @@
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onWebviewPanel:windcraft.componentView"
+    "onLanguage:typescript"
   ],
   "extensionDependencies": [
     "vscode.typescript-language-features"
@@ -212,7 +212,10 @@
       {
         "name": "windcraft-ts-plugin",
         "enableForWorkspaceTypeScriptVersions": true,
-        "languages": ["typescript", "typescriptreact"]
+        "languages": [
+          "typescript",
+          "typescriptreact"
+        ]
       }
     ],
     "walkthroughs": [
