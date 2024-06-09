@@ -25,3 +25,6 @@ out/
 .env.local
 TODO.md
 log.txt
+
+# Turbo repo
+.turbo
