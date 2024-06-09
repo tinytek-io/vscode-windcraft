@@ -3,15 +3,17 @@
   "private": true,
   "version": "0.0.5",
   "scripts": {
-    "dev": "npm run dev --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present",
-    "preview": "npm run preview --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present",
-    "check:link": "npm run check:link --workspaces --if-present",
-    "check:format": "npm run check:format --workspaces --if-present",
+    "dev": "turbo dev dev:client dev:server",
+    "build": "turbo build",
+    "preview": "turbo preview",
+    "test": "turbo test",
+    "check:lint": "turbo check:lint",
+    "check:format": "turbo check:format",
+    "check:types": "turbo check:types",
     "tail:log": "tail -f ./packages/ts-plugin/log.txt",
-    "package": "npm install && npm run build && vsce package --pre-release"
+    "package": "npm install && turbo build && vsce package --pre-release"
   },
+  "packageManager": "npm@10.2.4",
   "workspaces": [
     "packages/ts-plugin",
     "packages/webview-ui",
@@ -30,8 +32,9 @@
     "eslint": "^9.3.0",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.5",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "turbo": "^2.0.3",
+    "typescript": "^5.4.5"
   },
   "displayName": "WindCraft",
   "preview": true,

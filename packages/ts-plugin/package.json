@@ -9,10 +9,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "npm run dev:client & npm run dev:server && npm run dryrun",
     "dev:client": "tsc -p . -w",
     "dev:server": "rspack --watch",
-    "build": "npm run build:client && npm run build:server",
     "build:client": "rm -rf ./dist && tsc -p .",
     "build:server": "rspack --mode production",
     "check:types": "tsc -p . --noEmit",
