@@ -3,7 +3,7 @@ import { Decorator } from "./decorator";
 import { Settings } from "./configuration";
 import { BridgeProvider } from "./BridgeProvider";
 import { WindCraftVisualComponentEditorProvider } from "./component-server/WindCraftVisualComponentEditorProvider";
-import { createTypeScriptServer } from "windcraft-ts-plugin/client/createTypeScriptServer";
+import { createTypeScriptServer } from "@windcraft/ts-plugin/client/createTypeScriptServer";
 
 const componentServerHttp = `http://localhost:5173`;
 const componentServerWs = `ws://localhost:5173`;

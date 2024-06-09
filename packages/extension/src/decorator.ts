@@ -1,6 +1,6 @@
 import { Range, TextEditor, Position, DecorationOptions } from "vscode";
 import { ScopeDecorationType, CurrentDecorationType, CurrentEmptyDecorationType } from "./decorations";
-import { ClassNamePosition } from "windcraft-ts-plugin/client/classNameFile";
+import { ClassNamePosition } from "@windcraft/ts-plugin/client/classNameFile";
 
 const enabledLanguages = [
   "javascript",
