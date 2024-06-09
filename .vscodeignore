@@ -13,4 +13,4 @@
 !docs/images/logo/
 
 # Keep the windcraft-ts-plugin folder
-!node_modules/windcraft-ts-plugin/
+!node_modules/@windcraft/ts-plugin/

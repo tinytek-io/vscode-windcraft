@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { getNonce } from "./utilities/getNonce";
 import { getUri } from "./utilities/getUri";
 import { ExtensionBridge } from "./bridge";
-import { ClassNamePosition } from "windcraft-ts-plugin/client/classNameFile";
+import { ClassNamePosition } from "@windcraft/ts-plugin/client/classNameFile";
 
 export interface Position {
   line: number;

@@ -1,5 +1,6 @@
 {
-  "name": "windcraft-ts-plugin",
+  "name": "@windcraft/ts-plugin",
+  "private": true,
   "version": "0.0.1",
   "main": "./plugin.export.js",
   "exports": {

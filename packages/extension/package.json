@@ -1,5 +1,5 @@
 {
-  "name": "windcraft-extension",
+  "name": "@windcraft/vscode-extension",
   "private": true,
   "version": "0.0.1",
   "scripts": {
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "get-port": "^7.1.0",
-    "windcraft-ts-plugin": "*"
+    "@windcraft/ts-plugin": "*"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",

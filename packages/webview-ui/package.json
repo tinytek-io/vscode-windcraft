@@ -1,5 +1,5 @@
 {
-  "name": "webview-ui",
+  "name": "@windcraft/webview-ui",
   "private": true,
   "version": "1.0.0",
   "scripts": {
