@@ -1,6 +1,7 @@
-import { TimeSpan } from "@/lib/TimeSpan";
-import { generateUUID } from "@/lib/generateUUID";
+import { TimeSpan } from "../lib/TimeSpan";
+import { generateUUID } from "../lib/generateUUID";
 import { MessageHandler } from "./MessageHandler";
+import { logger } from "../logger/logger";
 
 export type RpcRequestMessage<A extends any[] = any[]> = {
   type: "RPC_REQUEST";
@@ -9,7 +10,7 @@ export type RpcRequestMessage<A extends any[] = any[]> = {
   args: A;
 };
 
-export type RpcResponseMessage<R extends any = any> = {
+export type RpcResponseMessage<R = any> = {
   type: "RPC_RESPONSE";
   invocationId: string;
   result: R;
@@ -21,10 +22,16 @@ export type RpcErrorResponseMessage = {
   error: string;
 };
 
+export type RpcEventMessage = {
+  type: "RPC_EVENT";
+  eventName: string;
+};
+
 export type RpcMessage =
   | RpcRequestMessage
   | RpcResponseMessage
-  | RpcErrorResponseMessage;
+  | RpcErrorResponseMessage
+  | RpcEventMessage;
 
 export type RpcProvider = Record<string, (...args: any[]) => any>;
 export type RpcProviderFunction = (...args: any[]) => RpcProvider;
@@ -39,7 +46,10 @@ export type PromiseRpcProvider<R extends RpcProvider> = {
 
 type GetRpcProvider<T> = T extends RpcProviderFunction ? ReturnType<T> : T;
 
-export class RpcInstance<R extends RpcProvider | RpcProviderFunction> {
+type EventListener = () => void;
+
+export class RpcInstance<R extends RpcProvider | RpcProviderFunction, E extends string> {
+  private _eventListeners: Record<string, EventListener[]> = {};
   public static TIMEOUT: TimeSpan = TimeSpan.fromSeconds(5);
   private pendingInvocations: Record<string, (result: any) => void> = {};
   private proxy: PromiseRpcProvider<GetRpcProvider<R>> = new Proxy(
@@ -80,7 +90,7 @@ export class RpcInstance<R extends RpcProvider | RpcProviderFunction> {
 
   constructor(
     private messageHandler: MessageHandler<RpcMessage, RpcMessage>,
-    provider: Record<string, (...args: any[]) => any>
+    provider: RpcProvider
   ) {
     // Wait for event to invoke the proxy or provider method
     messageHandler.onMessage(async (message) => {
@@ -118,8 +128,20 @@ export class RpcInstance<R extends RpcProvider | RpcProviderFunction> {
               error:
                 error instanceof Error
                   ? error.message
-                  : `${error ?? "unknown error"}`,
+                  : `${error || "unknown error"}`,
             });
+          }
+          break;
+        }
+        case "RPC_EVENT": {
+          const { eventName } = message;
+          const listeners = this._eventListeners[eventName] ?? [];
+          for (const listener of listeners) {
+            try {
+              listener();
+            } catch (error) {
+              logger.error(`Error in event listener for "${eventName}"`, error);
+            }
           }
           break;
         }
@@ -131,7 +153,27 @@ export class RpcInstance<R extends RpcProvider | RpcProviderFunction> {
     return this.proxy;
   }
 
+  emit(eventName: E) {
+    this.messageHandler.send({ type: "RPC_EVENT", eventName });
+  }
+
+  on(eventName: E, listener: EventListener) {
+    if (!this._eventListeners[eventName]) {
+      this._eventListeners[eventName] = [];
+    }
+    this._eventListeners[eventName].push(listener);
+
+    return () => {
+      this._eventListeners[eventName] = this._eventListeners[eventName].filter(
+        (l) => l !== listener
+      );
+    };
+  }
+
   dispose(): void {
-    this.messageHandler.dispose();
+    // this.messageHandler.dispose();
+    Object.keys(this._eventListeners).forEach((eventName) => {
+      delete this._eventListeners[eventName];
+    });
   }
 }

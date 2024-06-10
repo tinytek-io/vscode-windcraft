@@ -2,7 +2,7 @@ import { describe, it, expect, afterAll } from "bun:test";
 import { EventEmitter } from "events";
 import { RpcInstance, RpcRequestMessage } from "./RpcInstance";
 import { MessageHandler, Disposable } from "./MessageHandler";
-import { TimeSpan } from "@/lib/TimeSpan";
+import { TimeSpan } from "../lib/TimeSpan";
 
 const eventBus = new EventEmitter();
 
@@ -10,6 +10,8 @@ type EventBusMessage<P> = {
   senderId: string;
   payload: P;
 };
+
+type TestEvent = "testEvent";
 
 export class TestMessageHandler<I, O> implements MessageHandler<I, O> {
   private _disposables: Disposable[] = [];
@@ -120,9 +122,14 @@ describe("RpcInstance", () => {
     },
   };
 
-
-  const rpcMapFoo = new RpcInstance<typeof barMap>(messageHandlerFoo, fooMap());
-  const rpcMapBar = new RpcInstance<typeof fooMap>(messageHandlerBar, barMap);
+  const rpcMapFoo = new RpcInstance<typeof barMap, TestEvent>(
+    messageHandlerFoo,
+    fooMap()
+  );
+  const rpcMapBar = new RpcInstance<typeof fooMap, TestEvent>(
+    messageHandlerBar,
+    barMap
+  );
 
   afterAll(() => {
     rpcMapFoo.dispose();
@@ -181,5 +188,16 @@ describe("RpcInstance", () => {
       await rpcMapFoo.client.barTimeout();
       RpcInstance.TIMEOUT = TIMEOUT;
     }).toThrowError('Remote method call "barTimeout" timed out');
+  });
+
+  it("should handle event listener", async () => {
+    let result = false;
+    rpcMapBar.on("testEvent", () => {
+      result = true;
+    });
+
+    expect(result).toBe(false);
+    rpcMapFoo.emit("testEvent");
+    expect(result).toBe(true);
   });
 });
