@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["ES2023"],
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
@@ -11,9 +11,9 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "outDir": "dist/client",
+    "outDir": "dist",
     "declaration": true,
-    "declarationDir": "dist/client",
+    "declarationDir": "dist",
     "paths": {
       "@/*": [ "./src/*" ]
     }
