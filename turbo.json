@@ -1,20 +1,12 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "remoteCache": {
-      "enabled": false
+    "enabled": false
   },
   "tasks": {
     "build": {
-      "dependsOn": ["^build", "^build:client", "^build:server"],
+      "dependsOn": ["^build"],
       "outputs": ["dist/**"]
-    },
-    "build:client": {
-      "dependsOn": ["^build:client"],
-      "outputs": ["dist/client/**"]
-    },
-    "build:server": {
-      "dependsOn": ["^build:server"],
-      "outputs": ["dist/server/**"]
     },
     "check:types": {
       "dependsOn": ["^check:types"]
@@ -23,13 +15,8 @@
       "persistent": true,
       "cache": false
     },
-    "dev:client": {
-      "persistent": true,
-      "cache": false
-    },
-    "dev:server": {
-      "persistent": true,
-      "cache": false
+    "clean": {
+      "dependsOn": ["^clean"]
     }
   }
 }

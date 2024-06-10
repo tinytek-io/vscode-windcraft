@@ -16,8 +16,7 @@
   },
   "dependencies": {
     "@windcraft/ts-plugin": "*",
-    "@windcraft/utilities": "*",
-    "get-port": "^7.1.0"
+    "@windcraft/utilities": "*"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",

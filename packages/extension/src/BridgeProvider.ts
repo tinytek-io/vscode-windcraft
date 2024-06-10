@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { getNonce } from "./utilities/getNonce";
 import { getUri } from "./utilities/getUri";
 import { ExtensionBridge } from "./bridge";
-import { ClassNamePosition } from "@windcraft/ts-plugin/client/classNameFile";
+import { ClassNamePosition } from "@windcraft/ts-plugin/extension/getClassNamesPosition";
 
 export interface Position {
   line: number;
@@ -73,7 +73,10 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     this._updateClassNameCallback = callback;
   }
 
-  private async updateSelectionClassName(className: string, quote: string = '"') {
+  private async updateSelectionClassName(
+    className: string,
+    quote: string = '"'
+  ) {
     if (this._selectionPosition == null) {
       throw new Error("Selection not initialized");
     }
@@ -114,7 +117,10 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
         );
 
         // If there is no selection, insert the class name
-        editBuilder.insert(insertPosition, ` className=${quote}${className}${quote}`);
+        editBuilder.insert(
+          insertPosition,
+          ` className=${quote}${className}${quote}`
+        );
         // Note: We don't need to call the updateClassNameCallback here
         // depend on the TypeScript server to update the class name.
       } else if (/["'`]$/.test(literalString ?? "")) {

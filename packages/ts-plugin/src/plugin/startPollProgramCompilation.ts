@@ -1,24 +1,5 @@
 import { logger } from "@windcraft/utilities/logger/logger";
-import { EventEmitter } from "events";
 import ts from "typescript/lib/tsserverlibrary";
-
-type TsPluginEventMap = {
-  programCompiled: [];
-};
-const eventEmitter = new EventEmitter<TsPluginEventMap>();
-
-type Callback = () => void;
-const pendingRequests: Callback[] = [];
-
-/**
- * Resolves all pending requests when the `programCompiled` event is emitted.
- */
-eventEmitter.on("programCompiled", () => {
-  while (pendingRequests.length) {
-    const resolve = pendingRequests.pop();
-    resolve?.();
-  }
-});
 
 export type DisposeFunction = () => void;
 
@@ -30,6 +11,7 @@ export type DisposeFunction = () => void;
  * @returns {DisposeFunction} A function to clean up and stop polling the program compilation state.
  */
 export function startPollProgramCompilation(
+  callback: () => void,
   languageService: ts.LanguageService,
   interval = 10
 ): DisposeFunction {
@@ -39,7 +21,7 @@ export function startPollProgramCompilation(
     const currentProgram = languageService.getProgram();
     if (currentProgram !== previousProgram) {
       previousProgram = currentProgram;
-      eventEmitter.emit("programCompiled");
+      callback();
     }
   }, interval);
 
@@ -47,20 +29,4 @@ export function startPollProgramCompilation(
     logger.log("Stop polling program compilation state");
     clearInterval(intervalId);
   };
-}
-
-/**
- * Waits for the `programCompiled` event to be emitted.
- */
-export async function waitForProgramCompilation(ac: AbortController) {
-  return new Promise<void>((resolve, reject) => {
-    ac.signal.addEventListener("abort", () => {
-      const index = pendingRequests.indexOf(resolve);
-      if (index !== -1) {
-        pendingRequests.splice(index, 1);
-        reject("Aborted");
-      }
-    }, { once: true });
-    pendingRequests.unshift(resolve);
-  });
 }

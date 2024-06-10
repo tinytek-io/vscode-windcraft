@@ -3,51 +3,33 @@ import { Decorator } from "./decorator";
 import { Settings } from "./configuration";
 import { BridgeProvider } from "./BridgeProvider";
 import { WindCraftVisualComponentEditorProvider } from "./component-server/WindCraftVisualComponentEditorProvider";
-import { createTypeScriptServer } from "@windcraft/ts-plugin/client/createTypeScriptServer";
+import { activateRpcExtensionServer } from "@windcraft/ts-plugin/extension/activateRpcExtensionServer";
+import { getClassNamesPosition } from "@windcraft/ts-plugin/extension/getClassNamesPosition";
 
 const componentServerHttp = `http://localhost:5173`;
 const componentServerWs = `ws://localhost:5173`;
 
-type UpdateSelectionType = "INIT" | "READY" | "COMPILED" | "SELECTION_CHANGE";
-
-async function getTypeScriptServerApi() {
-  try {
-    const api = await createTypeScriptServer();
-    await api?.ensureReady();
-    return api;
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "An unknown error occurred";
-    vscode.window.showErrorMessage(
-      `WindCraft extension failed to activate: ${message}`
-    );
-  }
-}
+export type UpdateSelectionType =
+  | "INIT"
+  | "READY"
+  | "COMPILED"
+  | "SELECTION_CHANGE";
 
 export async function activate(context: vscode.ExtensionContext) {
   console.info("WindCraft extension is now active!!");
 
-  const typeScriptServerApi = await getTypeScriptServerApi();
-
-  if (typeScriptServerApi == null) {
-    console.error(
-      "TypeScript Server API is not available, cannot activate WindCraft extension."
-    );
-    return;
-  }
-
-  console.info(`TypeScript Server Port: ${typeScriptServerApi?.port ?? "N/A"}`);
-
   let nextDocumentId = 1;
   // Register the decorator
   const decorator = new Decorator();
-  const provider = new BridgeProvider(context.extensionUri);
+  const bridgeProvider = new BridgeProvider(context.extensionUri);
   const componentServerProvider =
     WindCraftVisualComponentEditorProvider.register(
       context,
       componentServerHttp,
       componentServerWs
     );
+
+  const rpcExtensionServer = await activateRpcExtensionServer(context);
 
   const skipUpdateEvent: Record<UpdateSelectionType, boolean> = {
     INIT: false,
@@ -56,7 +38,7 @@ export async function activate(context: vscode.ExtensionContext) {
     SELECTION_CHANGE: false,
   };
 
-  provider.onUpdateClassName((newClassName, newRange) => {
+  bridgeProvider.onUpdateClassName((newClassName, newRange) => {
     // Skip COMPILED & SELECTION_CHANGE events if class name was just updated
     skipUpdateEvent.SELECTION_CHANGE = true;
     skipUpdateEvent.COMPILED = true;
@@ -88,39 +70,35 @@ export async function activate(context: vscode.ExtensionContext) {
     }
 
     // Get the current class name and scope from the TypeScript server
-    const classNamesFile = await typeScriptServerApi.getClassNames(
+    const classNamesFile = await rpcExtensionServer.client.getClassNames(
       document.fileName,
-      document.offsetAt(selection.active),
-      document
+      document.offsetAt(selection.active)
     );
-    console.info("TypeScript Server Response:", classNamesFile);
 
-    if (!classNamesFile) {
-      return;
-    }
+    const classNamesPosition = getClassNamesPosition(classNamesFile, document)
 
-    console.info("Current Class Name:", classNamesFile.current);
+    console.info("Current Class Name:", classNamesPosition.current);
 
-    if (!classNamesFile.current) {
-      await provider.clearSelection();
+    if (!classNamesPosition.current) {
+      await bridgeProvider.clearSelection();
       decorator.clearDecorations();
       return;
     }
-    await provider.initializeSelection(
-      classNamesFile.current,
-      classNamesFile.scope.map((c) => c.className ?? "")
+    await bridgeProvider.initializeSelection(
+      classNamesPosition.current,
+      classNamesPosition.scope.map((c) => c.className ?? "")
     );
 
-    decorator.updateDecorations(classNamesFile.current, classNamesFile.scope);
+    decorator.updateDecorations(classNamesPosition.current, classNamesPosition.scope);
 
     return classNamesFile;
   };
 
-  typeScriptServerApi.addEventListener("programCompile", async () => {
+  rpcExtensionServer.on("programCompile", async () => {
     await updateSelection("COMPILED");
   });
 
-  provider.onReady(async () => {
+  bridgeProvider.onReady(async () => {
     console.log("BridgeProvider is ready");
     await updateSelection("READY");
   });
@@ -130,14 +108,14 @@ export async function activate(context: vscode.ExtensionContext) {
   await updateSelection("INIT");
 
   context.subscriptions.push(
-    vscode.window.onDidChangeActiveTextEditor(() => {
-      decorator.setActiveEditor(vscode.window.activeTextEditor);
+    vscode.window.onDidChangeTextEditorSelection(async () => {
+      updateSelection("SELECTION_CHANGE");
     })
   );
 
   context.subscriptions.push(
-    vscode.window.onDidChangeTextEditorSelection(async () => {
-      updateSelection("SELECTION_CHANGE");
+    vscode.window.onDidChangeActiveTextEditor(() => {
+      decorator.setActiveEditor(vscode.window.activeTextEditor);
     })
   );
 
@@ -151,7 +129,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("windcraft.clearTailwindStyles", () => {
-      provider.clearTailwindStyles();
+      bridgeProvider.clearTailwindStyles();
     })
   );
 
@@ -198,12 +176,12 @@ export async function activate(context: vscode.ExtensionContext) {
   // Register the view provider
 
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider(BridgeProvider.viewType, provider)
+    vscode.window.registerWebviewViewProvider(BridgeProvider.viewType, bridgeProvider)
   );
 
   context.subscriptions.push(componentServerProvider);
 }
 
 export function deactivate(context: vscode.ExtensionContext) {
-  // context.subscriptions.forEach((subscription) => subscription.dispose());
+  context.subscriptions.forEach((subscription) => subscription.dispose());
 }

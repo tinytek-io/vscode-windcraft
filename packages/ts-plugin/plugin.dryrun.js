@@ -16,3 +16,5 @@ if (typeof f.create !== "function") {
 if (typeof f.onConfigurationChanged !== "function") {
   throw new Error("Expected plugin factory to return an object with a  onConfigurationChanged method");
 }
+
+console.log("Plugin exports the expected methods");

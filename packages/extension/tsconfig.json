@@ -14,5 +14,5 @@
   },
 	"include": [
 		"src/**/*.ts"
-	]
+, "../ts-plugin/src/extension/createExtensionRpcProvider.ts"	]
 }

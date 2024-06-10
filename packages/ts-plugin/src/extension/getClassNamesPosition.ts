@@ -11,14 +11,17 @@ export type ClassNamesPositionResult = Omit<ClassNamesResult, "classNames"> & {
   scope: ClassNamePosition[];
 };
 
-export function classNamesPosition(
-  classNamesFile: ClassNamesResult,
+export function getClassNamesPosition(
+  classNamesFile: ClassNamesResult | undefined,
   document: TextDocument
 ): ClassNamesPositionResult {
-  const current = classNamesFile.classNames.slice(-1)[0];
-  const scope = classNamesFile.classNames.slice(0, -1);
+  const current = classNamesFile?.classNames.slice(-1)[0];
+  const scope = classNamesFile?.classNames.slice(0, -1) ?? [];
+
   return {
-    ...classNamesFile,
+    ...(classNamesFile ?? {
+      fileName: document.fileName,
+    }),
     current: current
       ? {
           ...current,

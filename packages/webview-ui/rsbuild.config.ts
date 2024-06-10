@@ -15,8 +15,10 @@ export default defineConfig({
     }),
     pluginReact(),
   ],
-  entry: {
-    main: "./src/index.tsx",
+  source: {
+    entry: {
+      main: "./src/index.tsx",
+    },
   },
   output: {
     distPath: {

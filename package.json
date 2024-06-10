@@ -3,9 +3,10 @@
   "private": true,
   "version": "0.0.5",
   "scripts": {
-    "dev": "turbo dev dev:client dev:server",
+    "dev": "turbo dev",
     "build": "turbo build",
     "preview": "turbo preview",
+    "clean": "turbo clean",
     "test": "turbo test",
     "check:lint": "turbo check:lint",
     "check:format": "turbo check:format",
@@ -83,25 +84,29 @@
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onLanguage:typescript"
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact"
   ],
   "extensionDependencies": [
     "vscode.typescript-language-features"
   ],
   "contributes": {
+    "typescriptServerPlugins": [
+      {
+        "name": "@windcraft/ts-plugin"
+      }
+    ],
     "menus": {
       "editor/title": [
         {
           "command": "windcraft.showPreview",
           "when": "editorLangId == typescriptreact",
-          "alt": "windcraft.showPreviewToSide",
           "group": "navigation",
           "icon": "./images/logo/windcraft-icon.svg"
         },
         {
           "command": "windcraft.showTailwindView",
           "when": "editorLangId == typescriptreact && !view.windcraft.tailwindView.visible",
-          "alt": "windcraft.showTailwindView",
           "group": "navigation",
           "icon": "./images/logo/windcraft-icon.svg"
         }
@@ -213,16 +218,6 @@
         }
       }
     },
-    "typescriptServerPlugins": [
-      {
-        "name": "windcraft-ts-plugin",
-        "enableForWorkspaceTypeScriptVersions": true,
-        "languages": [
-          "typescript",
-          "typescriptreact"
-        ]
-      }
-    ],
     "walkthroughs": [
       {
         "id": "windcraft-walkthrough",
