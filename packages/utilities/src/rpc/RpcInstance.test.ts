@@ -66,7 +66,8 @@ const messageHandlerBar = new TestMessageHandler<
 >("bar");
 
 describe("RpcInstance", () => {
-  const fooMap = {
+  // Provider map returned by the provider function
+  const fooMap = () => ({
     /**
      * Method with argument validation
      */
@@ -80,8 +81,9 @@ describe("RpcInstance", () => {
      * Void Method
      */
     fooVoid: (): void => {},
-  };
+  });
 
+  // Provider map
   const barMap = {
     /**
      * Method
@@ -118,7 +120,8 @@ describe("RpcInstance", () => {
     },
   };
 
-  const rpcMapFoo = new RpcInstance<typeof barMap>(messageHandlerFoo, fooMap);
+
+  const rpcMapFoo = new RpcInstance<typeof barMap>(messageHandlerFoo, fooMap());
   const rpcMapBar = new RpcInstance<typeof fooMap>(messageHandlerBar, barMap);
 
   afterAll(() => {

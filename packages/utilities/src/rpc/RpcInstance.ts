@@ -27,6 +27,7 @@ export type RpcMessage =
   | RpcErrorResponseMessage;
 
 export type RpcProvider = Record<string, (...args: any[]) => any>;
+export type RpcProviderFunction = (...args: any[]) => RpcProvider;
 
 export type PromiseRpcProvider<R extends RpcProvider> = {
   [K in keyof R]: (
@@ -36,11 +37,13 @@ export type PromiseRpcProvider<R extends RpcProvider> = {
     : Promise<ReturnType<R[K]>>;
 };
 
-export class RpcInstance<R extends RpcProvider> {
+type GetRpcProvider<T> = T extends RpcProviderFunction ? ReturnType<T> : T;
+
+export class RpcInstance<R extends RpcProvider | RpcProviderFunction> {
   public static TIMEOUT: TimeSpan = TimeSpan.fromSeconds(5);
   private pendingInvocations: Record<string, (result: any) => void> = {};
-  private proxy: PromiseRpcProvider<R> = new Proxy(
-    {} as PromiseRpcProvider<R>,
+  private proxy: PromiseRpcProvider<GetRpcProvider<R>> = new Proxy(
+    {} as PromiseRpcProvider<GetRpcProvider<R>>,
     {
       get:
         (_, methodName: string) =>
