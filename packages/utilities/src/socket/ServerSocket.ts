@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as net from "net";
-import { CurrentLogger } from "@/logger";
+import { CurrentLogger } from "@/logger/logger";
 import { MessageHandler } from "@/rpc/MessageHandler";
 
 const logger = new CurrentLogger("[ServerSocket]");

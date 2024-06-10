@@ -1,5 +1,4 @@
 import type * as ts from "typescript/lib/tsserverlibrary";
-import { log } from "../../lib/log";
 import { SimpleAST } from "./SimpleAST";
 
 export function getSimpleAST(

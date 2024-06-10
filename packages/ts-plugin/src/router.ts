@@ -1,5 +1,5 @@
 import express from "express";
-import { log } from "./lib/log";
+import { logger } from "@windcraft/utilities/logger/logger";
 import { getSimpleASTController } from "./controllers/getSimpleAST";
 import { getClassNamesController } from "./controllers/getClassNames";
 import { programCompileEventController } from "./controllers/programCompileEvent";
@@ -11,7 +11,7 @@ router.post("/classnames", getClassNamesController);
 router.post("/program-compile-event", programCompileEventController)
 
 router.post("/hello", (req, res) => {
-  log("Received request '/'");
+  logger.log("Received request '/'");
   res.send({ message: "Hello World" });
 });
 

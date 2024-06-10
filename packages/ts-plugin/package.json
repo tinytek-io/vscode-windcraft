@@ -25,7 +25,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "express": "^4.19.2",
+    "@windcraft/utilities": "*",
     "zod": "^3.23.8"
   }
 }

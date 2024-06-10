@@ -1,6 +1,6 @@
+import { logger } from "@windcraft/utilities/logger/logger";
 import { EventEmitter } from "events";
 import ts from "typescript/lib/tsserverlibrary";
-import { log } from "./log";
 
 type TsPluginEventMap = {
   programCompiled: [];
@@ -33,7 +33,7 @@ export function startPollProgramCompilation(
   languageService: ts.LanguageService,
   interval = 10
 ): DisposeFunction {
-  log("Start polling program compilation state");
+  logger.log("Start polling program compilation state");
   let previousProgram = languageService.getProgram();
   const intervalId = setInterval(() => {
     const currentProgram = languageService.getProgram();
@@ -44,7 +44,7 @@ export function startPollProgramCompilation(
   }, interval);
 
   return () => {
-    log("Stop polling program compilation state");
+    logger.log("Stop polling program compilation state");
     clearInterval(intervalId);
   };
 }

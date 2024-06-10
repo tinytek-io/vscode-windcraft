@@ -1,6 +1,5 @@
 import type * as ts from "typescript/lib/tsserverlibrary";
 import { JsxAST } from "./JsxAST";
-import { log } from "../../lib/log";
 
 export function getJsxAST(
   fileName: string,

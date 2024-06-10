@@ -10,6 +10,7 @@
   "dependencies": {
     "@iconify/json": "^2.2.208",
     "@vscode/webview-ui-toolkit": "^1.4.0",
+    "@windcraft/utilities": "*",
     "iconify-icon": "^2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -1,5 +1,5 @@
 import { MessageHandler } from "@/rpc/MessageHandler";
-import { CurrentLogger } from "@/logger";
+import { CurrentLogger } from "@/logger/logger";
 import { EventEmitter } from "events";
 import * as net from "net";
 
