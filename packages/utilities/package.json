@@ -1,0 +1,21 @@
+{
+  "name": "@windcraft/utilities",
+  "private": true,
+  "version": "0.0.1",
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "dev": "tsc -p . -w",
+    "build": "rm -rf ./dist && tsc -p ./tsconfig.build.json",
+    "check:types": "tsc -p . --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}

@@ -15,6 +15,7 @@
   },
   "packageManager": "npm@10.2.4",
   "workspaces": [
+    "packages/utilities",
     "packages/ts-plugin",
     "packages/webview-ui",
     "packages/extension"
