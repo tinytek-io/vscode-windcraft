@@ -25,9 +25,6 @@ export class ServerSocket<I, O> implements MessageHandler<I, O> {
       };
     });
   
-    const [minPort, maxPort] = Array.isArray(port) ? port : [port, port];
-    let currentPort = minPort;
-
     this._server = net.createServer((socket) => {
       logger.log("Client connected");
       socket.pipe(socket);
@@ -56,25 +53,35 @@ export class ServerSocket<I, O> implements MessageHandler<I, O> {
       });
 
       socket.on("error", (error: SocketError) => {
-        logger.error("Error", error);
-        if (error.code === "EADDRINUSE") {
-          currentPort++;
-          if (currentPort > maxPort) {
-            logger.error("No available ports");
-            this._server.close();
-            this._resolvePort(new Error("No available ports"), currentPort);
-          } else {
-            // Retry on next port
-            this._server.close();
-            this._server.listen(currentPort, hostname, () => {
-              logger.log("Listening on port", currentPort);
-              this._resolvePort(null, currentPort);
-            });
-          }
-        }
+        logger.error("Socket Error", error);
+
       });
     });
 
+    const [minPort, maxPort] = Array.isArray(port) ? port : [port, port];
+    let currentPort = minPort;
+
+    this._server.on("error", (error: SocketError) => {
+      logger.error("Server Error", error);
+      if (error.code === "EADDRINUSE") {
+        currentPort++;
+        if (currentPort > maxPort) {
+          logger.error("No available ports");
+          this._server.close();
+          this._resolvePort(new Error("No available ports"), currentPort);
+        } else {
+          // Retry on next port
+          this._server.close();
+          logger.log("Retrying on new port", currentPort);
+          this._server.listen(currentPort, hostname, () => {
+            logger.log("Listening on port", currentPort);
+            this._resolvePort(null, currentPort);
+          });
+        }
+      }
+    });
+
+    logger.log("Trying to listen on port", currentPort);
     this._server.listen(currentPort, hostname, () => {
       logger.log("Listening on port", currentPort);
       this._resolvePort(null, currentPort);
