@@ -6,6 +6,9 @@ import type {
   PluginRpcProviderEvent,
 } from "../plugin/createPluginRpcProvider";
 import { configurePlugin } from "./configurePlugin";
+import { CurrentLogger } from "@windcraft/utilities/logger/logger";
+
+const logger = new CurrentLogger("[activateRpcExtensionServer]");
 
 export async function activateRpcExtensionServer(
   context: vscode.ExtensionContext
@@ -17,8 +20,27 @@ export async function activateRpcExtensionServer(
   context.subscriptions.push(rpcServerSocket);
 
   const port = await rpcServerSocket.port;
+  logger.log("Server started on port", port);
+
+  const clientReady = new Promise<void>((resolve, reject) => {
+    let release: () => void = () => {};
+
+    const timeout = setTimeout(() => {
+      release();
+      reject(new Error("Client did not connect"));
+    }, 5000);
+
+    release = rpcServerSocket.on("clientReady", () => {
+      clearTimeout(timeout);
+      release();
+      resolve();
+    });
+  });
 
   await configurePlugin(port);
+  logger.log("Plugin configured");
+  await clientReady;
+  logger.log("Client connected");
 
   return rpcServerSocket;
 }

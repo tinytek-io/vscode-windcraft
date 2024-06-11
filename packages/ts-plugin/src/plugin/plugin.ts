@@ -50,6 +50,8 @@ const factory: ts.server.PluginModuleFactory = (mod) => {
           createPluginRpcProvider(info.languageService, mod.typescript),
           port
         );
+
+        client.emit("clientReady");
       };
 
       if (config?.port) {
