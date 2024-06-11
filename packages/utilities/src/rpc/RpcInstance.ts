@@ -31,6 +31,7 @@ export type RpcEventMessage = {
   type: "RPC_EVENT";
   senderId: string;
   eventName: string;
+  args: unknown[];
 };
 
 export type RpcMessage =
@@ -52,11 +53,15 @@ export type PromiseRpcProvider<R extends RpcProvider> = {
 
 type GetRpcProvider<T> = T extends RpcProviderFunction ? ReturnType<T> : T;
 
-type EventListener = () => void;
+export type DefaultEventMap = Record<string, unknown[]>;
 
-export class RpcInstance<R extends RpcProvider | RpcProviderFunction, E extends string> {
+type EventListener<E extends unknown[]> = (...args: E) => void;
+type EventListenerMap<E extends DefaultEventMap> = {
+  [K in keyof E]: EventListener<E[K]>[];
+};
+export class RpcInstance<R extends RpcProvider | RpcProviderFunction, E extends DefaultEventMap> {
   private _senderId: string = generateUUID();
-  private _eventListeners: Record<string, EventListener[]> = {};
+  private _eventListeners: EventListenerMap<E> = {} as EventListenerMap<E>;
   public static TIMEOUT: TimeSpan = TimeSpan.fromSeconds(10);
   private pendingInvocations: Record<string, (result: any) => void> = {};
   private proxy: PromiseRpcProvider<GetRpcProvider<R>> = new Proxy(
@@ -151,11 +156,11 @@ export class RpcInstance<R extends RpcProvider | RpcProviderFunction, E extends 
           break;
         }
         case "RPC_EVENT": {
-          const { eventName } = message;
+          const { eventName, args } = message;
           const listeners = this._eventListeners[eventName] ?? [];
           for (const listener of listeners) {
             try {
-              listener();
+              listener(...args as E[typeof eventName]);
             } catch (error) {
               logger.error(`Error in event listener for "${eventName}"`, error);
             }
@@ -170,14 +175,16 @@ export class RpcInstance<R extends RpcProvider | RpcProviderFunction, E extends 
     return this.proxy;
   }
 
-  emit(eventName: E) {
+  emit<N extends keyof E>(eventName: N, ...args: E[N]) {
     this.messageHandler.send({
-      type: "RPC_EVENT", eventName,
+      type: "RPC_EVENT",
+      eventName: eventName as string,
+      args,
       senderId: this._senderId,
     });
   }
 
-  on(eventName: E, listener: EventListener) {
+  on<N extends keyof E>(eventName: N, listener: EventListener<E[N]>) {
     if (!this._eventListeners[eventName]) {
       this._eventListeners[eventName] = [];
     }

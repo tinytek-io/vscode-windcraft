@@ -16,7 +16,10 @@ type EventBusMessage<P> = {
   payload: P;
 };
 
-type TestEvent = "testEvent";
+type TestEvent = {
+  "testEvent": [];
+  "testEventWithArgs": [string, number, boolean];
+};
 
 export class TestMessageHandler<I, O> implements MessageHandler<I, O> {
   private _disposables: Disposable[] = [];
@@ -200,5 +203,19 @@ describe("RpcInstance", () => {
     expect(result).toBe(false);
     rpcMapFoo.emit("testEvent");
     expect(result).toBe(true);
+  });
+
+  it("should handle event listener returning arguments", async () => {
+    let result: [string, number, boolean] = ["", 0, false];
+
+    rpcMapBar.on("testEventWithArgs", (a, b, c) => {
+      result = [a, b, c];
+    });
+
+    expect(result).toEqual(["", 0, false]);
+    rpcMapFoo.emit("testEventWithArgs", "foo", 1, true);
+    expect(result).toEqual(["foo", 1, true]);
+    rpcMapFoo.emit("testEventWithArgs", "bar", 2, false);
+    expect(result).toEqual(["bar", 2, false]);
   });
 });

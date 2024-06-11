@@ -31,4 +31,7 @@ export function createPluginRpcProvider(languageService: ts.LanguageService, typ
 
 export type PluginRpcProvider = ReturnType<typeof createPluginRpcProvider>;
 
-export type PluginRpcProviderEvent = "programCompile";
+export type PluginRpcProviderEvent = {
+  "programCompile": [];
+  "clientReady": [];
+};
