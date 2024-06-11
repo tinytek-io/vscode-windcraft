@@ -4,6 +4,10 @@ All notable changes to the "windcraft" extension will be documented in this file
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+### 0.0.5
+
+* Fixes issue on WSL where the extension was not working due to timeouts while waiting for the TypeScript Language Server Plugin to start - this has been fixed by increasing the attempts to connect to the server and wait for vs to start up.
+
 ### 0.0.4
 
 * Enable WindCraft to add the `ClassName` property to JSX elements in TypeScript files.
