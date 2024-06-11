@@ -6,6 +6,7 @@ import * as net from "net";
 const logger = new CurrentLogger("[ClientSocket]");
 
 export class ClientSocket<I, O> implements MessageHandler<I, O> {
+  private _data: string = "";
   private _client: net.Socket;
   private _onIncomingMessage = new EventEmitter<Record<"message", [I]>>();
 
@@ -20,13 +21,18 @@ export class ClientSocket<I, O> implements MessageHandler<I, O> {
     });
 
     this._client.on("data", (buffer) => {
-      logger.log("Received data: " + buffer);
-      try {
-        const message = JSON.parse(buffer.toString()) as I;
-        this._onIncomingMessage.emit("message", message);
-      } catch (error) {
-        logger.log("Error parsing message: " + error);
-      }
+      logger.log("Received data: " + buffer.toString());
+      this._data += buffer.toString();
+      const messages = this._data.split("\n");
+      this._data = messages.pop() ?? "";
+      messages.forEach((messageJson) => {
+        try {
+          const message = JSON.parse(messageJson) as I;
+          this._onIncomingMessage.emit("message", message);
+        } catch (error) {
+          logger.log("Error parsing message: " + error);
+        }
+      });
     });
 
     this._client.on("end", () => {
@@ -50,7 +56,7 @@ export class ClientSocket<I, O> implements MessageHandler<I, O> {
 
   public send(message: O) {
     logger.log("Sending message: " + JSON.stringify(message));
-    this._client.write(JSON.stringify(message));
+    this._client.write(JSON.stringify(message) + "\n");
   }
 
   public dispose() {

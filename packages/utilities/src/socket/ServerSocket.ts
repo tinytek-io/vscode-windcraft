@@ -7,6 +7,7 @@ const logger = new CurrentLogger("[ServerSocket]");
 
 type SocketError = Error & { code: string };
 export class ServerSocket<I, O> implements MessageHandler<I, O> {
+  private _data: string = "";
   private _port: Promise<number>;
   private _resolvePort: (error: Error | null, port: number) => void = () => {};
   private _server: net.Server;
@@ -32,7 +33,7 @@ export class ServerSocket<I, O> implements MessageHandler<I, O> {
       socket.pipe(socket);
 
       const outgoingEventlistener = this._onOutgoingMessage.event((message) => {
-        socket.write(JSON.stringify(message));
+        socket.write(JSON.stringify(message) + "\n");
       });
 
       socket.on("end", () => {
@@ -42,11 +43,16 @@ export class ServerSocket<I, O> implements MessageHandler<I, O> {
 
       socket.on("data", (buffer) => {
         logger.log("Received", buffer.toString());
-        try {
-          this._onIncomingMessage.fire(JSON.parse(buffer.toString()));
-        } catch (error) {
-          logger.error("DataError", error);
-        }
+        this._data += buffer.toString();
+        const messages = this._data.split("\n"); // Split messages by newline
+        this._data = messages.pop() ?? ""; // Remove last empty message or incomplete message
+        messages.forEach((messageJson) => {
+          try {
+            this._onIncomingMessage.fire(JSON.parse(messageJson));
+          } catch (error) {
+            logger.error("DataError", error);
+          }
+        });
       });
 
       socket.on("error", (error: SocketError) => {
@@ -69,7 +75,6 @@ export class ServerSocket<I, O> implements MessageHandler<I, O> {
       });
     });
 
-    logger.log("Listening on port", port);
     this._server.listen(currentPort, hostname, () => {
       logger.log("Listening on port", currentPort);
       this._resolvePort(null, currentPort);
