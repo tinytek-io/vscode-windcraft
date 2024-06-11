@@ -3,11 +3,16 @@ import { EventEmitter } from "events";
 import { RpcInstance, RpcRequestMessage } from "./RpcInstance";
 import { MessageHandler, Disposable } from "./MessageHandler";
 import { TimeSpan } from "../lib/TimeSpan";
+import { TestLogger } from "../logger/TestLogger";
+import { setCurrentLogger } from "../logger/logger";
+
+// Set the logger to test logger
+const logger = new TestLogger();
+setCurrentLogger(logger);
 
 const eventBus = new EventEmitter();
 
 type EventBusMessage<P> = {
-  senderId: string;
   payload: P;
 };
 
@@ -17,12 +22,9 @@ export class TestMessageHandler<I, O> implements MessageHandler<I, O> {
   private _disposables: Disposable[] = [];
   private _listeners: ((message: I) => void)[] = [];
 
-  constructor(private id: string) {
+  constructor() {
     const listener = (data: string) => {
       const message = JSON.parse(data) as EventBusMessage<I>;
-      if (message.senderId === this.id) {
-        return;
-      }
       this._listeners.forEach((l) => l(message.payload));
     };
     eventBus.on("message", listener);
@@ -45,7 +47,6 @@ export class TestMessageHandler<I, O> implements MessageHandler<I, O> {
 
   send(message: O): void {
     const eventBusMessage: EventBusMessage<O> = {
-      senderId: this.id,
       payload: message,
     };
     eventBus.emit("message", JSON.stringify(eventBusMessage));
@@ -60,12 +61,12 @@ export class TestMessageHandler<I, O> implements MessageHandler<I, O> {
 const messageHandlerFoo = new TestMessageHandler<
   RpcRequestMessage,
   RpcRequestMessage
->("foo");
+>();
 
 const messageHandlerBar = new TestMessageHandler<
   RpcRequestMessage,
   RpcRequestMessage
->("bar");
+>();
 
 describe("RpcInstance", () => {
   // Provider map returned by the provider function

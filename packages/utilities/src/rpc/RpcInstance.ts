@@ -1,10 +1,13 @@
 import { TimeSpan } from "../lib/TimeSpan";
 import { generateUUID } from "../lib/generateUUID";
 import { MessageHandler } from "./MessageHandler";
-import { logger } from "../logger/logger";
+import { CurrentLogger } from "../logger/logger";
+
+const logger = new CurrentLogger("[RpcInstance]");
 
 export type RpcRequestMessage<A extends any[] = any[]> = {
   type: "RPC_REQUEST";
+  senderId: string;
   invocationId: string;
   methodName: string;
   args: A;
@@ -12,18 +15,21 @@ export type RpcRequestMessage<A extends any[] = any[]> = {
 
 export type RpcResponseMessage<R = any> = {
   type: "RPC_RESPONSE";
+  senderId: string;
   invocationId: string;
   result: R;
 };
 
 export type RpcErrorResponseMessage = {
   type: "RPC_ERROR_RESPONSE";
+  senderId: string;
   invocationId: string;
   error: string;
 };
 
 export type RpcEventMessage = {
   type: "RPC_EVENT";
+  senderId: string;
   eventName: string;
 };
 
@@ -49,8 +55,9 @@ type GetRpcProvider<T> = T extends RpcProviderFunction ? ReturnType<T> : T;
 type EventListener = () => void;
 
 export class RpcInstance<R extends RpcProvider | RpcProviderFunction, E extends string> {
+  private _senderId: string = generateUUID();
   private _eventListeners: Record<string, EventListener[]> = {};
-  public static TIMEOUT: TimeSpan = TimeSpan.fromSeconds(5);
+  public static TIMEOUT: TimeSpan = TimeSpan.fromSeconds(10);
   private pendingInvocations: Record<string, (result: any) => void> = {};
   private proxy: PromiseRpcProvider<GetRpcProvider<R>> = new Proxy(
     {} as PromiseRpcProvider<GetRpcProvider<R>>,
@@ -60,10 +67,12 @@ export class RpcInstance<R extends RpcProvider | RpcProviderFunction, E extends 
         (...args: unknown[]) => {
           const message: RpcRequestMessage = {
             type: "RPC_REQUEST",
+            senderId: this._senderId,
             invocationId: generateUUID(),
             methodName,
             args,
           };
+          logger.log("Sending message", message);
           // Make remote call and wait for response event or timeout...
           return new Promise((resolve, reject) => {
             const timeout = setTimeout(() => {
@@ -94,6 +103,11 @@ export class RpcInstance<R extends RpcProvider | RpcProviderFunction, E extends 
   ) {
     // Wait for event to invoke the proxy or provider method
     messageHandler.onMessage(async (message) => {
+      logger.log("Received message", message);
+      if (message.senderId === this._senderId) {
+        // Ignore messages from self
+        return;
+      }
       switch (message.type) {
         case "RPC_ERROR_RESPONSE":
         case "RPC_RESPONSE": {
@@ -110,6 +124,7 @@ export class RpcInstance<R extends RpcProvider | RpcProviderFunction, E extends 
           if (!method) {
             this.messageHandler.send({
               type: "RPC_ERROR_RESPONSE",
+              senderId: this._senderId,
               invocationId,
               error: `Method "${methodName}" not found`,
             });
@@ -118,12 +133,14 @@ export class RpcInstance<R extends RpcProvider | RpcProviderFunction, E extends 
             const result = method(...args);
             this.messageHandler.send({
               type: "RPC_RESPONSE",
+              senderId: this._senderId,
               invocationId,
               result: result instanceof Promise ? await result : result,
             });
           } catch (error) {
             this.messageHandler.send({
               type: "RPC_ERROR_RESPONSE",
+              senderId: this._senderId,
               invocationId,
               error:
                 error instanceof Error
@@ -154,7 +171,10 @@ export class RpcInstance<R extends RpcProvider | RpcProviderFunction, E extends 
   }
 
   emit(eventName: E) {
-    this.messageHandler.send({ type: "RPC_EVENT", eventName });
+    this.messageHandler.send({
+      type: "RPC_EVENT", eventName,
+      senderId: this._senderId,
+    });
   }
 
   on(eventName: E, listener: EventListener) {
