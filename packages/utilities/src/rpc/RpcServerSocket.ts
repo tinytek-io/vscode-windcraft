@@ -1,8 +1,7 @@
 import { ServerSocket } from "../socket/ServerSocket";
-import { RpcProvider, RpcProviderFunction, RpcInstance, RpcRequestMessage } from "./RpcInstance";
+import { RpcProvider, RpcProviderFunction, RpcInstance, RpcRequestMessage, DefaultEventMap } from "./RpcInstance";
 
-export class RpcServerSocket<R extends RpcProvider | RpcProviderFunction, E extends string> {
-  private rpcInstance: RpcInstance<R, E>;
+export class RpcServerSocket<R extends RpcProvider | RpcProviderFunction, E extends DefaultEventMap> extends RpcInstance<R, E> {
   private socket: ServerSocket<RpcRequestMessage, RpcRequestMessage>;
 
   constructor(
@@ -10,28 +9,18 @@ export class RpcServerSocket<R extends RpcProvider | RpcProviderFunction, E exte
     port: number | [number, number],
     hostname?: string
   ) {
-    this.socket = new ServerSocket<RpcRequestMessage, RpcRequestMessage>(port, hostname);
-    this.rpcInstance = new RpcInstance(this.socket, rpcProvider);
-  }
+    const socket = new ServerSocket<RpcRequestMessage, RpcRequestMessage>(port, hostname);
+    super(socket, rpcProvider);
 
-  get client() {
-    return this.rpcInstance.client;
+    this.socket = socket;
   }
 
   get port() {
     return this.socket.port;
   }
-
-  get on() {
-    return this.rpcInstance.on;
-  }
-
-  get emit() {
-    return this.rpcInstance.emit;
-  }
-
+ 
   public dispose() {
-    this.rpcInstance.dispose();
+    super.dispose();
     this.socket.dispose();
   }
 }
