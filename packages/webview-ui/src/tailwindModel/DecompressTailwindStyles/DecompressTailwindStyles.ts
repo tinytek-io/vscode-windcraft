@@ -8,9 +8,7 @@ import { TailwindStyle } from "../lib/styleHelpers";
  *
  * The UI should be able to handle the full form of tailwind styles
  */
-export function DecompressTailwindStyles(
-  styles: TailwindStyle[]
-): TailwindStyle[] {
+export function DecompressTailwindStyles(styles: TailwindStyle[]): TailwindStyle[] {
   // TODO: Decompress tailwind styles
   return styles;
 }

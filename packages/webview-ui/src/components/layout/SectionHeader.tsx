@@ -1,4 +1,3 @@
-
 export type SectionHeaderProps = {
   title: string;
   children?: React.ReactNode;

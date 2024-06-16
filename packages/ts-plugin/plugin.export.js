@@ -1,7 +1,7 @@
 /**
  * This file exports the server factory function for the TypeScript plugin
  * using CommonJS export syntax.
- * 
+ *
  * Error:
  * ES Modules may not assign module.exports or exports.*, Use ESM export syntax, instead
  */

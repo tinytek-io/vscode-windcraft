@@ -10,7 +10,7 @@ import {
   TbRadiusBottomLeft,
   TbRadiusBottomRight,
   TbRadiusTopLeft,
-  TbRadiusTopRight,
+  TbRadiusTopRight
 } from "react-icons/tb";
 import { cn } from "../../lib/cn";
 import { LuLink2, LuUnlink2 } from "react-icons/lu";
@@ -34,8 +34,7 @@ import { useBorderRadius } from "../hooks/useBorderRadius";
 export function ElementSection() {
   const { hasPosition, position, setPosition } = usePosition();
   const { rotation, setRotation } = useRotation();
-  const { placementX, placementY, setPlacementX, setPlacementY } =
-    usePlacement();
+  const { placementX, placementY, setPlacementX, setPlacementY } = usePlacement();
   const { clipContent, toggleClipContent } = useOverflow();
   const { width, setWidth } = useWidth();
   const {
@@ -45,7 +44,7 @@ export function ElementSection() {
     setHeight,
     aspectRatio,
     setAspectRatio,
-    toggleHeightOrAspectRatio,
+    toggleHeightOrAspectRatio
   } = useHeightOrAspectRatio();
   const {
     borderRadius,
@@ -59,14 +58,12 @@ export function ElementSection() {
     setBorderRadiusBR,
     setBorderRadiusTL,
     setBorderRadiusTR,
-    toggleMultipleBorderRadius,
+    toggleMultipleBorderRadius
   } = useBorderRadius();
 
   return (
     <div className="flex flex-col">
-      <SectionHeader title="Element">
-        {/*<HiMiniArrowsPointingIn />*/}
-      </SectionHeader>
+      <SectionHeader title="Element">{/*<HiMiniArrowsPointingIn />*/}</SectionHeader>
       <div className="flex justify-between px-2">
         <div className="flex flex-col gap-2">
           {/* left */}
@@ -115,9 +112,7 @@ export function ElementSection() {
             {isAspectRatio ? (
               <Select
                 icon={MdAspectRatio}
-                value={
-                  aspectRatio.current ?? aspectRatio.applied ?? aspectRatioNone
-                }
+                value={aspectRatio.current ?? aspectRatio.applied ?? aspectRatioNone}
                 applied={isAspectRatioToggled ? "[Height]" : aspectRatio.applied ?? aspectRatioNone}
                 options={aspectRatioValues}
                 onChange={setAspectRatio}
@@ -136,11 +131,7 @@ export function ElementSection() {
             {multipleBorderRadius.current ? null : (
               <Select
                 icon={RxCornerTopLeft}
-                value={
-                  borderRadius.current ??
-                  borderRadius.applied ??
-                  borderRadiusNone
-                }
+                value={borderRadius.current ?? borderRadius.applied ?? borderRadiusNone}
                 applied={borderRadius.applied ?? borderRadiusNone}
                 options={[...borderRadiusMap.keys()]}
                 onChange={setBorderRadius}
@@ -153,11 +144,7 @@ export function ElementSection() {
           <div className="flex align-center">
             <CgAssign
               title="Enable positioning"
-              className={cn(
-                "btn",
-                hasPosition ? "selected" : null,
-                position.current ? "changed" : null
-              )}
+              className={cn("btn", hasPosition ? "selected" : null, position.current ? "changed" : null)}
               onClick={() => {
                 if (position.current != null) {
                   setPosition();
@@ -180,10 +167,7 @@ export function ElementSection() {
           <div className="flex align-center">
             <CgMaximize
               title="Indepedent border radius"
-              className={cn(
-                "btn",
-                multipleBorderRadius.current ? "selected" : null
-              )}
+              className={cn("btn", multipleBorderRadius.current ? "selected" : null)}
               onClick={toggleMultipleBorderRadius}
             />
           </div>
@@ -194,11 +178,7 @@ export function ElementSection() {
           <div className="flex flex-col gap-1">
             <Select
               icon={TbRadiusTopLeft}
-              value={
-                borderRadiusTL.current ??
-                borderRadiusTL.applied ??
-                borderRadiusNone
-              }
+              value={borderRadiusTL.current ?? borderRadiusTL.applied ?? borderRadiusNone}
               applied={borderRadiusTL.applied ?? borderRadiusNone}
               options={[...borderRadiusMap.keys()]}
               onChange={setBorderRadiusTL}
@@ -206,11 +186,7 @@ export function ElementSection() {
 
             <Select
               icon={TbRadiusBottomLeft}
-              value={
-                borderRadiusBL.current ??
-                borderRadiusBL.applied ??
-                borderRadiusNone
-              }
+              value={borderRadiusBL.current ?? borderRadiusBL.applied ?? borderRadiusNone}
               applied={borderRadiusBL.applied ?? borderRadiusNone}
               options={[...borderRadiusMap.keys()]}
               onChange={setBorderRadiusBL}
@@ -220,11 +196,7 @@ export function ElementSection() {
           <div className="flex flex-col gap-1">
             <Select
               icon={TbRadiusTopRight}
-              value={
-                borderRadiusTR.current ??
-                borderRadiusTR.applied ??
-                borderRadiusNone
-              }
+              value={borderRadiusTR.current ?? borderRadiusTR.applied ?? borderRadiusNone}
               applied={borderRadiusTR.applied ?? borderRadiusNone}
               options={[...borderRadiusMap.keys()]}
               onChange={setBorderRadiusTR}
@@ -232,11 +204,7 @@ export function ElementSection() {
 
             <Select
               icon={TbRadiusBottomRight}
-              value={
-                borderRadiusBR.current ??
-                borderRadiusBR.applied ??
-                borderRadiusNone
-              }
+              value={borderRadiusBR.current ?? borderRadiusBR.applied ?? borderRadiusNone}
               applied={borderRadiusBR.applied ?? borderRadiusNone}
               options={[...borderRadiusMap.keys()]}
               onChange={setBorderRadiusBR}
@@ -249,9 +217,7 @@ export function ElementSection() {
           <IconToggleButton
             icon={FaRegSquare}
             checkedIcon={FaRegCheckSquare}
-            checked={
-              (clipContent.current ?? clipContent.applied) === "overflow-hidden"
-            }
+            checked={(clipContent.current ?? clipContent.applied) === "overflow-hidden"}
             appliedChecked={clipContent.applied === "overflow-hidden"}
             onClick={toggleClipContent}
             title="Clip content"

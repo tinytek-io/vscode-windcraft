@@ -1,23 +1,18 @@
 import { RpcServerSocket } from "@windcraft/utilities/rpc/RpcServerSocket";
 import * as vscode from "vscode";
 import { extensionRpcProvider } from "./createExtensionRpcProvider";
-import type {
-  PluginRpcProvider,
-  PluginRpcProviderEvent,
-} from "../plugin/createPluginRpcProvider";
+import type { PluginRpcProvider, PluginRpcProviderEvent } from "../plugin/createPluginRpcProvider";
 import { configurePlugin } from "./configurePlugin";
 import { CurrentLogger } from "@windcraft/utilities/logger/logger";
 import { TimeSpan } from "@windcraft/utilities/lib/TimeSpan";
 
 const logger = new CurrentLogger("[activateRpcExtensionServer]");
 
-export async function activateRpcExtensionServer(
-  context: vscode.ExtensionContext
-) {
-  const rpcServerSocket = new RpcServerSocket<
-    PluginRpcProvider,
-    PluginRpcProviderEvent
-  >(extensionRpcProvider(), [55000, 55500]);
+export async function activateRpcExtensionServer(context: vscode.ExtensionContext) {
+  const rpcServerSocket = new RpcServerSocket<PluginRpcProvider, PluginRpcProviderEvent>(
+    extensionRpcProvider(),
+    [55000, 55500]
+  );
   context.subscriptions.push(rpcServerSocket);
 
   const port = await rpcServerSocket.port;

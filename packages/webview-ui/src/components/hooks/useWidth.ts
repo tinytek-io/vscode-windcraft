@@ -7,18 +7,21 @@ export function useWidth() {
 
   const width = getValueByPrefix(widthPrefix);
 
-  const setWidth = useCallback((newWidth: string) => {
-    const appliedWidth = width.applied ?? widthNone;
-    if (newWidth === appliedWidth) {
-      // New value is the same as the applied value, we don't need to set it again
-      updateCurrentStyles(widthClasses, []);
-    } else {
-      updateCurrentStyles(widthClasses, [`${widthPrefix}${newWidth}`]);
-    }
-  }, [width, updateCurrentStyles]);
+  const setWidth = useCallback(
+    (newWidth: string) => {
+      const appliedWidth = width.applied ?? widthNone;
+      if (newWidth === appliedWidth) {
+        // New value is the same as the applied value, we don't need to set it again
+        updateCurrentStyles(widthClasses, []);
+      } else {
+        updateCurrentStyles(widthClasses, [`${widthPrefix}${newWidth}`]);
+      }
+    },
+    [width, updateCurrentStyles]
+  );
 
   return {
     width,
-    setWidth,
+    setWidth
   };
 }

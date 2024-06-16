@@ -9,7 +9,7 @@ import {
   borderRadiusClassesTL,
   borderRadiusClassesTR,
   borderRadiusNone,
-  borderRadiusClassesAll,
+  borderRadiusClassesAll
 } from "../../types/borderRadius";
 
 export function useBorderRadius() {
@@ -34,7 +34,7 @@ export function useBorderRadius() {
       (borderRadiusTL.applied != null ||
         borderRadiusTR.applied != null ||
         borderRadiusBR.applied != null ||
-        borderRadiusBL.applied != null),
+        borderRadiusBL.applied != null)
   };
 
   const setBorderRadius = useCallback(
@@ -43,9 +43,7 @@ export function useBorderRadius() {
       if (newBorderRadius === appliedBorderRadius) {
         updateCurrentStyles(borderRadiusClasses, []);
       } else {
-        updateCurrentStyles(borderRadiusClasses, [
-          `rounded-${newBorderRadius}`,
-        ]);
+        updateCurrentStyles(borderRadiusClasses, [`rounded-${newBorderRadius}`]);
       }
     },
     [borderRadius, updateCurrentStyles]
@@ -57,9 +55,7 @@ export function useBorderRadius() {
       if (newBorderRadius === appliedBorderRadius) {
         updateCurrentStyles(borderRadiusClassesTL, []);
       } else {
-        updateCurrentStyles(borderRadiusClassesTL, [
-          `rounded-tl-${newBorderRadius}`,
-        ]);
+        updateCurrentStyles(borderRadiusClassesTL, [`rounded-tl-${newBorderRadius}`]);
       }
     },
     [borderRadius, updateCurrentStyles]
@@ -71,9 +67,7 @@ export function useBorderRadius() {
       if (newBorderRadius === appliedBorderRadius) {
         updateCurrentStyles(borderRadiusClassesTR, []);
       } else {
-        updateCurrentStyles(borderRadiusClassesTR, [
-          `rounded-tr-${newBorderRadius}`,
-        ]);
+        updateCurrentStyles(borderRadiusClassesTR, [`rounded-tr-${newBorderRadius}`]);
       }
     },
     [borderRadius, updateCurrentStyles]
@@ -85,9 +79,7 @@ export function useBorderRadius() {
       if (newBorderRadius === appliedBorderRadius) {
         updateCurrentStyles(borderRadiusClassesBR, []);
       } else {
-        updateCurrentStyles(borderRadiusClassesBR, [
-          `rounded-br-${newBorderRadius}`,
-        ]);
+        updateCurrentStyles(borderRadiusClassesBR, [`rounded-br-${newBorderRadius}`]);
       }
     },
     [borderRadius, updateCurrentStyles]
@@ -99,9 +91,7 @@ export function useBorderRadius() {
       if (newBorderRadius === appliedBorderRadius) {
         updateCurrentStyles(borderRadiusClassesBL, []);
       } else {
-        updateCurrentStyles(borderRadiusClassesBL, [
-          `rounded-bl-${newBorderRadius}`,
-        ]);
+        updateCurrentStyles(borderRadiusClassesBL, [`rounded-bl-${newBorderRadius}`]);
       }
     },
     [borderRadius, updateCurrentStyles]
@@ -116,15 +106,13 @@ export function useBorderRadius() {
       borderRadiusBR.current ??
       borderRadiusNone;
     if (multipleBorderRadius.current) {
-      updateCurrentStyles(borderRadiusClassesAll, [
-        `rounded${borderRadiusMap.get(newBorderRadius)}`,
-      ]);
+      updateCurrentStyles(borderRadiusClassesAll, [`rounded${borderRadiusMap.get(newBorderRadius)}`]);
     } else {
       updateCurrentStyles(borderRadiusClassesAll, [
         `rounded-tr${borderRadiusMap.get(newBorderRadius)}`,
         `rounded-tl${borderRadiusMap.get(newBorderRadius)}`,
         `rounded-br${borderRadiusMap.get(newBorderRadius)}`,
-        `rounded-bl${borderRadiusMap.get(newBorderRadius)}`,
+        `rounded-bl${borderRadiusMap.get(newBorderRadius)}`
       ]);
     }
   }, [
@@ -134,7 +122,7 @@ export function useBorderRadius() {
     borderRadiusTR,
     borderRadiusBR,
     multipleBorderRadius,
-    updateCurrentStyles,
+    updateCurrentStyles
   ]);
 
   return {
@@ -151,6 +139,6 @@ export function useBorderRadius() {
     setBorderRadiusTR,
     setBorderRadiusBR,
     setBorderRadiusBL,
-    toggleMultipleBorderRadius,
+    toggleMultipleBorderRadius
   };
 }

@@ -2,9 +2,7 @@ import { useCallback } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
 import { gapNone, gapValues } from "../../types/gap";
 
-const allClasses = gapValues
-  .map((g) => [`gap-${g}`, `gap-x-${g}`, `gap-y-${g}`])
-  .flat();
+const allClasses = gapValues.map((g) => [`gap-${g}`, `gap-x-${g}`, `gap-y-${g}`]).flat();
 const allClassesX = gapValues.map((g) => [`gap-${g}`, `gap-x-${g}`]).flat();
 const allClassesY = gapValues.map((g) => [`gap-${g}`, `gap-y-${g}`]).flat();
 
@@ -55,6 +53,6 @@ export function useGap() {
     // Methods
     updateValue,
     updateX,
-    updateY,
+    updateY
   };
 }

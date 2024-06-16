@@ -20,31 +20,22 @@ export function getClassNamesPosition(
 
   return {
     ...(classNamesFile ?? {
-      fileName: document.fileName,
+      fileName: document.fileName
     }),
     current: current
       ? {
           ...current,
-          range: new Range(
-            document.positionAt(current.position.start),
-            document.positionAt(current.position.end)
-          ),
+          range: new Range(document.positionAt(current.position.start), document.positionAt(current.position.end)),
           literalRange: new Range(
             document.positionAt(current.position.start + 1),
             document.positionAt(current.position.end - 1)
-          ),
+          )
         }
       : undefined,
     scope: scope.map((c) => ({
       ...c,
-      range: new Range(
-        document.positionAt(c.position.start),
-        document.positionAt(c.position.end)
-      ),
-      literalRange: new Range(
-        document.positionAt(c.position.start + 1),
-        document.positionAt(c.position.end - 1)
-      ),
-    })),
+      range: new Range(document.positionAt(c.position.start), document.positionAt(c.position.end)),
+      literalRange: new Range(document.positionAt(c.position.start + 1), document.positionAt(c.position.end - 1))
+    }))
   };
 }

@@ -10,10 +10,7 @@ export function isTailwindStyle(style: string): boolean {
   }
 
   // Check for tailwind modifier classes
-  if (
-    state !== "" &&
-    tailwindModifiers.some((m) => stateParts.includes(m)) === false
-  ) {
+  if (state !== "" && tailwindModifiers.some((m) => stateParts.includes(m)) === false) {
     return false;
   }
 
@@ -104,7 +101,7 @@ const tailwindValues = [
   "backdrop-saturate",
   "backdrop-sepia",
   // Debug
-  "!outline",
+  "!outline"
 ];
 
 const tailwindValuePrefixes = [
@@ -216,7 +213,7 @@ const tailwindValuePrefixes = [
   "backdrop-saturate",
   "backdrop-sepia",
   // Debug
-  "!outline",
+  "!outline"
 ];
 
 const tailwindModifiers = [
@@ -239,5 +236,5 @@ const tailwindModifiers = [
   "disabled",
   "required",
   "valid",
-  "invalid",
+  "invalid"
 ];

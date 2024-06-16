@@ -71,7 +71,7 @@ export const widthValues = [
   "dvw",
   "min",
   "max",
-  "fit",
+  "fit"
 ];
 
 export const widthClasses = widthValues.map((w) => `w-${w}`);

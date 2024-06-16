@@ -22,10 +22,7 @@ const factory: ts.server.PluginModuleFactory = (mod) => {
 
   return {
     create(info) {
-      if (
-        info.project.projectService.serverMode !==
-        LANGUAGE_SERVICE_MODE_SEMANTIC
-      ) {
+      if (info.project.projectService.serverMode !== LANGUAGE_SERVICE_MODE_SEMANTIC) {
         logger.log("SKIP - Not semantic mode");
         return info.languageService;
       } else {
@@ -65,7 +62,7 @@ const factory: ts.server.PluginModuleFactory = (mod) => {
       if (config.port && start) {
         start(config.port);
       }
-    },
+    }
   };
 };
 

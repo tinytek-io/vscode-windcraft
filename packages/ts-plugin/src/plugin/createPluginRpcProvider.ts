@@ -9,7 +9,7 @@ export function createPluginRpcProvider(languageService: ts.LanguageService, typ
       logger.log("Getting simple AST");
       const program = languageService.getProgram();
       if (!program) {
-        throw new Error("Program not found")
+        throw new Error("Program not found");
       }
       return getSimpleAST(fileName, program, typescript);
     },
@@ -17,10 +17,10 @@ export function createPluginRpcProvider(languageService: ts.LanguageService, typ
       logger.log("Getting class names");
       const program = languageService.getProgram();
       if (!program) {
-        throw new Error("Program not found")
+        throw new Error("Program not found");
       }
       return getClassNames(fileName, position, program, typescript);
-    },
+    }
     /* programCompileEvent: (fileName: string) => {
       const program = languageService.getProgram();
       if (!program) {
@@ -35,6 +35,6 @@ export function createPluginRpcProvider(languageService: ts.LanguageService, typ
 export type PluginRpcProvider = ReturnType<typeof createPluginRpcProvider>;
 
 export type PluginRpcProviderEvent = {
-  "programCompile": [];
-  "clientReady": [];
+  programCompile: [];
+  clientReady: [];
 };

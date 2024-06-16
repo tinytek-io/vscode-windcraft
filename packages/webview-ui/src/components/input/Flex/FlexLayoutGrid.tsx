@@ -8,20 +8,26 @@ import { flexCoord, layoutGridValues } from "./state";
 import { gapNone } from "../../../types/gap";
 import { cn } from "../../../lib/cn";
 
-export type FlexLayoutGridProps = {
-};
+export type FlexLayoutGridProps = {};
 
-export function FlexLayoutGrid({ }: FlexLayoutGridProps) {
+export function FlexLayoutGrid({}: FlexLayoutGridProps) {
   const { updateCurrentStyles, getValueOneOf } = useExtensionState();
   const flex = useFlex();
   const gap = useGap();
 
   const gapXValue = {
-    current: gap.value.current ?? gap.value.current ?? gap.x.current ?? gap.x.current ?? gap.value.applied ?? gap.x.applied ?? gapNone,
-    applied: gap.value.applied ?? gap.x.applied ?? gapNone,
+    current:
+      gap.value.current ??
+      gap.value.current ??
+      gap.x.current ??
+      gap.x.current ??
+      gap.value.applied ??
+      gap.x.applied ??
+      gapNone,
+    applied: gap.value.applied ?? gap.x.applied ?? gapNone
   };
 
-  const isGapXAuto = gapXValue.current === gapNone;;
+  const isGapXAuto = gapXValue.current === gapNone;
 
   const flexDirection = (flex.direction.current ?? flex.direction.applied ?? "flex-row") as FlexDirection;
   const gridType = getLayoutGridType(flexDirection, isGapXAuto);
@@ -47,17 +53,16 @@ export function FlexLayoutGrid({ }: FlexLayoutGridProps) {
             const currentX = coord.x[x];
             const currentY = coord.y[y];
 
-            const currentSet = currentX === (keyX.current ?? keyX.applied ?? defaultX) && currentY === (keyY.current ?? keyY.applied ?? defaultY);
+            const currentSet =
+              currentX === (keyX.current ?? keyX.applied ?? defaultX) &&
+              currentY === (keyY.current ?? keyY.applied ?? defaultY);
             const appliedSet = currentX === (keyX.applied ?? defaultX) && currentY === (keyY.applied ?? defaultY);
 
             if (currentSet) {
               return (
                 <Icon
                   key={x}
-                  className={cn(
-                    "flex-grid",
-                    currentSet && appliedSet ? null : "changed",
-                  )}
+                  className={cn("flex-grid", currentSet && appliedSet ? null : "changed")}
                   title={`${currentX} ${currentY}`}
                 />
               );

@@ -8,11 +8,7 @@ const testProjectPath = path.resolve(testProjectRoot, "001");
 /**
  * Find the tsconfig.json for the test project.
  */
-const configPath = ts.findConfigFile(
-  testProjectRoot,
-  ts.sys.fileExists,
-  "tsconfig.json"
-);
+const configPath = ts.findConfigFile(testProjectRoot, ts.sys.fileExists, "tsconfig.json");
 
 if (!configPath) {
   throw new Error("Could not find a valid 'tsconfig.json'.");
@@ -23,11 +19,7 @@ const configFile = ts.readConfigFile(configPath, ts.sys.readFile);
 /*
  * Parse the tsconfig.json for the test project.
  */
-const compilerOptions = ts.parseJsonConfigFileContent(
-  configFile.config,
-  ts.sys,
-  testProjectRoot
-);
+const compilerOptions = ts.parseJsonConfigFileContent(configFile.config, ts.sys, testProjectRoot);
 
 /**
  * Create a test program for the given source files.
@@ -44,7 +36,7 @@ export function createTestProgram(sourceFiles: string[]) {
  * Test files for test project 001.
  */
 export const testFile001 = {
-  button: path.join(testProjectPath, "Button.tsx"),
+  button: path.join(testProjectPath, "Button.tsx")
 };
 
 // Check if all test files exist in test project 001.

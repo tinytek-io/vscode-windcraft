@@ -1,7 +1,6 @@
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
 import { useCallback } from "react";
 
-
 export function useOverflow() {
   const { getValueOneOf, updateCurrentStyles } = useExtensionState();
   const clipContent = getValueOneOf(["overflow-hidden", "overflow-auto"]);
@@ -24,6 +23,6 @@ export function useOverflow() {
 
   return {
     clipContent,
-    toggleClipContent,
+    toggleClipContent
   };
 }

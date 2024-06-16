@@ -17,7 +17,16 @@ export type NumberInputProps = {
 };
 
 export function NumberInput({
-  icon: Icon, value, applied, min = 0, max = 100, placeholder, className, disabled, onChange, onFocus,
+  icon: Icon,
+  value,
+  applied,
+  min = 0,
+  max = 100,
+  placeholder,
+  className,
+  disabled,
+  onChange,
+  onFocus
 }: NumberInputProps) {
   const resizeRef = useRef<HTMLDivElement | null>(null);
   useWheelSelectIndex({
@@ -26,17 +35,11 @@ export function NumberInput({
     min,
     max,
     onChange,
-    disabled,
+    disabled
   });
 
   return (
-    <div
-      ref={resizeRef}
-      className={cn(
-        "number-input flex w-16 rounded border align-center",
-        className
-      )}
-    >
+    <div ref={resizeRef} className={cn("number-input flex w-16 rounded border align-center", className)}>
       {Icon ? <Icon className="icon" /> : null}
       <input
         type="number"
@@ -46,10 +49,8 @@ export function NumberInput({
         value={value}
         onChange={(e) => onChange(parseInt(e.target.value, 10))}
         onFocus={onFocus}
-        className={cn(
-          "number-input w-full bg-transparent",
-          value !== applied ? "changed" : null
-        )} />
+        className={cn("number-input w-full bg-transparent", value !== applied ? "changed" : null)}
+      />
     </div>
   );
 }

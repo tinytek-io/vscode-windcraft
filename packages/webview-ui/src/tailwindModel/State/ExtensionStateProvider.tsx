@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useReducer } from "react";
 import { StyleState, createInitialState, reducer } from "./reducer";
 import { Action } from "./actions";
 import { TailwindStyle, addStylesToCurrent, createClassName, removeStylesFromCurrent } from "../lib/styleHelpers";
@@ -13,15 +6,18 @@ import { bridge } from "../../utilities/Bridge";
 import { ColorName, parseColorName } from "../../types/color";
 import { OptionalTailwindStyle, CurrentAppliedType, KeySuffixMap, UIValue, TailwindSuffix } from "../../types/general";
 
-type ExtensionMessageTypes = {
-  type: "INITIALIZE_SELECTION",
-  currentClassName: string,
-  scopeClassNames: string[],
-} | {
-  type: "CLEAR_SELECTION",
-} | {
-  type: "CLEAR_TAILWIND_STYLES",
-};
+type ExtensionMessageTypes =
+  | {
+      type: "INITIALIZE_SELECTION";
+      currentClassName: string;
+      scopeClassNames: string[];
+    }
+  | {
+      type: "CLEAR_SELECTION";
+    }
+  | {
+      type: "CLEAR_TAILWIND_STYLES";
+    };
 
 export interface ExtensionState {
   styleState: StyleState;
@@ -52,7 +48,7 @@ export interface ExtensionStateContextType extends ExtensionState {
   /**
    * Get a tailwind class based on a list of options
    * e.g. getValueOneOf(["bg-red-500", "bg-blue-500"]) => "bg-red-500" or "bg-blue-500" or undefined
-   * 
+   *
    * Note: endOfStyles is an optional parameter that can be used to stop the search at a specific style
    */
   getValueOneOf: (options: string[], endOfStyles?: string) => CurrentAppliedType<UIValue | undefined>;
@@ -70,32 +66,38 @@ export interface ExtensionStateContextType extends ExtensionState {
 
 export const ExtensionStateContext = createContext<ExtensionStateContextType>({
   styleState: createInitialState(),
-  dispatch: () => { },
-  updateCurrentStyles: () => { },
+  dispatch: () => {},
+  updateCurrentStyles: () => {},
   hasExactValue: () => ({ current: false, applied: false }),
   getBySuffix: () => ({ current: undefined, applied: undefined }),
   getValueByPrefix: () => ({ current: undefined, applied: undefined }),
   getValueOneOf: () => ({ current: undefined, applied: undefined }),
   getValueByPrefixOneOf: () => ({ current: undefined, applied: undefined }),
-  getColorByPrefix: () => ({ current: undefined, applied: undefined }),
+  getColorByPrefix: () => ({ current: undefined, applied: undefined })
 });
 
 type ExtensionStateProviderProps = {
   children: React.ReactNode;
 };
 
-export function ExtensionStateProvider({
-  children,
-}: Readonly<ExtensionStateProviderProps>) {
+export function ExtensionStateProvider({ children }: Readonly<ExtensionStateProviderProps>) {
   const [styleState, dispatch] = useReducer(reducer, createInitialState());
 
   const updateCurrentStyles = useCallback(
     async (removeStyles: OptionalTailwindStyle[], addStyles: OptionalTailwindStyle[]) => {
-      const removedStyles = removeStylesFromCurrent(styleState.tailwindStyles, removeStyles.filter(Boolean) as TailwindStyle[], styleState.modifierState);
-      const addedStyles = addStylesToCurrent(removedStyles, addStyles.filter(Boolean) as TailwindStyle[], styleState.modifierState);
+      const removedStyles = removeStylesFromCurrent(
+        styleState.tailwindStyles,
+        removeStyles.filter(Boolean) as TailwindStyle[],
+        styleState.modifierState
+      );
+      const addedStyles = addStylesToCurrent(
+        removedStyles,
+        addStyles.filter(Boolean) as TailwindStyle[],
+        styleState.modifierState
+      );
       const className = createClassName({
         customStyles: styleState.customStyles,
-        tailwindStyles: addedStyles,
+        tailwindStyles: addedStyles
       });
 
       console.log(`Call remote method: "${className}"`);
@@ -107,8 +109,8 @@ export function ExtensionStateProvider({
           type: "CODE_SELECTION",
           payload: {
             currentClassName: result,
-            scopeClassNames: null,
-          },
+            scopeClassNames: null
+          }
         });
       } else {
         console.error("Error setting class name");
@@ -124,7 +126,7 @@ export function ExtensionStateProvider({
   const hasExactValue: ExtensionStateContextType["hasExactValue"] = useCallback(
     (value: string) => ({
       current: hasExactValueStyle(styleState.currentTailwindStyles, value),
-      applied: hasExactValueStyle(styleState.appliedTailwindStyles, value),
+      applied: hasExactValueStyle(styleState.appliedTailwindStyles, value)
     }),
     [styleState]
   );
@@ -132,7 +134,7 @@ export function ExtensionStateProvider({
   const getBySuffix: ExtensionStateContextType["getBySuffix"] = useCallback(
     (prefix: string, kv: KeySuffixMap) => ({
       current: getBySuffixStyle(styleState.currentTailwindStyles, prefix, kv),
-      applied: getBySuffixStyle(styleState.appliedTailwindStyles, prefix, kv),
+      applied: getBySuffixStyle(styleState.appliedTailwindStyles, prefix, kv)
     }),
     [hasExactValue]
   );
@@ -140,21 +142,23 @@ export function ExtensionStateProvider({
   const getValueByPrefix: ExtensionStateContextType["getValueByPrefix"] = useCallback(
     (prefix: string, not: string[] = []) => ({
       current: getValueByPrefixStyle(styleState.currentTailwindStyles, prefix, not),
-      applied: getValueByPrefixStyle(styleState.appliedTailwindStyles, prefix, not),
-    }), [styleState]
+      applied: getValueByPrefixStyle(styleState.appliedTailwindStyles, prefix, not)
+    }),
+    [styleState]
   );
 
   const getColorByPrefix: ExtensionStateContextType["getColorByPrefix"] = useCallback(
     (prefix: string, not: string[] = []) => ({
       current: getColorByPrefixStyle(styleState.currentTailwindStyles, prefix, not),
-      applied: getColorByPrefixStyle(styleState.appliedTailwindStyles, prefix, not),
-    }), [styleState]
+      applied: getColorByPrefixStyle(styleState.appliedTailwindStyles, prefix, not)
+    }),
+    [styleState]
   );
 
   const getValueOneOf: ExtensionStateContextType["getValueOneOf"] = useCallback(
     (options: string[], endOfStyles?: string) => ({
       current: getValueOneOfStyle(styleState.currentTailwindStyles, options, endOfStyles),
-      applied: getValueOneOfStyle(styleState.appliedTailwindStyles, options, endOfStyles),
+      applied: getValueOneOfStyle(styleState.appliedTailwindStyles, options, endOfStyles)
     }),
     [styleState]
   );
@@ -162,7 +166,7 @@ export function ExtensionStateProvider({
   const getValueByPrefixOneOf: ExtensionStateContextType["getValueByPrefixOneOf"] = useCallback(
     (prefixes: string[]) => ({
       current: getValueByPrefixOneOfStyle(styleState.currentTailwindStyles, prefixes),
-      applied: getValueByPrefixOneOfStyle(styleState.appliedTailwindStyles, prefixes),
+      applied: getValueByPrefixOneOfStyle(styleState.appliedTailwindStyles, prefixes)
     }),
     [styleState]
   );
@@ -178,8 +182,8 @@ export function ExtensionStateProvider({
               type: "CODE_SELECTION",
               payload: {
                 currentClassName: message.currentClassName,
-                scopeClassNames: message.scopeClassNames,
-              },
+                scopeClassNames: message.scopeClassNames
+              }
             });
           } catch (error) {
             console.error("Error parsing selection update payload", error);
@@ -189,7 +193,7 @@ export function ExtensionStateProvider({
         case "CLEAR_SELECTION": {
           console.log("Cleared selection");
           dispatch({
-            type: "CODE_DESELECTION",
+            type: "CODE_DESELECTION"
           });
           break;
         }
@@ -221,16 +225,12 @@ export function ExtensionStateProvider({
       getValueByPrefix,
       getValueOneOf,
       getValueByPrefixOneOf,
-      getColorByPrefix,
+      getColorByPrefix
     }),
     [styleState, dispatch, updateCurrentStyles]
   );
 
-  return (
-    <ExtensionStateContext.Provider value={value}>
-      {children}
-    </ExtensionStateContext.Provider>
-  );
+  return <ExtensionStateContext.Provider value={value}>{children}</ExtensionStateContext.Provider>;
 }
 
 export function useExtensionState() {
@@ -244,19 +244,19 @@ function getValueOneOfStyle(styles: TailwindStyle[], options: string[], endOfSty
 }
 
 function getValueByPrefixOneOfStyle(styles: TailwindStyle[], prefixes: string[]) {
-  return styles.find((s) => prefixes.find(p => s.startsWith(p)));
+  return styles.find((s) => prefixes.find((p) => s.startsWith(p)));
 }
 
 function getColorByPrefixStyle(styles: TailwindStyle[], prefix: string, not: string[] = []) {
   return styles
-    .find((s) => s.startsWith(prefix) && !not.some(n => s.startsWith(n)) && parseColorName(s.slice(prefix.length)) != null)
+    .find(
+      (s) => s.startsWith(prefix) && !not.some((n) => s.startsWith(n)) && parseColorName(s.slice(prefix.length)) != null
+    )
     ?.slice(prefix.length) as ColorName | undefined;
 }
 
 function getValueByPrefixStyle(styles: TailwindStyle[], prefix: string, not: string[] = []) {
-  return styles
-    .find((s) => s.startsWith(prefix) && !not.some(n => s.startsWith(n)))
-    ?.slice(prefix.length);
+  return styles.find((s) => s.startsWith(prefix) && !not.some((n) => s.startsWith(n)))?.slice(prefix.length);
 }
 
 function getBySuffixStyle(styles: TailwindStyle[], prefix: string, kv: KeySuffixMap) {

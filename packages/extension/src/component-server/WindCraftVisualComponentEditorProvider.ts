@@ -1,9 +1,7 @@
 import * as vscode from "vscode";
 import { getNonce } from "../utilities/getNonce";
 
-export class WindCraftVisualComponentEditorProvider
-  implements vscode.CustomTextEditorProvider
-{
+export class WindCraftVisualComponentEditorProvider implements vscode.CustomTextEditorProvider {
   public static register(
     context: vscode.ExtensionContext,
     componentServerHost: string,
@@ -39,14 +37,14 @@ export class WindCraftVisualComponentEditorProvider
   ): Promise<void> {
     // Setup initial content for the webview
     webviewPanel.webview.options = {
-      enableScripts: true,
+      enableScripts: true
     };
     webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
     function updateWebview() {
       webviewPanel.webview.postMessage({
         type: "update",
-        text: document.getText(),
+        text: document.getText()
       });
     }
 
@@ -58,13 +56,11 @@ export class WindCraftVisualComponentEditorProvider
     // Remember that a single text document can also be shared between multiple custom
     // editors (this happens for example when you split a custom editor)
 
-    const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(
-      (e) => {
-        if (e.document.uri.toString() === document.uri.toString()) {
-          updateWebview();
-        }
+    const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument((e) => {
+      if (e.document.uri.toString() === document.uri.toString()) {
+        updateWebview();
       }
-    );
+    });
 
     // Make sure we get rid of the listener when our editor is closed.
     webviewPanel.onDidDispose(() => {
@@ -104,7 +100,7 @@ export class WindCraftVisualComponentEditorProvider
       `default-src 'none';`,
       `style-src ${webview.cspSource} ${this._componentServerHost} 'unsafe-inline';`,
       `script-src 'nonce-${nonce}' ${webview.cspSource} ${this._componentServerHost};`,
-      `connect-src 'self' ${this._componentServerWebSocketHost} ${this._componentServerHost};`,
+      `connect-src 'self' ${this._componentServerWebSocketHost} ${this._componentServerHost};`
     ].join(" ");
 
     return `

@@ -13,31 +13,17 @@ export type HorizontalConstraints = {
 };
 
 export const horizontalConstraintNone = "Scale";
-export type HorizontalConstraintOption =
-  | "Left"
-  | "Right"
-  | "Left and Right"
-  | "Center"
-  | "Scale";
+export type HorizontalConstraintOption = "Left" | "Right" | "Left and Right" | "Center" | "Scale";
 export const horizontalConstraintOptions: HorizontalConstraintOption[] = [
   "Left",
   "Right",
   "Left and Right",
   "Center",
-  "Scale",
+  "Scale"
 ];
 
-export type HorizontalSelectValue =
-  | "right"
-  | "left"
-  | "insetX"
-  | "left-right"
-  | "scale-x";
+export type HorizontalSelectValue = "right" | "left" | "insetX" | "left-right" | "scale-x";
 
-export function isHorizontalConstraintOption(
-  value: string
-): value is HorizontalConstraintOption {
-  return horizontalConstraintOptions.includes(
-    value as HorizontalConstraintOption
-  );
+export function isHorizontalConstraintOption(value: string): value is HorizontalConstraintOption {
+  return horizontalConstraintOptions.includes(value as HorizontalConstraintOption);
 }

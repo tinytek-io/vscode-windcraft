@@ -11,8 +11,8 @@ export type Action =
 export interface CodeSelection {
   type: "CODE_SELECTION";
   payload: {
-    currentClassName: string,
-    scopeClassNames: string[] | null,
+    currentClassName: string;
+    scopeClassNames: string[] | null;
   };
 }
 

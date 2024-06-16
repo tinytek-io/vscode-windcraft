@@ -16,11 +16,7 @@ export function BackdropEffectSection() {
         />
       </SectionHeader>
       {configuredBackdropEffects.map((type) => (
-        <BackdropEffectInput
-          key={type}
-          type={type}
-          availableTypes={availableBackdropEffects}
-        />
+        <BackdropEffectInput key={type} type={type} availableTypes={availableBackdropEffects} />
       ))}
     </div>
   );

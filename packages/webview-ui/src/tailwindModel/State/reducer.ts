@@ -11,7 +11,7 @@ import {
   currentTailwindStylesFilter,
   getTailwindValue,
   removeStylesFromCurrent,
-  scopeTailwindStylesFilter,
+  scopeTailwindStylesFilter
 } from "../lib/styleHelpers";
 import { Action } from "./actions";
 
@@ -50,7 +50,7 @@ export function createInitialState(): StyleState {
     currentTailwindStyles: [],
     appliedTailwindStyles: [],
     bothTailwindStyles: [],
-    bothTailwindValues: [],
+    bothTailwindValues: []
   };
 }
 
@@ -62,28 +62,16 @@ export function reducer(state: StyleState, action: Action): StyleState {
     }
     case "CODE_SELECTION": {
       const currentClassName = action.payload.currentClassName;
-      const scopeClassNames =
-        action.payload.scopeClassNames || state.scopeClassNames || [];
+      const scopeClassNames = action.payload.scopeClassNames || state.scopeClassNames || [];
 
       const scopeTailwindStyles = createScopedStyleState(scopeClassNames);
 
-      const { customStyles, tailwindStyles } =
-        createStyleState(currentClassName);
-      const currentTailwindStyles = getCurrentTailwindStyles(
-        state.modifierState,
-        tailwindStyles
-      );
+      const { customStyles, tailwindStyles } = createStyleState(currentClassName);
+      const currentTailwindStyles = getCurrentTailwindStyles(state.modifierState, tailwindStyles);
 
-      const appliedTailwindStyles = getAppliedTailwindStyles(
-        state.modifierState,
-        tailwindStyles,
-        scopeTailwindStyles
-      );
+      const appliedTailwindStyles = getAppliedTailwindStyles(state.modifierState, tailwindStyles, scopeTailwindStyles);
 
-      const bothTailwindStyles = [
-        ...currentTailwindStyles,
-        ...appliedTailwindStyles,
-      ];
+      const bothTailwindStyles = [...currentTailwindStyles, ...appliedTailwindStyles];
 
       console.log(action.type, {
         modifierState: state.modifierState,
@@ -101,45 +89,31 @@ export function reducer(state: StyleState, action: Action): StyleState {
         currentTailwindStyles,
         appliedTailwindStyles,
         bothTailwindStyles,
-        bothTailwindValues: bothTailwindStyles.map(getTailwindValue),
+        bothTailwindValues: bothTailwindStyles.map(getTailwindValue)
       };
     }
     case "ADD_TAILWIND_STYLE": {
       return {
         ...state,
-        tailwindStyles: addStylesToCurrent(
-          state.tailwindStyles,
-          [action.payload],
-          state.modifierState
-        ),
+        tailwindStyles: addStylesToCurrent(state.tailwindStyles, [action.payload], state.modifierState)
       };
     }
     case "REMOVE_TAILWIND_STYLE": {
       return {
         ...state,
-        tailwindStyles: removeStylesFromCurrent(
-          state.tailwindStyles,
-          [action.payload],
-          state.modifierState
-        ),
+        tailwindStyles: removeStylesFromCurrent(state.tailwindStyles, [action.payload], state.modifierState)
       };
     }
     case "SET_MODIFIER_STATE": {
       const modifierState = action.payload;
-      const currentTailwindStyles = getCurrentTailwindStyles(
-        modifierState,
-        state.tailwindStyles
-      );
+      const currentTailwindStyles = getCurrentTailwindStyles(modifierState, state.tailwindStyles);
 
       const appliedTailwindStyles = getAppliedTailwindStyles(
         modifierState,
         state.tailwindStyles,
         state.scopeTailwindStyles
       );
-      const bothTailwindStyles = [
-        ...currentTailwindStyles,
-        ...appliedTailwindStyles,
-      ];
+      const bothTailwindStyles = [...currentTailwindStyles, ...appliedTailwindStyles];
 
       console.log(action.type, {
         modifierState,
@@ -153,7 +127,7 @@ export function reducer(state: StyleState, action: Action): StyleState {
         currentTailwindStyles,
         appliedTailwindStyles,
         bothTailwindStyles,
-        bothTailwindValues: bothTailwindStyles.map(getTailwindValue),
+        bothTailwindValues: bothTailwindStyles.map(getTailwindValue)
       };
     }
     default:
@@ -161,14 +135,9 @@ export function reducer(state: StyleState, action: Action): StyleState {
   }
 }
 
-function getCurrentTailwindStyles(
-  modifierState: string,
-  tailwindStyles: TailwindStyle[]
-): TailwindStyle[] {
+function getCurrentTailwindStyles(modifierState: string, tailwindStyles: TailwindStyle[]): TailwindStyle[] {
   return uniqueArray(
-    sortClassList(
-      tailwindStyles.filter(currentTailwindStylesFilter(modifierState))
-    ).map(getTailwindValue)
+    sortClassList(tailwindStyles.filter(currentTailwindStylesFilter(modifierState))).map(getTailwindValue)
   ).toReversed();
 }
 
@@ -179,12 +148,8 @@ function getAppliedTailwindStyles(
 ): TailwindStyle[] {
   const mergedTailwindStyles = [
     ...tailwindStyles.filter(appliedTailwindStylesFilter(modifierState)),
-    ...scopeTailwindStyles.flat().filter(scopeTailwindStylesFilter(modifierState)),
+    ...scopeTailwindStyles.flat().filter(scopeTailwindStylesFilter(modifierState))
   ];
 
-  return uniqueArray(
-    sortClassList(
-      mergedTailwindStyles
-    ).map(getTailwindValue)
-  ).toReversed();
+  return uniqueArray(sortClassList(mergedTailwindStyles).map(getTailwindValue)).toReversed();
 }

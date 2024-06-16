@@ -5,7 +5,7 @@ import {
   VerticalConstraints,
   VerticalConstraintOption,
   VerticalSelectValue,
-  isVerticalConstraintOption,
+  isVerticalConstraintOption
 } from "../../types/constraintVertical";
 import { useKeyboardShift } from "./useKeyboardShift";
 import { useCallback } from "react";
@@ -13,8 +13,7 @@ import { useCallback } from "react";
 export function useVerticalConstraint() {
   const shift = useKeyboardShift();
 
-  const { updateCurrentStyles, getValueByPrefix, getValueByPrefixOneOf } =
-    useExtensionState();
+  const { updateCurrentStyles, getValueByPrefix, getValueByPrefixOneOf } = useExtensionState();
 
   const firstConstraint = getValueByPrefixOneOf(["top", "bottom", "inset-y"]);
   const isInset = getIsInsetY(firstConstraint);
@@ -27,7 +26,7 @@ export function useVerticalConstraint() {
     {
       top,
       bottom,
-      insetY,
+      insetY
     },
     isInset
   );
@@ -124,7 +123,7 @@ export function useVerticalConstraint() {
     verticalOption,
     // Actions
     verticalConstraintValueChange,
-    verticalConstraintOptionChange,
+    verticalConstraintOptionChange
   };
 }
 
@@ -150,56 +149,51 @@ export function getIsInsetY(v: CurrentAppliedType<string | undefined>) {
   return false;
 }
 
-function getValidConstraints(
-  state: VerticalConstraints,
-  isInsetY: boolean
-): VerticalConstraintsState {
+function getValidConstraints(state: VerticalConstraints, isInsetY: boolean): VerticalConstraintsState {
   return isInsetY
     ? {
         top: getCurrentAppliedType(false),
         bottom: getCurrentAppliedType(false),
         insetY: {
           current: state.insetY.current != null,
-          applied: state.insetY.applied != null,
-        },
+          applied: state.insetY.applied != null
+        }
       }
     : {
         top: {
           current: state.top.current != null,
-          applied: state.top.applied != null,
+          applied: state.top.applied != null
         },
         bottom: {
           current: state.bottom.current != null,
-          applied: state.bottom.applied != null,
+          applied: state.bottom.applied != null
         },
-        insetY: getCurrentAppliedType(false),
+        insetY: getCurrentAppliedType(false)
       };
 }
 
-function getVerticalOption(
-  state: VerticalConstraintsState
-): CurrentAppliedType<VerticalConstraintOption | undefined> {
+function getVerticalOption(state: VerticalConstraintsState): CurrentAppliedType<VerticalConstraintOption | undefined> {
   const current = getVerticalConstraintOption({
     top: state.top.current || state.top.applied,
     bottom: state.bottom.current || state.bottom.applied,
-    insetY: state.insetY.current || state.insetY.applied,
+    insetY: state.insetY.current || state.insetY.applied
   });
   const applied = getVerticalConstraintOption({
     top: state.top.applied,
     bottom: state.bottom.applied,
-    insetY: state.insetY.applied,
+    insetY: state.insetY.applied
   });
 
   return {
     current,
-    applied,
+    applied
   };
 }
 
 function getVerticalConstraintOption({
   top,
   bottom,
-  insetY,
+  insetY
 }: {
   top: boolean;
   bottom: boolean;
@@ -216,9 +210,7 @@ function getVerticalConstraintOption({
   }
 }
 
-export function getVerticalConstraintValue(
-  verticalOption: VerticalConstraintOption
-): VerticalSelectValue {
+export function getVerticalConstraintValue(verticalOption: VerticalConstraintOption): VerticalSelectValue {
   switch (verticalOption) {
     case "Top":
       return "top";

@@ -13,29 +13,17 @@ export type VerticalConstraints = {
 };
 
 export const verticalConstraintNone = "Scale";
-export type VerticalConstraintOption =
-  | "Top"
-  | "Bottom"
-  | "Top and Bottom"
-  | "Center"
-  | "Scale";
+export type VerticalConstraintOption = "Top" | "Bottom" | "Top and Bottom" | "Center" | "Scale";
 export const verticalConstraintOptions: VerticalConstraintOption[] = [
   "Top",
   "Bottom",
   "Top and Bottom",
   "Center",
-  "Scale",
+  "Scale"
 ];
 
-export type VerticalSelectValue =
-  | "top"
-  | "bottom"
-  | "insetY"
-  | "top-bottom"
-  | "scale-y";
+export type VerticalSelectValue = "top" | "bottom" | "insetY" | "top-bottom" | "scale-y";
 
-export function isVerticalConstraintOption(
-  value: string
-): value is VerticalConstraintOption {
+export function isVerticalConstraintOption(value: string): value is VerticalConstraintOption {
   return verticalConstraintOptions.includes(value as VerticalConstraintOption);
 }

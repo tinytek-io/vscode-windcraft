@@ -6,16 +6,12 @@ export function useBorderSection() {
 
   const borderClasses = useMemo(
     () => ({
-      current: styleState.currentTailwindStyles.filter(
-        (s) => s.startsWith("border-") || s === "border"
-      ),
-      applied: styleState.appliedTailwindStyles.filter(
-        (s) => s.startsWith("border-") || s === "border"
-      ),
+      current: styleState.currentTailwindStyles.filter((s) => s.startsWith("border-") || s === "border"),
+      applied: styleState.appliedTailwindStyles.filter((s) => s.startsWith("border-") || s === "border"),
       all: styleState.tailwindStyles.filter((s) => {
         const end = s.split(":").pop() ?? "";
         return end.startsWith("border-") || end === "border";
-      }),
+      })
     }),
     [styleState]
   );
@@ -24,16 +20,13 @@ export function useBorderSection() {
     () => updateCurrentStyles(borderClasses.all, []),
     [updateCurrentStyles, borderClasses.current]
   );
-  const addBorder = useCallback(
-    () => updateCurrentStyles([], ["border", "border-transparent"]),
-    [updateCurrentStyles]
-  );
+  const addBorder = useCallback(() => updateCurrentStyles([], ["border", "border-transparent"]), [updateCurrentStyles]);
 
   return {
     // State
     borderClasses,
     // Actions
     removeBorder,
-    addBorder,
+    addBorder
   };
 }

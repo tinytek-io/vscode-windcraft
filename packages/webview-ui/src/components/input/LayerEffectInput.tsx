@@ -14,7 +14,6 @@ import { TfiCamera } from "react-icons/tfi";
 import { LayerEffectType } from "../../types/layerEffects";
 import { useLayerEffectValue } from "../hooks/useLayerEffects";
 
-
 export type EffectInputProps = {
   type: LayerEffectType;
   availableTypes: LayerEffectType[];
@@ -36,19 +35,18 @@ export function LayerEffectInput({ type, availableTypes }: EffectInputProps) {
         options={[type, ...availableTypes].toSorted()}
         onChange={changeType}
         title="Layer effect type"
-        disabled={availableTypes.length === 0} />
+        disabled={availableTypes.length === 0}
+      />
       <Select
         icon={Icon}
         value={value.current ?? value.applied}
         applied={value.applied}
         options={allValues}
         onChange={setValue}
-        title={`Layer effect value`} />
+        title={`Layer effect value`}
+      />
       <LuMinus
-        className={cn(
-          "btn",
-          isChanged ? "" : "disabled",
-        )}
+        className={cn("btn", isChanged ? "" : "disabled")}
         onClick={isChanged ? removeValue : undefined}
         title="Remove layer effect"
       />
@@ -64,5 +62,5 @@ const layerEffectIcons: Record<LayerEffectType, IconType> = {
   HueRotate: TbColorSwatch,
   Invert: IoInvertModeOutline,
   Saturate: IoMdColorPalette,
-  Sepia: TfiCamera,
+  Sepia: TfiCamera
 };

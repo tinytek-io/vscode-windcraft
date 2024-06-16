@@ -14,7 +14,6 @@ import { TfiCamera } from "react-icons/tfi";
 import { useBackdropEffectValue } from "../hooks/useBackdropEffects";
 import { BackdropEffectType } from "../../types/backdropEffects";
 
-
 export type EffectInputProps = {
   type: BackdropEffectType;
   availableTypes: BackdropEffectType[];
@@ -36,19 +35,18 @@ export function BackdropEffectInput({ type, availableTypes }: Readonly<EffectInp
         options={[type, ...availableTypes].toSorted()}
         onChange={changeType}
         title="Backdrop effect type"
-        disabled={availableTypes.length === 0} />
+        disabled={availableTypes.length === 0}
+      />
       <Select
         icon={Icon}
         value={value.current ?? value.applied}
         applied={value.applied}
         options={allValues}
         onChange={setValue}
-        title={`Backdrop effect value`} />
+        title={`Backdrop effect value`}
+      />
       <LuMinus
-        className={cn(
-          "btn",
-          isChanged ? "" : "disabled",
-        )}
+        className={cn("btn", isChanged ? "" : "disabled")}
         onClick={isChanged ? removeValue : undefined}
         title="Remove backdrop effect"
       />
@@ -65,5 +63,5 @@ const backdropEffectIcons: Record<BackdropEffectType, IconType> = {
   Invert: IoInvertModeOutline,
   Opacity: MdOpacity,
   Saturate: IoMdColorPalette,
-  Sepia: TfiCamera,
+  Sepia: TfiCamera
 };

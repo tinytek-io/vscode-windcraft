@@ -8,7 +8,7 @@ import {
   CgDistributeHorizontal,
   CgMoreAlt,
   CgSidebar,
-  CgSidebarRight,
+  CgSidebarRight
 } from "react-icons/cg";
 import { LuMinus, LuPlus } from "react-icons/lu";
 import { TbBorderSides } from "react-icons/tb";
@@ -31,15 +31,9 @@ export function FlexLayoutSection() {
     <div>
       <SectionHeader title="Flex layout">
         {flex.enabled ? (
-          <LuMinus
-            className="btn"
-            onClick={flex.removeFlex}
-          />
+          <LuMinus className="btn" onClick={flex.removeFlex} />
         ) : (
-          <LuPlus
-            className="btn"
-            onClick={flex.addFlex}
-          />
+          <LuPlus className="btn" onClick={flex.addFlex} />
         )}
       </SectionHeader>
       {flex.enabled && (
@@ -51,7 +45,9 @@ export function FlexLayoutSection() {
                 className={cn(
                   "btn",
                   flex.direction.current === "flex-col" ? "selected" : null,
-                  flex.direction.current === "flex-col" && flex.direction.current !== flex.direction.applied ? "changed" : null,
+                  flex.direction.current === "flex-col" && flex.direction.current !== flex.direction.applied
+                    ? "changed"
+                    : null
                 )}
                 onClick={() => flex.setDirection("flex-col")}
               />
@@ -59,7 +55,9 @@ export function FlexLayoutSection() {
                 className={cn(
                   "btn",
                   (flex.direction.current ?? "flex-row") === "flex-row" ? "selected" : null,
-                  flex.direction.current === "flex-row" && flex.direction.current !== flex.direction.applied ? "changed" : null,
+                  flex.direction.current === "flex-row" && flex.direction.current !== flex.direction.applied
+                    ? "changed"
+                    : null
                 )}
                 onClick={() => flex.setDirection("flex-row")}
               />
@@ -67,7 +65,9 @@ export function FlexLayoutSection() {
                 className={cn(
                   "btn",
                   flex.direction.current === "flex-wrap" ? "selected" : null,
-                  flex.direction.current === "flex-wrap" && flex.direction.current !== flex.direction.applied ? "changed" : null,
+                  flex.direction.current === "flex-wrap" && flex.direction.current !== flex.direction.applied
+                    ? "changed"
+                    : null
                 )}
                 onClick={() => flex.setDirection("flex-wrap")}
               />
@@ -75,9 +75,7 @@ export function FlexLayoutSection() {
             <div className="flex align-center">
               {flex.direction.current !== "flex-wrap" ? (
                 <Select
-                  icon={
-                    flex.direction.current === "flex-col" ? CgSpaceBetweenV : CgSpaceBetween
-                  }
+                  icon={flex.direction.current === "flex-col" ? CgSpaceBetweenV : CgSpaceBetween}
                   value={gap.value.current ?? gap.value.applied ?? gapNone}
                   applied={gap.value.applied ?? gapNone}
                   options={gapValues}
@@ -167,16 +165,14 @@ export function FlexLayoutSection() {
           </div>
           <div className="flex flex-col justify-between px-1 gap-2">
             {/* right */}
-            <div>
-              {/* <CgMoreAlt /> */}
-            </div>
+            <div>{/* <CgMoreAlt /> */}</div>
             <div></div>
             <div>
               <TbBorderSides
                 className={cn(
                   "btn",
                   padding.isAdvanced ? "selected" : null,
-                  padding.isAdvancedChanged ? "changed" : null,
+                  padding.isAdvancedChanged ? "changed" : null
                 )}
                 onClick={padding.toggleMode}
               />

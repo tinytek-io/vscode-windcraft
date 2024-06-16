@@ -4,14 +4,14 @@ import { JsxAST } from "../ComponentAST/JsxAST";
 
 export const classNameSchema = z.object({
   position: JsxAST.positionSchema,
-  className: z.string().optional(),
+  className: z.string().optional()
 });
 
 export type ClassName = z.infer<typeof classNameSchema>;
 
 export const classNamesResultSchema = z.object({
   fileName: z.string(),
-  classNames: classNameSchema.array(),
+  classNames: classNameSchema.array()
 });
 
 export type ClassNamesResult = z.infer<typeof classNamesResultSchema>;
@@ -23,7 +23,7 @@ export type ClassNamesResult = z.infer<typeof classNamesResultSchema>;
  * @param program - TypeScript program.
  * @param typescript - TypeScript module.
  * @returns Array of class names or undefined if file not found.
- * 
+ *
  * @example
  * ```ts
  * const classNames = getClassNames("test.tsx", 170, program, ts);
@@ -47,7 +47,7 @@ export function getClassNames(
   // Array to store class names.
   const classNamesResult: ClassNamesResult = {
     fileName,
-    classNames: [],
+    classNames: []
   };
 
   /**
@@ -73,10 +73,7 @@ export function getClassNames(
      * Find the class name attribute and extract the class names.
      */
     jsxElement?.attributes.properties.forEach((jsxAttribute) => {
-      if (
-        typescript.isJsxAttribute(jsxAttribute) &&
-        jsxAttribute.name.getText() === "className"
-      ) {
+      if (typescript.isJsxAttribute(jsxAttribute) && jsxAttribute.name.getText() === "className") {
         jsxAttribute.forEachChild((className) => {
           // For now we only support string literals as class names.
           if (typescript.isStringLiteral(className)) {
@@ -85,8 +82,8 @@ export function getClassNames(
               className: className.text,
               position: {
                 start: className.getStart(),
-                end: className.getEnd(),
-              },
+                end: className.getEnd()
+              }
             });
           }
         });
@@ -100,8 +97,8 @@ export function getClassNames(
         className: undefined,
         position: {
           start: endPosition,
-          end: endPosition,
-        },
+          end: endPosition
+        }
       });
     }
 

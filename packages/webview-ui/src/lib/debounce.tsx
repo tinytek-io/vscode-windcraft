@@ -1,4 +1,3 @@
-
 export function debounce(fn: Function, delay: number) {
   let timeout: Timer | null = null;
   return function (...args: any[]) {

@@ -4,15 +4,7 @@ import { MdVerticalAlignCenter } from "react-icons/md";
 import { AiOutlineVerticalAlignTop, AiOutlineVerticalAlignBottom } from "react-icons/ai";
 import { RxAlignBaseline, RxTextAlignTop, RxTextAlignBottom } from "react-icons/rx";
 
-
-export type VerticalAlign = "baseline" |
-  "top" |
-  "middle" |
-  "bottom" |
-  "text-top" |
-  "text-bottom" |
-  "sub" |
-  "super";
+export type VerticalAlign = "baseline" | "top" | "middle" | "bottom" | "text-top" | "text-bottom" | "sub" | "super";
 export const verticalAlignMap: Record<VerticalAlign, string> = {
   top: "align-top",
   middle: "align-middle",
@@ -21,7 +13,7 @@ export const verticalAlignMap: Record<VerticalAlign, string> = {
   sub: "align-sub",
   super: "align-super",
   "text-top": "align-text-top",
-  "text-bottom": "align-text-bottom",
+  "text-bottom": "align-text-bottom"
 };
 export const verticalAlignClasses = [...Object.values(verticalAlignMap)];
 export const verticalAlignValues = Object.keys(verticalAlignMap);
@@ -40,7 +32,7 @@ export const verticalAlignIcons: Record<VerticalAlign, IconType> = {
   sub: ImSubscript2,
   super: ImSuperscript2,
   "text-top": RxTextAlignTop,
-  "text-bottom": RxTextAlignBottom,
+  "text-bottom": RxTextAlignBottom
 };
 
 export function getVerticalAlign(value: string): VerticalAlign {

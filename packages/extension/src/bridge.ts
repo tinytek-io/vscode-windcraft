@@ -77,7 +77,7 @@ export class ExtensionBridge {
         type: "callMethodError",
         id: data.id,
         name: data.name,
-        error: `Method ${data.name} not found`,
+        error: `Method ${data.name} not found`
       };
       this.webviewView.webview.postMessage(errorMethodResponse);
       return;
@@ -89,7 +89,7 @@ export class ExtensionBridge {
         type: "callMethodResult",
         id: data.id,
         name: data.name,
-        result,
+        result
       };
       this.webviewView.webview.postMessage(successMethodResponse);
     } catch (error) {
@@ -97,7 +97,7 @@ export class ExtensionBridge {
         type: "callMethodError",
         id: data.id,
         name: data.name,
-        error: error instanceof Error ? error.message : (error as string),
+        error: error instanceof Error ? error.message : (error as string)
       };
       this.webviewView.webview.postMessage(errorMethodResponse);
     }

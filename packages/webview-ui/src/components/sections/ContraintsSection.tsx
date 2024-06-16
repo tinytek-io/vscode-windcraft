@@ -11,8 +11,10 @@ import { useVerticalConstraint } from "../hooks/useVerticalConstraint";
 
 export function ConstraintsSection() {
   const { position, hasPosition, setPosition } = usePosition();
-  const { verticalConstraints, verticalOption, verticalConstraintOptionChange, verticalConstraintValueChange } = useVerticalConstraint();
-  const { horizontalConstraints, horizontalOption, horizontalConstraintOptionChange, horizontalConstraintValueChange } = useHorizontalConstraint();
+  const { verticalConstraints, verticalOption, verticalConstraintOptionChange, verticalConstraintValueChange } =
+    useVerticalConstraint();
+  const { horizontalConstraints, horizontalOption, horizontalConstraintOptionChange, horizontalConstraintValueChange } =
+    useHorizontalConstraint();
 
   if (!hasPosition) {
     return null;

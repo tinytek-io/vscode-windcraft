@@ -2,12 +2,7 @@ import { useCallback } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
 
 export type PositionType = "absolute" | "relative" | "fixed" | "sticky";
-export const positionValues: Readonly<PositionType[]> = [
-  "absolute",
-  "relative",
-  "fixed",
-  "sticky",
-];
+export const positionValues: Readonly<PositionType[]> = ["absolute", "relative", "fixed", "sticky"];
 
 export function usePosition() {
   const { getValueOneOf, updateCurrentStyles } = useExtensionState();
@@ -24,7 +19,7 @@ export function usePosition() {
         `bottom-${y}`,
         `inset-x-${x}`,
         `inset-y-${y}`,
-        `inset-${x}`,
+        `inset-${x}`
       ];
       const allClasses = [...positionValues, ...coordValues];
       if (position.applied === value || !value) {
@@ -41,6 +36,6 @@ export function usePosition() {
     position,
     hasPosition,
     // Actions
-    setPosition,
+    setPosition
   };
 }

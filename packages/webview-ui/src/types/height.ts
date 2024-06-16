@@ -60,7 +60,7 @@ export const heightValues = [
   "dvh",
   "min",
   "max",
-  "fit",
+  "fit"
 ];
 
 export const heightClasses = heightValues.map((h) => `${heightPrefix}${h}`);

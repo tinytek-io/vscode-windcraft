@@ -18,13 +18,9 @@ function App() {
   const hasSelection = useHasSelection();
 
   if (hasSelection) {
-    return (
-      <PropertiesPage />
-    );
+    return <PropertiesPage />;
   }
-  return (
-    <GlobalSettingsPage />
-  );
+  return <GlobalSettingsPage />;
 }
 
 export default App;

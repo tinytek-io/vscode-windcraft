@@ -16,9 +16,7 @@ const WINDCRAFT_TS_PLUGIN_ID = "@windcraft/ts-plugin";
 export async function configurePlugin(port: number) {
   // ref: https://code.visualstudio.com/api/references/contribution-points#Plugin-configuration
   // Get the TS extension
-  const tsExtension = vscode.extensions.getExtension<TsLanguageFeatures>(
-    TYPESCRIPT_EXTENSION_ID
-  );
+  const tsExtension = vscode.extensions.getExtension<TsLanguageFeatures>(TYPESCRIPT_EXTENSION_ID);
   if (!tsExtension) {
     return;
   }
@@ -34,13 +32,8 @@ export async function configurePlugin(port: number) {
     return;
   }
 
-  console.log(
-    "[TYPESCRIPT SERVER] Configure plugin",
-    WINDCRAFT_TS_PLUGIN_ID,
-    "on port",
-    port
-  );
+  console.log("[TYPESCRIPT SERVER] Configure plugin", WINDCRAFT_TS_PLUGIN_ID, "on port", port);
   api.configurePlugin(WINDCRAFT_TS_PLUGIN_ID, {
-    port,
+    port
   });
 }

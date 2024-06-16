@@ -7,23 +7,15 @@ import {
   borderWidthPrefixMap,
   isBorderWidthNormalType,
   BorderWidthValue,
-  allBorderWidthStyles,
+  allBorderWidthStyles
 } from "../../types/borderWidth";
 import { useFluffValue } from "./useFluffValue";
 
 export function useBorderConfig() {
   const { styleState, updateCurrentStyles } = useExtensionState();
 
-  const borderWidthMap: Record<
-    BorderWidthNormalType,
-    CurrentAppliedType<BorderWidthValue | undefined>
-  > = {
-    All: useFluffValue<BorderWidthValue>(
-      "border",
-      "1",
-      ["border-0", "border-2", "border-4", "border-8"],
-      "border-0"
-    ),
+  const borderWidthMap: Record<BorderWidthNormalType, CurrentAppliedType<BorderWidthValue | undefined>> = {
+    All: useFluffValue<BorderWidthValue>("border", "1", ["border-0", "border-2", "border-4", "border-8"], "border-0"),
     Top: useFluffValue<BorderWidthValue>(
       "border-t",
       "1",
@@ -47,7 +39,7 @@ export function useBorderConfig() {
       "1",
       ["border-l-0", "border-l-2", "border-l-4", "border-l-8"],
       "border-0"
-    ),
+    )
   };
 
   const widthTypes: CurrentAppliedType<BorderWidthNormalType[]> = {
@@ -56,45 +48,31 @@ export function useBorderConfig() {
       .map(([key]) => key) as BorderWidthNormalType[],
     applied: Object.entries(borderWidthMap)
       .filter(([_, v]) => (v.applied ?? "0") !== "0")
-      .map(([key]) => key) as BorderWidthNormalType[],
+      .map(([key]) => key) as BorderWidthNormalType[]
   };
 
   const borderWidthType: CurrentAppliedType<BorderWidthAllType | undefined> = {
     current:
-      widthTypes.current.length === 1
-        ? widthTypes.current[0]
-        : widthTypes.current.length > 1
-        ? "Custom"
-        : undefined,
+      widthTypes.current.length === 1 ? widthTypes.current[0] : widthTypes.current.length > 1 ? "Custom" : undefined,
 
     applied:
-      widthTypes.applied.length === 1
-        ? widthTypes.applied[0]
-        : widthTypes.applied.length > 1
-        ? "Custom"
-        : undefined,
+      widthTypes.applied.length === 1 ? widthTypes.applied[0] : widthTypes.applied.length > 1 ? "Custom" : undefined
   };
 
   const borderWidth: CurrentAppliedType<BorderWidthValue | undefined> = {
-    current: Object.values(borderWidthMap).find(
-      (v) => (v.current ?? v.applied) != null
-    )?.current,
+    current: Object.values(borderWidthMap).find((v) => (v.current ?? v.applied) != null)?.current,
 
-    applied: Object.values(borderWidthMap).find((v) => v.applied != null)
-      ?.applied,
+    applied: Object.values(borderWidthMap).find((v) => v.applied != null)?.applied
   };
 
   const setBorderWidth = useCallback(
     (newWidth: string) => {
-      const widthType =
-        borderWidthType.current ?? borderWidthType.applied ?? "All";
+      const widthType = borderWidthType.current ?? borderWidthType.applied ?? "All";
       const widthSuffix = newWidth === "1" ? "" : `-${newWidth}`;
       const prefixes =
         widthType === "Custom"
           ? widthTypes.current.map((type) => borderWidthPrefixMap[type]).flat()
-          : borderWidthPrefixMap[
-              borderWidthType.current ?? borderWidthType.applied ?? "All"
-            ];
+          : borderWidthPrefixMap[borderWidthType.current ?? borderWidthType.applied ?? "All"];
       const newClasses = prefixes.map((prefix) => `${prefix}${widthSuffix}`);
 
       if (widthType === "Custom" || widthType === "All") {
@@ -122,10 +100,7 @@ export function useBorderConfig() {
         } else {
           // For Top, Right, Bottom, Left we need to unset the other classes
           // TODO: Only set if state is not "root"
-          updateCurrentStyles(allBorderWidthStyles, [
-            "border-0",
-            ...newClasses,
-          ]);
+          updateCurrentStyles(allBorderWidthStyles, ["border-0", ...newClasses]);
         }
       }
     },
@@ -157,6 +132,6 @@ export function useBorderConfig() {
     // Actions
     setBorderWidth,
     setBorderType,
-    toggleBorder,
+    toggleBorder
   };
 }

@@ -6,7 +6,7 @@ import {
   placementXClasses,
   placementXPrefix,
   placementYClasses,
-  placementYPrefix,
+  placementYPrefix
 } from "../../types/placement";
 
 export function usePlacement() {
@@ -46,6 +46,6 @@ export function usePlacement() {
     placementX,
     placementY,
     setPlacementX,
-    setPlacementY,
+    setPlacementY
   };
 }

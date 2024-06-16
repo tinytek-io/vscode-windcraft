@@ -15,20 +15,10 @@ export function usePadding() {
   const top = getValueByPrefix("pt-");
   const bottom = getValueByPrefix("pb-");
 
-  const currentAdvanced = [
-    left.current,
-    right.current,
-    top.current,
-    bottom.current,
-  ].filter(Boolean).length
+  const currentAdvanced = [left.current, right.current, top.current, bottom.current].filter(Boolean).length
     ? true
     : undefined;
-  const appliedAdvanced = [
-    left.applied,
-    right.applied,
-    top.applied,
-    bottom.applied,
-  ].filter(Boolean).length
+  const appliedAdvanced = [left.applied, right.applied, top.applied, bottom.applied].filter(Boolean).length
     ? true
     : undefined;
   const currentSimple = x.current || y.current ? false : undefined;
@@ -42,22 +32,10 @@ export function usePadding() {
 
   const toggleMode = useCallback(() => {
     if (isAdvanced) {
-      const px =
-        left.current ??
-        right.current ??
-        left.applied ??
-        right.applied ??
-        paddingNone;
-      const py =
-        top.current ??
-        bottom.current ??
-        top.applied ??
-        bottom.applied ??
-        paddingNone;
+      const px = left.current ?? right.current ?? left.applied ?? right.applied ?? paddingNone;
+      const py = top.current ?? bottom.current ?? top.applied ?? bottom.applied ?? paddingNone;
       updateCurrentStyles(
-        paddingValues
-          .map((p) => [`pl-${p}`, `pr-${p}`, `pt-${p}`, `pb-${p}`])
-          .flat(),
+        paddingValues.map((p) => [`pl-${p}`, `pr-${p}`, `pt-${p}`, `pb-${p}`]).flat(),
         [[`px-${px}`], [`py-${py}`]].flat()
       );
     } else {
@@ -67,7 +45,7 @@ export function usePadding() {
         paddingValues.map((p) => [`px-${p}`, `py-${p}`]).flat(),
         [
           [`pl-${px}`, `pr-${px}`],
-          [`pt-${py}`, `pb-${py}`],
+          [`pt-${py}`, `pb-${py}`]
         ].flat()
       );
     }
@@ -191,6 +169,6 @@ export function usePadding() {
     updateTop,
     updateBottom,
     updateLeft,
-    updateRight,
+    updateRight
   };
 }

@@ -24,7 +24,7 @@ export function TextSection() {
     setFontSize,
     setFontWeight,
     setTextAlign,
-    setVerticalAlign,
+    setVerticalAlign
   } = useTextSettings();
 
   return (

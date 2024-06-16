@@ -39,6 +39,6 @@ export type CurrentAppliedType<T> = {
 export function getCurrentAppliedType<T>(value: T): CurrentAppliedType<T> {
   return {
     current: value,
-    applied: value,
+    applied: value
   };
 }

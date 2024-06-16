@@ -1,7 +1,6 @@
 import { ColorInput } from "./Color/ColorInput";
 import { useColor } from "../hooks/useColor";
 
-
 export function BorderColorInput() {
   const borderColor = useColor("border-");
 
@@ -15,6 +14,7 @@ export function BorderColorInput() {
       appliedColorName={borderColor.color.applied ?? "transparent"}
       onChange={(newColor) => {
         borderColor.setColor(newColor);
-      }} />
+      }}
+    />
   );
 }

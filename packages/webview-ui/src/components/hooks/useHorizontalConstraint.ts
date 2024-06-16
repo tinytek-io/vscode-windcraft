@@ -5,7 +5,7 @@ import {
   HorizontalConstraints,
   HorizontalConstraintOption,
   HorizontalSelectValue,
-  isHorizontalConstraintOption,
+  isHorizontalConstraintOption
 } from "../../types/constraintHorizontal";
 import { useKeyboardShift } from "./useKeyboardShift";
 import { useCallback } from "react";
@@ -13,8 +13,7 @@ import { useCallback } from "react";
 export function useHorizontalConstraint() {
   const shift = useKeyboardShift();
 
-  const { updateCurrentStyles, getValueByPrefix, getValueByPrefixOneOf } =
-    useExtensionState();
+  const { updateCurrentStyles, getValueByPrefix, getValueByPrefixOneOf } = useExtensionState();
 
   const firstConstraint = getValueByPrefixOneOf(["left", "right", "inset-x"]);
   const isInset = getIsInsetX(firstConstraint);
@@ -27,7 +26,7 @@ export function useHorizontalConstraint() {
     {
       left,
       right,
-      insetX,
+      insetX
     },
     isInset
   );
@@ -124,7 +123,7 @@ export function useHorizontalConstraint() {
     horizontalOption,
     // Actions
     horizontalConstraintValueChange,
-    horizontalConstraintOptionChange,
+    horizontalConstraintOptionChange
   };
 }
 
@@ -151,29 +150,26 @@ export function getIsInsetX(v: CurrentAppliedType<string | undefined>) {
   return false;
 }
 
-function getValidConstraints(
-  state: HorizontalConstraints,
-  isInsetY: boolean
-): HorizontalConstraintsState {
+function getValidConstraints(state: HorizontalConstraints, isInsetY: boolean): HorizontalConstraintsState {
   return isInsetY
     ? {
         left: getCurrentAppliedType(false),
         right: getCurrentAppliedType(false),
         insetX: {
           current: state.insetX.current != null,
-          applied: state.insetX.applied != null,
-        },
+          applied: state.insetX.applied != null
+        }
       }
     : {
         left: {
           current: state.left.current != null,
-          applied: state.left.applied != null,
+          applied: state.left.applied != null
         },
         right: {
           current: state.right.current != null,
-          applied: state.right.applied != null,
+          applied: state.right.applied != null
         },
-        insetX: getCurrentAppliedType(false),
+        insetX: getCurrentAppliedType(false)
       };
 }
 
@@ -183,24 +179,24 @@ function getHorizontalOption(
   const current = getHorizontalConstraintOption({
     left: state.left.current || state.left.applied,
     right: state.right.current || state.right.applied,
-    insetX: state.insetX.current || state.insetX.applied,
+    insetX: state.insetX.current || state.insetX.applied
   });
   const applied = getHorizontalConstraintOption({
     left: state.left.applied,
     right: state.right.applied,
-    insetX: state.insetX.applied,
+    insetX: state.insetX.applied
   });
 
   return {
     current,
-    applied,
+    applied
   };
 }
 
 function getHorizontalConstraintOption({
   left,
   right,
-  insetX,
+  insetX
 }: {
   left: boolean;
   right: boolean;
@@ -217,9 +213,7 @@ function getHorizontalConstraintOption({
   }
 }
 
-export function getHorizontalConstraintValue(
-  horizontalOption: HorizontalConstraintOption
-): HorizontalSelectValue {
+export function getHorizontalConstraintValue(horizontalOption: HorizontalConstraintOption): HorizontalSelectValue {
   switch (horizontalOption) {
     case "Left":
       return "left";

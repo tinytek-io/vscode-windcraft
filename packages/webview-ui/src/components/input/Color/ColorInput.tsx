@@ -13,14 +13,8 @@ export type ColorInputProps = {
 
 export function ColorInput({ colorName, appliedColorName, onChange }: ColorInputProps) {
   const [showSearch, setShowSearch] = useState(false);
-  const [colorId, colorOpacity] = (colorName ?? "").split("/") as [
-    ColorType,
-    string?
-  ];
-  const [appliedColorId, appliedColorOpacity] = (appliedColorName ?? "").split("/") as [
-    ColorType,
-    string?
-  ] ?? [];
+  const [colorId, colorOpacity] = (colorName ?? "").split("/") as [ColorType, string?];
+  const [appliedColorId, appliedColorOpacity] = ((appliedColorName ?? "").split("/") as [ColorType, string?]) ?? [];
 
   return (
     <div className="flex flex-col w-full gap-2">

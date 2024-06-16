@@ -15,7 +15,9 @@ root.render(
         <div className="flex flex-col grow-0">
           <VSCodeDivider />
           <div className="flex items-center justify-between p-4">
-            <VSCodeButton className="w-full" disabled title="Extension is currently in beta">Unlicensed</VSCodeButton>
+            <VSCodeButton className="w-full" disabled title="Extension is currently in beta">
+              Unlicensed
+            </VSCodeButton>
           </div>
         </div>
       </main>

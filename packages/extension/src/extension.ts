@@ -9,11 +9,7 @@ import { getClassNamesPosition } from "@windcraft/ts-plugin/extension/getClassNa
 const componentServerHttp = `http://localhost:5173`;
 const componentServerWs = `ws://localhost:5173`;
 
-export type UpdateSelectionType =
-  | "INIT"
-  | "READY"
-  | "COMPILED"
-  | "SELECTION_CHANGE";
+export type UpdateSelectionType = "INIT" | "READY" | "COMPILED" | "SELECTION_CHANGE";
 
 export async function activate(context: vscode.ExtensionContext) {
   console.info("WindCraft extension is now active!!");
@@ -22,12 +18,11 @@ export async function activate(context: vscode.ExtensionContext) {
   // Register the decorator
   const decorator = new Decorator();
   const bridgeProvider = new BridgeProvider(context.extensionUri);
-  const componentServerProvider =
-    WindCraftVisualComponentEditorProvider.register(
-      context,
-      componentServerHttp,
-      componentServerWs
-    );
+  const componentServerProvider = WindCraftVisualComponentEditorProvider.register(
+    context,
+    componentServerHttp,
+    componentServerWs
+  );
 
   const rpcExtensionServer = await activateRpcExtensionServer(context);
 
@@ -35,7 +30,7 @@ export async function activate(context: vscode.ExtensionContext) {
     INIT: false,
     READY: false,
     COMPILED: false,
-    SELECTION_CHANGE: false,
+    SELECTION_CHANGE: false
   };
 
   bridgeProvider.onUpdateClassName((newClassName, newRange) => {
@@ -75,7 +70,7 @@ export async function activate(context: vscode.ExtensionContext) {
       document.offsetAt(selection.active)
     );
 
-    const classNamesPosition = getClassNamesPosition(classNamesFile, document)
+    const classNamesPosition = getClassNamesPosition(classNamesFile, document);
 
     console.info("Current Class Name:", classNamesPosition.current);
 
@@ -137,27 +132,20 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("windcraft.showPreview", () => {
       const workspaceFolders = vscode.workspace.workspaceFolders;
       if (!workspaceFolders) {
-        vscode.window.showErrorMessage(
-          "Creating new Paw Draw files currently requires opening a workspace"
-        );
+        vscode.window.showErrorMessage("Creating new Paw Draw files currently requires opening a workspace");
         return;
       }
 
       const docUri = vscode.window.activeTextEditor?.document.uri;
 
       const orgUri = workspaceFolders[0].uri;
-      const uri = vscode.Uri.joinPath(
-        workspaceFolders[0].uri,
-        `new-${nextDocumentId++}.tsx`
-      ).with({ scheme: "untitled" });
+      const uri = vscode.Uri.joinPath(workspaceFolders[0].uri, `new-${nextDocumentId++}.tsx`).with({
+        scheme: "untitled"
+      });
 
       console.log(uri, orgUri, docUri);
 
-      vscode.commands.executeCommand(
-        "vscode.openWith",
-        docUri,
-        WindCraftVisualComponentEditorProvider.viewType
-      );
+      vscode.commands.executeCommand("vscode.openWith", docUri, WindCraftVisualComponentEditorProvider.viewType);
     })
   );
 
@@ -175,9 +163,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   // Register the view provider
 
-  context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider(BridgeProvider.viewType, bridgeProvider)
-  );
+  context.subscriptions.push(vscode.window.registerWebviewViewProvider(BridgeProvider.viewType, bridgeProvider));
 
   context.subscriptions.push(componentServerProvider);
 }

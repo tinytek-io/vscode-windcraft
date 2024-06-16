@@ -1,4 +1,3 @@
-
 export type EventTriangleProps = {
   onClick: (type: "insetX" | "insetY") => void;
 };
@@ -11,7 +10,7 @@ export function EventTriangle({ onClick }: EventTriangleProps) {
       <div
         className="absolute w-full h-full"
         style={{
-          transform: "rotate(45deg) translateY(-16px) translateX(-16px)",
+          transform: "rotate(45deg) translateY(-16px) translateX(-16px)"
         }}
         onClick={() => onClick("insetY")}
       ></div>
@@ -19,7 +18,7 @@ export function EventTriangle({ onClick }: EventTriangleProps) {
       <div
         className="absolute w-full h-full"
         style={{
-          transform: "rotate(45deg) translateY(16px) translateX(16px)",
+          transform: "rotate(45deg) translateY(16px) translateX(16px)"
         }}
         onClick={() => onClick("insetY")}
       ></div>
@@ -27,7 +26,7 @@ export function EventTriangle({ onClick }: EventTriangleProps) {
       <div
         className="absolute w-full h-full"
         style={{
-          transform: "rotate(45deg) translateY(16px) translateX(-16px)",
+          transform: "rotate(45deg) translateY(16px) translateX(-16px)"
         }}
         onClick={() => onClick("insetX")}
       ></div>
@@ -35,7 +34,7 @@ export function EventTriangle({ onClick }: EventTriangleProps) {
       <div
         className="absolute w-full h-full"
         style={{
-          transform: "rotate(45deg) translateY(-16px) translateX(16px)",
+          transform: "rotate(45deg) translateY(-16px) translateX(16px)"
         }}
         onClick={() => onClick("insetX")}
       ></div>

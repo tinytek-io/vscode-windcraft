@@ -10,7 +10,7 @@ export function useColor(prefix: "bg-" | "text-" | "border-") {
   const colorClassName: CurrentAppliedType<string | undefined> = useMemo(
     () => ({
       current: color.current ? `${prefix}${color.current}` : undefined,
-      applied: color.applied ? `${prefix}${color.applied}` : undefined,
+      applied: color.applied ? `${prefix}${color.applied}` : undefined
     }),
     [color, prefix]
   );
@@ -30,6 +30,6 @@ export function useColor(prefix: "bg-" | "text-" | "border-") {
     color,
     colorClassName,
     setColor,
-    resetColor,
+    resetColor
   };
 }

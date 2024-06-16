@@ -6,22 +6,17 @@ import {
   MixBlendInputValue,
   isMixBlendInputValue,
   mixBlendNone,
-  getMixBlendClassName,
+  getMixBlendClassName
 } from "../../types/layer";
 
 export function useLayer() {
-  const {
-    getValueByPrefix,
-    hasExactValue,
-    updateCurrentStyles,
-    getValueOneOf,
-  } = useExtensionState();
+  const { getValueByPrefix, hasExactValue, updateCurrentStyles, getValueOneOf } = useExtensionState();
 
   const mixBlend = getMixBlendInputValue(getValueByPrefix("mix-blend-"));
   const opacities = getValueByPrefix("opacity-");
   const opacity = {
     current: opacities.current ?? opacities.applied ?? opacityNone,
-    applied: opacities.applied ?? opacityNone,
+    applied: opacities.applied ?? opacityNone
   };
 
   const hiddenValue = getValueOneOf(["visible", "invisible"]);
@@ -31,18 +26,8 @@ export function useLayer() {
    * undefined if it is neither hidden nor visible.
    */
   const hidden = {
-    current:
-      hiddenValue.current === "visible"
-        ? false
-        : hiddenValue.current === "invisible"
-        ? true
-        : undefined,
-    applied:
-      hiddenValue.applied === "visible"
-        ? false
-        : hiddenValue.applied === "invisible"
-        ? true
-        : undefined,
+    current: hiddenValue.current === "visible" ? false : hiddenValue.current === "invisible" ? true : undefined,
+    applied: hiddenValue.applied === "visible" ? false : hiddenValue.applied === "invisible" ? true : undefined
   };
 
   const setMixBlend = useCallback(
@@ -64,10 +49,7 @@ export function useLayer() {
       if (value === opacityNone || value === opacity.applied) {
         updateCurrentStyles([`opacity-${opacity.current}`], []);
       } else {
-        updateCurrentStyles(
-          [`opacity-${opacity.current}`],
-          [`opacity-${value}`]
-        );
+        updateCurrentStyles([`opacity-${opacity.current}`], [`opacity-${value}`]);
       }
     },
     [updateCurrentStyles, opacity]
@@ -93,6 +75,6 @@ export function useLayer() {
     // Methods
     setMixBlend,
     setOpacity,
-    toggleHidden,
+    toggleHidden
   };
 }
