@@ -43,7 +43,7 @@ export function BackdropEffectInput({ type, availableTypes }: Readonly<EffectInp
         applied={value.applied}
         options={allValues}
         onChange={setValue}
-        title={`Backdrop effect value`}
+        title={"Backdrop effect value"}
       />
       <LuMinus
         className={cn("btn", isChanged ? "" : "disabled")}

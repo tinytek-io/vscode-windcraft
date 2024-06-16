@@ -1,6 +1,6 @@
 import type { Configuration } from "@rspack/cli";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import * as path from "path";
+import * as path from "node:path";
 
 const extensionConfig: Configuration = {
   target: "node", // VS Code extensions run in a Node.js-context 📖 -> https://webpack.js.org/configuration/node/

@@ -32,7 +32,7 @@ export function useTextSettings() {
       [fontWeight.current, fontSize.current, textAlign.current, verticalAlign.current, color.colorClassName.current],
       []
     );
-  }, [updateCurrentStyles]);
+  }, [updateCurrentStyles, fontWeight, fontSize, textAlign, verticalAlign, color.colorClassName]);
 
   const addTextSettings = useCallback(() => {
     updateCurrentStyles([], ["text-current"]);

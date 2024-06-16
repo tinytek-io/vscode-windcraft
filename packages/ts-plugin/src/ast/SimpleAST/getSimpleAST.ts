@@ -51,7 +51,7 @@ export function getSimpleAST(fileName: string, program: ts.Program, typescript: 
       if (!result.children) {
         result.children = [];
       }
-      result.children.push(nodeWalker(n, indent + "  "));
+      result.children.push(nodeWalker(n, `${indent}  `));
     });
 
     return result;

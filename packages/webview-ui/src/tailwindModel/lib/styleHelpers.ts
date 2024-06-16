@@ -238,7 +238,11 @@ export function getTailwindState(tailwindStyle: TailwindStyle): TailwindModifier
  * e.g. "md:dark:bg-red-500" -> "bg-red-500"
  */
 export function getTailwindValue(tailwindStyle: TailwindStyle): TailwindValue {
-  return tailwindStyle.split(":").pop()!;
+  const value = tailwindStyle.split(":").pop();
+  if (value === undefined) {
+    throw new Error("Tailwind style does not have a value");
+  }
+  return value;
 }
 
 /**

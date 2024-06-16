@@ -166,7 +166,7 @@ export function FlexLayoutSection() {
           <div className="flex flex-col justify-between px-1 gap-2">
             {/* right */}
             <div>{/* <CgMoreAlt /> */}</div>
-            <div></div>
+            <div />
             <div>
               <TbBorderSides
                 className={cn(
@@ -177,7 +177,7 @@ export function FlexLayoutSection() {
                 onClick={padding.toggleMode}
               />
             </div>
-            {padding.isAdvanced ? <div></div> : null}
+            {padding.isAdvanced ? <div /> : null}
           </div>
         </div>
       )}

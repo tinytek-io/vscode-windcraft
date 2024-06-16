@@ -11,8 +11,8 @@ export type ColorButtonProps = {
   onChange: (color: ColorType) => void;
 };
 
-export function ColorButton({ colorId, appliedColorId, disabled, onClick, onChange }: ColorButtonProps) {
-  const resizeRef = useRef<HTMLDivElement | null>(null);
+export function ColorButton({ colorId, appliedColorId, disabled, onClick, onChange }: Readonly<ColorButtonProps>) {
+  const resizeRef = useRef<HTMLButtonElement | null>(null);
   const search = getColorSearchName(colorId) ?? "";
   const result = colorSearch(search);
 
@@ -26,12 +26,17 @@ export function ColorButton({ colorId, appliedColorId, disabled, onClick, onChan
     disabled
   });
   return (
-    <div ref={resizeRef} className="color-input flex gap-2 cursor-pointer align-center" onClick={onClick} tabIndex={1}>
-      <div className="w-3 h-3 border" style={{ backgroundColor: colorValue }} title={colorValue}></div>
+    <button
+      type="button"
+      ref={resizeRef}
+      className="color-input flex gap-2 cursor-pointer align-center"
+      onClick={onClick}
+    >
+      <div className="w-3 h-3 border" style={{ backgroundColor: colorValue }} title={colorValue} />
       <div className={cn(colorId !== appliedColorId ? "changed" : null)}>
         {formatColorName(colorId ?? "transparent")}
       </div>
-    </div>
+    </button>
   );
 }
 

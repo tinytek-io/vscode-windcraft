@@ -8,9 +8,7 @@ import { flexCoord, layoutGridValues } from "./state";
 import { gapNone } from "../../../types/gap";
 import { cn } from "../../../lib/cn";
 
-export type FlexLayoutGridProps = {};
-
-export function FlexLayoutGrid({}: FlexLayoutGridProps) {
+export function FlexLayoutGrid() {
   const { updateCurrentStyles, getValueOneOf } = useExtensionState();
   const flex = useFlex();
   const gap = useGap();

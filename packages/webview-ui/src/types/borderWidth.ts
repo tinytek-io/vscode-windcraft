@@ -36,5 +36,6 @@ export function isBorderWidthNormalType(type: string): type is BorderWidthAllTyp
   return borderWidthTypes.includes(type as BorderWidthNormalType);
 }
 
-export const allBorderWidthStyles = ["border", "border-t", "border-r", "border-b", "border-l"]
-  .flatMap((prefix) => borderWidthValues.map((v) => (v === "1" ? prefix : `${prefix}-${v}`)));
+export const allBorderWidthStyles = ["border", "border-t", "border-r", "border-b", "border-l"].flatMap((prefix) =>
+  borderWidthValues.map((v) => (v === "1" ? prefix : `${prefix}-${v}`))
+);

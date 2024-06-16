@@ -1,5 +1,5 @@
 import type * as ts from "typescript/lib/tsserverlibrary";
-import path from "path";
+import path from "node:path";
 import { RpcClientSocket } from "@windcraft/utilities/rpc/RpcClientSocket";
 import { FileLogger } from "@windcraft/utilities/logger/FileLogger";
 import { setCurrentLogger, logger } from "@windcraft/utilities/logger/logger";
@@ -25,9 +25,8 @@ const factory: ts.server.PluginModuleFactory = (mod) => {
       if (info.project.projectService.serverMode !== LANGUAGE_SERVICE_MODE_SEMANTIC) {
         logger.log("SKIP - Not semantic mode");
         return info.languageService;
-      } else {
-        logger.log("OK - Semantic mode");
       }
+      logger.log("OK - Semantic mode");
 
       // Start polling for program compilation events
       startPollProgramCompilation(() => {
@@ -37,7 +36,7 @@ const factory: ts.server.PluginModuleFactory = (mod) => {
 
       const config = info.config as Partial<PluginConfiguration> | undefined;
 
-      logger.log("Creating server" + JSON.stringify(config));
+      logger.log(`Creating server${JSON.stringify(config)}`);
 
       // Start the server
       start = (port) => {
@@ -58,7 +57,7 @@ const factory: ts.server.PluginModuleFactory = (mod) => {
       return info.languageService;
     },
     onConfigurationChanged(config: Partial<PluginConfiguration>) {
-      logger.log("Config changed" + JSON.stringify(config));
+      logger.log(`Config changed${JSON.stringify(config)}`);
       if (config.port && start) {
         start(config.port);
       }

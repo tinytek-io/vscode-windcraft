@@ -31,8 +31,11 @@ export const fontSizeMap: Record<FontSize, string> = {
 export const fontSizeClasses = [...Object.values(fontSizeMap)];
 export const fontSizeValues = Object.keys(fontSizeMap);
 export const classFontSizeMap: Record<string, FontSize> = Object.entries(fontSizeMap).reduce(
-  (acc, [key, value]) => ({ ...acc, [value]: key }),
-  {}
+  (acc, [key, value]) => {
+    acc[value] = key as FontSize;
+    return acc;
+  },
+  {} as Record<string, FontSize>
 );
 export function isFontSize(value: string): value is FontSize {
   return value in fontSizeMap;

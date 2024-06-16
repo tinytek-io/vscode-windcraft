@@ -1,6 +1,6 @@
-import { Range, TextEditor } from "vscode";
+import type { Range, TextEditor } from "vscode";
 import { ScopeDecorationType, CurrentDecorationType, CurrentEmptyDecorationType } from "./decorations";
-import { ClassNamePosition } from "@windcraft/ts-plugin/extension/getClassNamesPosition";
+import type { ClassNamePosition } from "@windcraft/ts-plugin/extension/getClassNamesPosition";
 
 const enabledLanguages = ["javascript", "javascriptreact", "typescript", "typescriptreact"];
 

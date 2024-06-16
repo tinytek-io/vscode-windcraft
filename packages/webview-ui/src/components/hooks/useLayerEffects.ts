@@ -60,7 +60,7 @@ export function useLayerEffectValue(type: LayerEffectType) {
       current: value.current ?? value.applied ?? effect.none,
       applied: value.applied ?? effect.none
     };
-  }, [getValueOneOf, allClassNames]);
+  }, [getValueOneOf, allClassNames, effect]);
   const value = useMemo(
     () => ({
       current: allValues[allClassNames.indexOf(className.current)] ?? effect.valueMap[effect.none],
@@ -74,12 +74,12 @@ export function useLayerEffectValue(type: LayerEffectType) {
       const newClassName = layerEffectMap[type].valueMap[newValue] ?? layerEffectMap[type].none;
       updateCurrentStyles([className.current], [newClassName]);
     },
-    [updateCurrentStyles]
+    [updateCurrentStyles, className, type]
   );
 
   const removeValue = useCallback(() => {
     updateCurrentStyles([className.current], []);
-  }, [updateCurrentStyles]);
+  }, [updateCurrentStyles, className]);
 
   const changeType = useCallback(
     (newType: string) => {
@@ -91,7 +91,7 @@ export function useLayerEffectValue(type: LayerEffectType) {
         console.error(`Invalid layer effect type: ${newType}`);
       }
     },
-    [updateCurrentStyles]
+    [updateCurrentStyles, className, value]
   );
 
   return {

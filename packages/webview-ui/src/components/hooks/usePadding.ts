@@ -49,7 +49,7 @@ export function usePadding() {
         ].flat()
       );
     }
-  }, [x, y, left, right, top, bottom, updateCurrentStyles]);
+  }, [x, y, left, right, top, bottom, updateCurrentStyles, isAdvanced]);
 
   const updateX = useCallback(
     (newPadding: string) => {

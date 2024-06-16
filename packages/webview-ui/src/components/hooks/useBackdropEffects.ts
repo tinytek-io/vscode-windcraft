@@ -1,7 +1,12 @@
 import { useCallback, useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
 import type { CurrentAppliedType } from "../../types/general";
-import { type BackdropEffectType, backdropEffectMap, backdropEffects, isBackdropEffect } from "../../types/backdropEffects";
+import {
+  type BackdropEffectType,
+  backdropEffectMap,
+  backdropEffects,
+  isBackdropEffect
+} from "../../types/backdropEffects";
 
 export function useBackdropEffects() {
   const { updateCurrentStyles, getValueOneOf } = useExtensionState();
@@ -64,7 +69,7 @@ export function useBackdropEffectValue(type: BackdropEffectType) {
       current: value.current ?? value.applied ?? effect.none,
       applied: value.applied ?? effect.none
     };
-  }, [getValueOneOf, allClassNames]);
+  }, [getValueOneOf, allClassNames, effect]);
 
   const value: CurrentAppliedType<string> = useMemo(
     () => ({
@@ -79,12 +84,12 @@ export function useBackdropEffectValue(type: BackdropEffectType) {
       const newClassName = backdropEffectMap[type].valueMap[newValue] ?? backdropEffectMap[type].none;
       updateCurrentStyles([className.current], [newClassName]);
     },
-    [updateCurrentStyles]
+    [updateCurrentStyles, className, type]
   );
 
   const removeValue = useCallback(() => {
     updateCurrentStyles([className.current], []);
-  }, [updateCurrentStyles]);
+  }, [updateCurrentStyles, className]);
 
   const changeType = useCallback(
     (newType: string) => {
@@ -96,7 +101,7 @@ export function useBackdropEffectValue(type: BackdropEffectType) {
         console.error(`Invalid backdrop effect type: ${newType}`);
       }
     },
-    [updateCurrentStyles]
+    [updateCurrentStyles, className, value]
   );
 
   return {

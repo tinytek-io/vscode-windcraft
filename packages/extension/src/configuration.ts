@@ -6,6 +6,7 @@ export enum Settings {
   ThemeFile = "themeFile"
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: Generic type
 export function set(key: Settings, value: any) {
   vscode.workspace.getConfiguration(Settings.Identifier).update(key, value, true);
 }

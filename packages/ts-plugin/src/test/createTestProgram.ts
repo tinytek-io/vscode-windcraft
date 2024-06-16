@@ -1,6 +1,6 @@
 import * as ts from "typescript";
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 const testProjectRoot = __dirname;
 const testProjectPath = path.resolve(testProjectRoot, "001");
@@ -40,8 +40,8 @@ export const testFile001 = {
 };
 
 // Check if all test files exist in test project 001.
-Object.entries(testFile001).forEach(([key, filePath]) => {
+for (const [key, filePath] of Object.entries(testFile001)) {
   if (!fs.existsSync(filePath)) {
     throw new Error(`File not found for "${key}": ${filePath}`);
   }
-});
+}

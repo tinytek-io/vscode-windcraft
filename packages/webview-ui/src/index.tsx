@@ -4,7 +4,13 @@ import App from "./App";
 import { ExtensionStateProvider } from "./tailwindModel/State/ExtensionStateProvider";
 import { VSCodeDivider, VSCodeButton } from "@vscode/webview-ui-toolkit/react";
 
-const root = ReactDOM.createRoot(document.getElementById("root")!);
+const rootElement = document.getElementById("root");
+
+if (!rootElement) {
+  throw new Error("Root element not found");
+}
+
+const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <ExtensionStateProvider>

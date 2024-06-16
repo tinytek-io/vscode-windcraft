@@ -5,9 +5,9 @@ export type ButtonProps = {
 
 export function Button({ onClick, children }: ButtonProps) {
   return (
-    <button className="flex" onClick={onClick}>
+    <button type="button" className="flex" onClick={onClick}>
       <div className="flex flex-col">test</div>
-      <img src="test" className="w-full" />
+      <img alt="test" src="test" className="w-full" />
       <div>empty element</div>
       {children}
     </button>

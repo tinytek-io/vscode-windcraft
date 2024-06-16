@@ -25,11 +25,11 @@ export function useHeightOrAspectRatio() {
       return false;
     }
     return false;
-  }, [aspectRatio]);
+  }, [aspectRatio, height]);
 
   const isAspectRatioToggled = useMemo(() => {
     return !!(aspectRatio.current && height.applied) || !!(height.current && aspectRatio.applied);
-  }, [aspectRatio]);
+  }, [aspectRatio, height]);
 
   const setHeight = useCallback(
     (newHeight: string) => {
@@ -70,7 +70,7 @@ export function useHeightOrAspectRatio() {
         updateCurrentStyles(heightClasses, [getAspectRatioValue(newValue)]);
       }
     }
-  }, [updateCurrentStyles, aspectRatio]);
+  }, [updateCurrentStyles, aspectRatio, isAspectRatio]);
 
   return {
     isAspectRatio,

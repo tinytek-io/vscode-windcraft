@@ -13,9 +13,12 @@ export const textAlignMap: Record<TextAlign, string> = {
 };
 export const textAlignClasses = [...Object.values(textAlignMap)];
 export const textAlignValues = Object.keys(textAlignMap);
-export const classTextAlignMap: Record<string, TextAlign> = Object.entries(textAlignMap).reduce(
-  (acc, [key, value]) => ({ ...acc, [value]: key }),
-  {}
+export const classTextAlignMap = Object.entries(textAlignMap).reduce(
+  (acc, [key, value]) => {
+    acc[value] = key as TextAlign;
+    return acc;
+  },
+  {} as Record<string, TextAlign>
 );
 export function isTextAlign(value: string): value is TextAlign {
   return value in textAlignMap;

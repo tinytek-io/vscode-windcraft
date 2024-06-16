@@ -44,5 +44,5 @@ export function useWheelSelectIndex({ value = 0, min, max, onChange, disabled, r
         resizeRef.current.removeEventListener("wheel", handleWheel);
       }
     };
-  }, [handleWheel, disabled]);
+  }, [handleWheel, disabled, resizeRef]);
 }

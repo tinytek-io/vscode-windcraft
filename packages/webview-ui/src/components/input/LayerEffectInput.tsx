@@ -43,7 +43,7 @@ export function LayerEffectInput({ type, availableTypes }: EffectInputProps) {
         applied={value.applied}
         options={allValues}
         onChange={setValue}
-        title={`Layer effect value`}
+        title={"Layer effect value"}
       />
       <LuMinus
         className={cn("btn", isChanged ? "" : "disabled")}

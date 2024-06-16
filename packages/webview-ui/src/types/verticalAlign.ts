@@ -18,8 +18,11 @@ export const verticalAlignMap: Record<VerticalAlign, string> = {
 export const verticalAlignClasses = [...Object.values(verticalAlignMap)];
 export const verticalAlignValues = Object.keys(verticalAlignMap);
 export const classVerticalAlignMap: Record<string, VerticalAlign> = Object.entries(verticalAlignMap).reduce(
-  (acc, [key, value]) => ({ ...acc, [value]: key }),
-  {}
+  (acc, [key, value]) => {
+    acc[value] = key as VerticalAlign;
+    return acc;
+  },
+  {} as Record<string, VerticalAlign>
 );
 export function isVerticalAlign(value: string): value is VerticalAlign {
   return value in verticalAlignMap;

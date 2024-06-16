@@ -1,4 +1,4 @@
-import * as vscode from "vscode";
+import type * as vscode from "vscode";
 
 type CallMethodMessage<A> = {
   type: "callMethod";
@@ -21,12 +21,16 @@ type CallMethodResponse<R> =
       error: string;
     };
 
+// biome-ignore lint/suspicious/noExplicitAny: Generic type
 type MessageEvent = CallMethodMessage<any>;
 
+// biome-ignore lint/suspicious/noExplicitAny: Generic type
 export type MethodList = Record<string, (...args: any[]) => any>;
 
 export class ExtensionBridge {
   private queueIsRunning = false;
+
+  // biome-ignore lint/suspicious/noExplicitAny: Generic type
   private messageQueue: CallMethodMessage<any>[] = [];
 
   constructor(
@@ -70,9 +74,11 @@ export class ExtensionBridge {
   /**
    * Run a method from call method message data
    */
+  // biome-ignore lint/suspicious/noExplicitAny: Generic type
   private async runMethod(data: CallMethodMessage<any>) {
     const method = this.methodList[data.name];
     if (!method) {
+      // biome-ignore lint/suspicious/noExplicitAny: Generic type
       const errorMethodResponse: CallMethodResponse<any> = {
         type: "callMethodError",
         id: data.id,
@@ -85,6 +91,7 @@ export class ExtensionBridge {
 
     try {
       const result = await method(...data.args);
+      // biome-ignore lint/suspicious/noExplicitAny: Generic type
       const successMethodResponse: CallMethodResponse<any> = {
         type: "callMethodResult",
         id: data.id,
@@ -93,6 +100,7 @@ export class ExtensionBridge {
       };
       this.webviewView.webview.postMessage(successMethodResponse);
     } catch (error) {
+      // biome-ignore lint/suspicious/noExplicitAny: Generic type
       const errorMethodResponse: CallMethodResponse<any> = {
         type: "callMethodError",
         id: data.id,

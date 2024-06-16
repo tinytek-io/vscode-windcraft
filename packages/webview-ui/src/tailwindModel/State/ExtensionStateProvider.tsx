@@ -4,7 +4,13 @@ import type { Action } from "./actions";
 import { type TailwindStyle, addStylesToCurrent, createClassName, removeStylesFromCurrent } from "../lib/styleHelpers";
 import { bridge } from "../../utilities/Bridge";
 import { type ColorName, parseColorName } from "../../types/color";
-import type { OptionalTailwindStyle, CurrentAppliedType, KeySuffixMap, UIValue, TailwindSuffix } from "../../types/general";
+import type {
+  OptionalTailwindStyle,
+  CurrentAppliedType,
+  KeySuffixMap,
+  UIValue,
+  TailwindSuffix
+} from "../../types/general";
 
 type ExtensionMessageTypes =
   | {
@@ -136,7 +142,7 @@ export function ExtensionStateProvider({ children }: Readonly<ExtensionStateProv
       current: getBySuffixStyle(styleState.currentTailwindStyles, prefix, kv),
       applied: getBySuffixStyle(styleState.appliedTailwindStyles, prefix, kv)
     }),
-    [hasExactValue]
+    [styleState]
   );
 
   const getValueByPrefix: ExtensionStateContextType["getValueByPrefix"] = useCallback(
@@ -172,11 +178,12 @@ export function ExtensionStateProvider({ children }: Readonly<ExtensionStateProv
   );
 
   useEffect(() => {
+    // biome-ignore lint/suspicious/noExplicitAny: Sufficient until converted to RPC
     function handleSelectionChange(event: MessageEvent<any>) {
       const message = event.data as ExtensionMessageTypes; // The json data that the extension sent
       switch (message.type) {
         case "INITIALIZE_SELECTION": {
-          console.log(`Initialized selection:`, message);
+          console.log("Initialized selection:", message);
           try {
             dispatch({
               type: "CODE_SELECTION",
@@ -209,7 +216,7 @@ export function ExtensionStateProvider({ children }: Readonly<ExtensionStateProv
     return () => {
       window.removeEventListener("message", handleSelectionChange);
     };
-  }, [dispatch, clearTailwindStyles]);
+  }, [clearTailwindStyles]);
 
   useEffect(() => {
     bridge.remoteMethods.isReady();
@@ -227,7 +234,16 @@ export function ExtensionStateProvider({ children }: Readonly<ExtensionStateProv
       getValueByPrefixOneOf,
       getColorByPrefix
     }),
-    [styleState, dispatch, updateCurrentStyles]
+    [
+      styleState,
+      updateCurrentStyles,
+      hasExactValue,
+      getBySuffix,
+      getValueByPrefix,
+      getValueOneOf,
+      getValueByPrefixOneOf,
+      getColorByPrefix
+    ]
   );
 
   return <ExtensionStateContext.Provider value={value}>{children}</ExtensionStateContext.Provider>;

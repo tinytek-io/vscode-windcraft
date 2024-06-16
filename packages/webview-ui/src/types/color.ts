@@ -49,7 +49,7 @@ export type ColorObject = {
 export function parseColorName(value: string): ColorObject | null {
   const [colorType, opacity = "100"] = value.split("/");
   const opacityValue = Number.parseInt(opacity, 10);
-  if (!isColorType(colorType) || isNaN(opacityValue)) {
+  if (!isColorType(colorType) || Number.isNaN(opacityValue)) {
     return null;
   }
 

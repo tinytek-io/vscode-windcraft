@@ -7,37 +7,41 @@ export function EventTriangle({ onClick }: EventTriangleProps) {
   return (
     <div className="relative w-full h-full overflow-hidden cursor-pointer">
       {/* top */}
-      <div
+      <button
+        type="button"
         className="absolute w-full h-full"
         style={{
           transform: "rotate(45deg) translateY(-16px) translateX(-16px)"
         }}
         onClick={() => onClick("insetY")}
-      ></div>
+      />
       {/* top */}
-      <div
+      <button
+        type="button"
         className="absolute w-full h-full"
         style={{
           transform: "rotate(45deg) translateY(16px) translateX(16px)"
         }}
         onClick={() => onClick("insetY")}
-      ></div>
+      />
       {/* left */}
-      <div
+      <button
+        type="button"
         className="absolute w-full h-full"
         style={{
           transform: "rotate(45deg) translateY(16px) translateX(-16px)"
         }}
         onClick={() => onClick("insetX")}
-      ></div>
+      />
       {/* right */}
-      <div
+      <button
+        type="button"
         className="absolute w-full h-full"
         style={{
           transform: "rotate(45deg) translateY(-16px) translateX(16px)"
         }}
         onClick={() => onClick("insetX")}
-      ></div>
+      />
     </div>
   );
 }

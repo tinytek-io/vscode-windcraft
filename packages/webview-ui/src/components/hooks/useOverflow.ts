@@ -19,7 +19,7 @@ export function useOverflow() {
       // New value is the same as the applied value
       updateCurrentStyles(["overflow-hidden", "overflow-auto"], []);
     }
-  }, [clipContent]);
+  }, [updateCurrentStyles, clipContent]);
 
   return {
     clipContent,

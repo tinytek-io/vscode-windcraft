@@ -22,7 +22,7 @@ describe.skip("JsxAST", () => {
 
       expect(jsxASTFile).toBeDefined();
 
-      const button = jsxASTFile!.components.find((c) => c.name === "Button");
+      const button = jsxASTFile?.components.find((c) => c.name === "Button");
       expect(button).toEqual(buttonJsxAST);
     });
   });

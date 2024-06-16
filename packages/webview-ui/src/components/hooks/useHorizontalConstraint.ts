@@ -132,18 +132,22 @@ export function getIsInsetX(v: CurrentAppliedType<string | undefined>) {
   if (v.current) {
     if (v.current.startsWith("inset")) {
       return true;
-    } else if (v.current.startsWith("left")) {
+    }
+    if (v.current.startsWith("left")) {
       return false;
-    } else if (v.current.startsWith("right")) {
+    }
+    if (v.current.startsWith("right")) {
       return false;
     }
   }
   if (v.applied) {
     if (v.applied.startsWith("inset")) {
       return true;
-    } else if (v.applied.startsWith("left")) {
+    }
+    if (v.applied.startsWith("left")) {
       return false;
-    } else if (v.applied.startsWith("right")) {
+    }
+    if (v.applied.startsWith("right")) {
       return false;
     }
   }
@@ -204,11 +208,14 @@ function getHorizontalConstraintOption({
 }): HorizontalConstraintOption | undefined {
   if (left && right) {
     return "Left and Right";
-  } else if (left) {
+  }
+  if (left) {
     return "Left";
-  } else if (right) {
+  }
+  if (right) {
     return "Right";
-  } else if (insetX) {
+  }
+  if (insetX) {
     return "Center";
   }
 }

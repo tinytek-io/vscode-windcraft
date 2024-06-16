@@ -40,15 +40,15 @@ export function DynamicSection() {
         .join(":");
       dispatch({ type: "SET_MODIFIER_STATE", payload: modifierState });
     },
-    []
+    [dispatch]
   );
 
   const modifierStates = styleState.modifierState.split(":");
 
-  const deviceMode = modifierStates.find((mod) => deviceModes.includes(mod)) || "xs";
+  const deviceMode = modifierStates.find((mod) => deviceModes.includes(mod)) ?? "xs";
   const themeMode = modifierStates.includes("dark") ? "dark" : "light";
-  const elementEvent = modifierStates.find((mod) => elementEventModes.includes(mod)) || "none";
-  const elementForm = modifierStates.find((mod) => elementFormModes.includes(mod)) || "none";
+  const elementEvent = modifierStates.find((mod) => elementEventModes.includes(mod)) ?? "none";
+  const elementForm = modifierStates.find((mod) => elementFormModes.includes(mod)) ?? "none";
 
   return (
     <div>

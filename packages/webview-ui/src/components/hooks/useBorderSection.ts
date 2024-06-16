@@ -18,7 +18,7 @@ export function useBorderSection() {
 
   const removeBorder = useCallback(
     () => updateCurrentStyles(borderClasses.all, []),
-    [updateCurrentStyles, borderClasses.current]
+    [updateCurrentStyles, borderClasses]
   );
   const addBorder = useCallback(() => updateCurrentStyles([], ["border", "border-transparent"]), [updateCurrentStyles]);
 

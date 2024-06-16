@@ -72,7 +72,7 @@ export function getClassNames(
     /**
      * Find the class name attribute and extract the class names.
      */
-    jsxElement?.attributes.properties.forEach((jsxAttribute) => {
+    for (const jsxAttribute of jsxElement?.attributes.properties || []) {
       if (typescript.isJsxAttribute(jsxAttribute) && jsxAttribute.name.getText() === "className") {
         jsxAttribute.forEachChild((className) => {
           // For now we only support string literals as class names.
@@ -88,7 +88,7 @@ export function getClassNames(
           }
         });
       }
-    });
+    }
 
     if (jsxElement && foundClassName === false) {
       const endPosition = jsxElement.getEnd() - 1;

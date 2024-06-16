@@ -23,9 +23,9 @@ export type LayoutGrids = Record<LayoutGridType, LayoutGridIcons>;
 export function getLayoutGridType(direction: FlexDirection, gapAuto: boolean): LayoutGridType {
   if (direction === "flex-row") {
     return gapAuto ? "row-auto" : "row";
-  } else if (direction === "flex-col") {
-    return gapAuto ? "column-auto" : "column";
-  } else {
-    return gapAuto ? "wrap-auto" : "wrap";
   }
+  if (direction === "flex-col") {
+    return gapAuto ? "column-auto" : "column";
+  }
+  return gapAuto ? "wrap-auto" : "wrap";
 }

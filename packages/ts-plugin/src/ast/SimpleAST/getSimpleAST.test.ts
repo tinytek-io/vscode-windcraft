@@ -18,10 +18,10 @@ describe("SimpleASTService", () => {
   });
 
   describe("getSimpleAST for test project 001", () => {
-    Object.keys(testFile001).forEach((key) => {
+    for (const key of Object.keys(testFile001)) {
       it(`should return SimpleAST for "${key}"`, () => {
         expect(getSimpleAST(testFile001.button, program, ts)).toMatchSnapshot();
       });
-    });
+    }
   });
 });

@@ -6,8 +6,8 @@ import { WindCraftVisualComponentEditorProvider } from "./component-server/WindC
 import { activateRpcExtensionServer } from "@windcraft/ts-plugin/extension/activateRpcExtensionServer";
 import { getClassNamesPosition } from "@windcraft/ts-plugin/extension/getClassNamesPosition";
 
-const componentServerHttp = `http://localhost:5173`;
-const componentServerWs = `ws://localhost:5173`;
+const componentServerHttp = "http://localhost:5173";
+const componentServerWs = "ws://localhost:5173";
 
 export type UpdateSelectionType = "INIT" | "READY" | "COMPILED" | "SELECTION_CHANGE";
 
@@ -169,5 +169,7 @@ export async function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate(context: vscode.ExtensionContext) {
-  context.subscriptions.forEach((subscription) => subscription.dispose());
+  for (const subscription of context.subscriptions) {
+    subscription.dispose();
+  }
 }

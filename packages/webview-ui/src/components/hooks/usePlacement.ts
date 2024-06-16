@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
 import {
   placementNone,
-  placementValues,
   placementXClasses,
   placementXPrefix,
   placementYClasses,
@@ -26,7 +25,7 @@ export function usePlacement() {
         updateCurrentStyles(placementXClasses, [`${placementXPrefix}${newX}`]);
       }
     },
-    [updateCurrentStyles, placementXPrefix]
+    [updateCurrentStyles, placementX]
   );
 
   const setPlacementY = useCallback(
@@ -39,7 +38,7 @@ export function usePlacement() {
         updateCurrentStyles(placementYClasses, [`${placementYPrefix}${newY}`]);
       }
     },
-    [updateCurrentStyles, placementYPrefix]
+    [updateCurrentStyles, placementY]
   );
 
   return {

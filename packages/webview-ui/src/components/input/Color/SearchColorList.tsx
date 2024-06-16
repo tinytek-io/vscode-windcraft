@@ -9,7 +9,7 @@ export type SearchColorListProps = {
   onChange?: (newValue: ColorType) => void;
 };
 
-export function SearchColorList({ initialSearch = "", onClose, onChange }: SearchColorListProps) {
+export function SearchColorList({ initialSearch = "", onClose, onChange }: Readonly<SearchColorListProps>) {
   const [search, setSearch] = useState(initialSearch);
 
   const result = colorSearch(search) as [ColorType, string][];
@@ -30,7 +30,6 @@ export function SearchColorList({ initialSearch = "", onClose, onChange }: Searc
           }}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          tabIndex={1}
         />
       </div>
       <div
@@ -43,15 +42,15 @@ export function SearchColorList({ initialSearch = "", onClose, onChange }: Searc
       >
         {result.length ? (
           result.map(([key, value]) => (
-            <div
+            <button
+              type="button"
               key={key}
               className="list-item flex px-2 py-1 gap-2"
-              tabIndex={2}
               onClick={onChange ? () => onChange(key) : undefined}
             >
-              <div className="w-4 h-4 border" style={{ backgroundColor: value }} title={value}></div>
+              <div className="w-4 h-4 border" style={{ backgroundColor: value }} title={value} />
               {formatColorName(key)}
-            </div>
+            </button>
           ))
         ) : (
           <div className="flex px-2 py-1 gap-2">No results</div>

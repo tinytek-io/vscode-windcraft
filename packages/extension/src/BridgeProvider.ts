@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { getNonce } from "./utilities/getNonce";
 import { getUri } from "./utilities/getUri";
 import { ExtensionBridge } from "./bridge";
-import { ClassNamePosition } from "@windcraft/ts-plugin/extension/getClassNamesPosition";
+import type { ClassNamePosition } from "@windcraft/ts-plugin/extension/getClassNamesPosition";
 
 export interface Position {
   line: number;
@@ -70,7 +70,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     this._updateClassNameCallback = callback;
   }
 
-  private async updateSelectionClassName(className: string, quote: string = '"') {
+  private async updateSelectionClassName(className: string, quote = '"') {
     if (this._selectionPosition == null) {
       throw new Error("Selection not initialized");
     }

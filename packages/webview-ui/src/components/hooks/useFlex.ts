@@ -1,9 +1,8 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
 import type { CurrentAppliedType } from "../../types/general";
-import { useValue } from "./useValue";
 import { useGap } from "./useGap";
-import { gapClasses, gapNone, gapValues } from "../../types/gap";
+import { gapClasses, gapNone } from "../../types/gap";
 
 export type FlexDirection = "flex-row" | "flex-col" | "flex-wrap";
 
@@ -17,10 +16,13 @@ export function useFlex() {
 
   const rawDir = getValueOneOf(["flex-wrap", "flex-col", "flex-row"]);
 
-  const direction: CurrentAppliedType<string | undefined> = {
-    current: rawDir.current ?? rawDir.applied,
-    applied: rawDir.applied
-  };
+  const direction: CurrentAppliedType<string | undefined> = useMemo(
+    () => ({
+      current: rawDir.current ?? rawDir.applied,
+      applied: rawDir.applied
+    }),
+    [rawDir]
+  );
 
   const addFlex = useCallback(() => {
     updateCurrentStyles([], ["flex"]);

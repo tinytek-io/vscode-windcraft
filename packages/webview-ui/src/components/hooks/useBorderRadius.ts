@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
 import type { CurrentAppliedType } from "../../types/general";
 import {
@@ -22,20 +22,23 @@ export function useBorderRadius() {
   const borderRadiusBR = getBySuffix("rounded-br", borderRadiusMap);
   const borderRadiusBL = getBySuffix("rounded-bl", borderRadiusMap);
 
-  const multipleBorderRadius: CurrentAppliedType<boolean> = {
-    current:
-      borderRadius.current == null &&
-      (borderRadiusTL.current != null ||
-        borderRadiusTR.current != null ||
-        borderRadiusBR.current != null ||
-        borderRadiusBL.current != null),
-    applied:
-      borderRadius.applied == null &&
-      (borderRadiusTL.applied != null ||
-        borderRadiusTR.applied != null ||
-        borderRadiusBR.applied != null ||
-        borderRadiusBL.applied != null)
-  };
+  const multipleBorderRadius: CurrentAppliedType<boolean> = useMemo(
+    () => ({
+      current:
+        borderRadius.current == null &&
+        (borderRadiusTL.current != null ||
+          borderRadiusTR.current != null ||
+          borderRadiusBR.current != null ||
+          borderRadiusBL.current != null),
+      applied:
+        borderRadius.applied == null &&
+        (borderRadiusTL.applied != null ||
+          borderRadiusTR.applied != null ||
+          borderRadiusBR.applied != null ||
+          borderRadiusBL.applied != null)
+    }),
+    [borderRadius, borderRadiusTL, borderRadiusTR, borderRadiusBR, borderRadiusBL]
+  );
 
   const setBorderRadius = useCallback(
     (newBorderRadius: string) => {
@@ -58,7 +61,7 @@ export function useBorderRadius() {
         updateCurrentStyles(borderRadiusClassesTL, [`rounded-tl-${newBorderRadius}`]);
       }
     },
-    [borderRadius, updateCurrentStyles]
+    [updateCurrentStyles, borderRadiusTL]
   );
 
   const setBorderRadiusTR = useCallback(
@@ -70,7 +73,7 @@ export function useBorderRadius() {
         updateCurrentStyles(borderRadiusClassesTR, [`rounded-tr-${newBorderRadius}`]);
       }
     },
-    [borderRadius, updateCurrentStyles]
+    [updateCurrentStyles, borderRadiusTR]
   );
 
   const setBorderRadiusBR = useCallback(
@@ -82,7 +85,7 @@ export function useBorderRadius() {
         updateCurrentStyles(borderRadiusClassesBR, [`rounded-br-${newBorderRadius}`]);
       }
     },
-    [borderRadius, updateCurrentStyles]
+    [updateCurrentStyles, borderRadiusBR]
   );
 
   const setBorderRadiusBL = useCallback(
@@ -94,7 +97,7 @@ export function useBorderRadius() {
         updateCurrentStyles(borderRadiusClassesBL, [`rounded-bl-${newBorderRadius}`]);
       }
     },
-    [borderRadius, updateCurrentStyles]
+    [updateCurrentStyles, borderRadiusBL]
   );
 
   const toggleMultipleBorderRadius = useCallback(() => {

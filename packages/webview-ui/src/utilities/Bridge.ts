@@ -22,6 +22,7 @@ export type CallMethodResponse<R> =
       error: string;
     };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 type AsyncFunction = (...args: any[]) => Promise<any>;
 
 export class Bridge<M extends Record<string, F>, F extends AsyncFunction = AsyncFunction> {

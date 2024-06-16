@@ -43,14 +43,12 @@ export function useVerticalConstraint() {
           } else if (verticalConstraints.top.applied) {
             // Top is already applied
             updateCurrentStyles(["top-0"], []);
+          } else if (shift) {
+            // Add top
+            updateCurrentStyles(["inset-y-0"], ["top-0"]);
           } else {
-            if (shift) {
-              // Add top
-              updateCurrentStyles(["inset-y-0"], ["top-0"]);
-            } else {
-              // Set top
-              updateCurrentStyles(["bottom-0", "inset-y-0"], ["top-0"]);
-            }
+            // Set top
+            updateCurrentStyles(["bottom-0", "inset-y-0"], ["top-0"]);
           }
           break;
         }
@@ -61,14 +59,12 @@ export function useVerticalConstraint() {
           } else if (verticalConstraints.bottom.applied) {
             // Bottom is already applied
             updateCurrentStyles(["bottom-0"], []);
+          } else if (shift) {
+            // Add bottom
+            updateCurrentStyles(["inset-y-0"], ["bottom-0"]);
           } else {
-            if (shift) {
-              // Add bottom
-              updateCurrentStyles(["inset-y-0"], ["bottom-0"]);
-            } else {
-              // Set bottom
-              updateCurrentStyles(["top-0", "inset-y-0"], ["bottom-0"]);
-            }
+            // Set bottom
+            updateCurrentStyles(["top-0", "inset-y-0"], ["bottom-0"]);
           }
           break;
         }
@@ -131,18 +127,22 @@ export function getIsInsetY(v: CurrentAppliedType<string | undefined>) {
   if (v.current) {
     if (v.current.startsWith("inset")) {
       return true;
-    } else if (v.current.startsWith("top")) {
+    }
+    if (v.current.startsWith("top")) {
       return false;
-    } else if (v.current.startsWith("bottom")) {
+    }
+    if (v.current.startsWith("bottom")) {
       return false;
     }
   }
   if (v.applied) {
     if (v.applied.startsWith("inset")) {
       return true;
-    } else if (v.applied.startsWith("top")) {
+    }
+    if (v.applied.startsWith("top")) {
       return false;
-    } else if (v.applied.startsWith("bottom")) {
+    }
+    if (v.applied.startsWith("bottom")) {
       return false;
     }
   }
@@ -201,11 +201,14 @@ function getVerticalConstraintOption({
 }): VerticalConstraintOption | undefined {
   if (top && bottom) {
     return "Top and Bottom";
-  } else if (top) {
+  }
+  if (top) {
     return "Top";
-  } else if (bottom) {
+  }
+  if (bottom) {
     return "Bottom";
-  } else if (insetY) {
+  }
+  if (insetY) {
     return "Center";
   }
 }
