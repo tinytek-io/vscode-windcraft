@@ -10,9 +10,10 @@
     "package": "cd ../../ && npm run build",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "pretest": "npm run compile-tests && npm run compile && npm run check",
+    "test": "vscode-test",
+    "check": "biome check",
+    "format": "biome format --write"
   },
   "dependencies": {
     "@windcraft/ts-plugin": "*",
@@ -23,8 +24,6 @@
     "@types/node": "18.x",
     "@types/vscode": "^1.87.0",
     "@types/vscode-webview": "^1.57.5",
-    "@typescript-eslint/eslint-plugin": "^7.4.0",
-    "@typescript-eslint/parser": "^7.4.0",
     "@vscode/test-cli": "^0.0.8",
     "@vscode/test-electron": "^2.3.9"
   }

@@ -13,7 +13,9 @@
     "build": "rm -rf ./dist && tsc -p .",
     "check:types": "tsc -p . --noEmit",
     "dryrun": "node ./plugin.dryrun.js",
-    "clean": "rm -rf ./dist"
+    "clean": "rm -rf ./dist",
+    "check": "biome check",
+    "format": "biome format --write"
   },
   "devDependencies": {
     "@types/bun": "latest",

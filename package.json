@@ -8,8 +8,8 @@
     "preview": "turbo preview",
     "clean": "turbo clean",
     "test": "turbo test",
-    "check:lint": "turbo check:lint",
-    "check:format": "turbo check:format",
+    "check": "turbo check",
+    "format": "turbo format",
     "check:types": "turbo check:types",
     "tail:log": "tail -f ./packages/ts-plugin/log.txt",
     "package": "npm install && turbo build && vsce package --pre-release"
@@ -26,15 +26,14 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.8.1",
     "@changesets/cli": "^2.27.5",
     "@rsbuild/core": "^0.7.1",
     "@rsbuild/plugin-react": "^0.7.1",
     "@rsbuild/plugin-type-check": "^0.7.1",
     "@rspack/cli": "^0.7.0",
     "@rspack/core": "^0.7.0",
-    "eslint": "^9.3.0",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
-    "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
     "turbo": "^2.0.3",
     "typescript": "^5.4.5"
@@ -67,21 +66,9 @@
     "color": "#F2F2F2",
     "theme": "light"
   },
-  "extensionKind": [
-    "ui",
-    "workspace"
-  ],
-  "categories": [
-    "Other"
-  ],
-  "keywords": [
-    "tailwind",
-    "css",
-    "design",
-    "ui",
-    "windcraft",
-    "design"
-  ],
+  "extensionKind": ["ui", "workspace"],
+  "categories": ["Other"],
+  "keywords": ["tailwind", "css", "design", "ui", "windcraft", "design"],
   "main": "./dist/extension.js",
   "activationEvents": [
     "onLanguage:typescript",
@@ -209,10 +196,7 @@
       "properties": {
         "windcraft.themeFile": {
           "order": 1,
-          "type": [
-            "string",
-            "null"
-          ],
+          "type": ["string", "null"],
           "default": null,
           "description": "Tailwind CSS theme css file path"
         }

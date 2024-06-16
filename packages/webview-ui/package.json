@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "rsbuild dev",
     "build": "rsbuild build",
-    "preview": "rsbuild preview"
+    "preview": "rsbuild preview",
+    "check": "biome check",
+    "format": "biome format --write"
   },
   "dependencies": {
     "@iconify/json": "^2.2.208",

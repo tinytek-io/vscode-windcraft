@@ -8,6 +8,20 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "build:client": {
+      "dependsOn": ["^build:client"],
+      "outputs": ["dist/client/**"]
+    },
+    "build:server": {
+      "dependsOn": ["^build:server"],
+      "outputs": ["dist/server/**"]
+    },
+    "check": {
+      "dependsOn": ["^check"]
+    },
+    "format": {
+      "dependsOn": ["^format"]
+    },
     "check:types": {
       "dependsOn": ["^check:types"]
     },
