@@ -39,4 +39,4 @@ export const gapValues = [
   "96"
 ];
 
-export const gapClasses = gapValues.map((g) => [`gap-x-${g}`, `gap-y-${g}`, `gap-${g}`]).flat();
+export const gapClasses = gapValues.flatMap((g) => [`gap-x-${g}`, `gap-y-${g}`, `gap-${g}`]);

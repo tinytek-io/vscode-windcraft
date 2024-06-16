@@ -1,4 +1,4 @@
-import { TailwindStyle } from "../lib/styleHelpers";
+import type { TailwindStyle } from "../lib/styleHelpers";
 
 /**
  * We compress the tailwind styles to their shortest form

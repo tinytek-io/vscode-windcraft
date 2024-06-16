@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import { CurrentAppliedType } from "../../types/general";
-import { BackdropEffectType, backdropEffectMap, backdropEffects, isBackdropEffect } from "../../types/backdropEffects";
+import type { CurrentAppliedType } from "../../types/general";
+import { type BackdropEffectType, backdropEffectMap, backdropEffects, isBackdropEffect } from "../../types/backdropEffects";
 
 export function useBackdropEffects() {
   const { updateCurrentStyles, getValueOneOf } = useExtensionState();

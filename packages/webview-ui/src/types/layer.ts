@@ -1,4 +1,4 @@
-import { CurrentAppliedType } from "./general";
+import type { CurrentAppliedType } from "./general";
 
 /**
  * Check if the value is a MixBlendInputValue

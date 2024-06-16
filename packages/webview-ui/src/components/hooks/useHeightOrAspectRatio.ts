@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import { CurrentAppliedType } from "../../types/general";
+import type { CurrentAppliedType } from "../../types/general";
 import { heightClasses, heightNone, heightPrefix } from "../../types/height";
 import { aspectRatioClasses, aspectRatioNone, aspectRatioPrefix, getAspectRatioValue } from "../../types/aspectRatio";
 

@@ -2,9 +2,9 @@ import { Select } from "./Select";
 import { CgBorderTop, CgBorderRight, CgBorderBottom, CgBorderLeft } from "react-icons/cg";
 import { RxBorderWidth } from "react-icons/rx";
 import { cn } from "../../lib/cn";
-import { borderWidthIconsMap, borderWidthValues, borderWidthTypes, BorderWidthValue } from "../../types/borderWidth";
+import { borderWidthIconsMap, borderWidthValues, borderWidthTypes, type BorderWidthValue } from "../../types/borderWidth";
 import { useBorderConfig } from "../hooks/useBorderConfig";
-import { CurrentAppliedType } from "../../types/general";
+import type { CurrentAppliedType } from "../../types/general";
 
 export function BorderWidthInput() {
   const { borderWidthType, borderWidth, setBorderType, setBorderWidth, borderWidthMap, toggleBorder } =

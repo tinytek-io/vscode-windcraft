@@ -1,4 +1,4 @@
-import { CurrentAppliedType } from "./general";
+import type { CurrentAppliedType } from "./general";
 
 export type HorizontalConstraintsState = {
   left: CurrentAppliedType<boolean>;

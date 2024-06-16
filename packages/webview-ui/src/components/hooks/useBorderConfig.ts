@@ -1,12 +1,12 @@
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import { CurrentAppliedType } from "../../types/general";
+import type { CurrentAppliedType } from "../../types/general";
 import { useCallback } from "react";
 import {
-  BorderWidthNormalType,
-  BorderWidthAllType,
+  type BorderWidthNormalType,
+  type BorderWidthAllType,
   borderWidthPrefixMap,
   isBorderWidthNormalType,
-  BorderWidthValue,
+  type BorderWidthValue,
   allBorderWidthStyles
 } from "../../types/borderWidth";
 import { useFluffValue } from "./useFluffValue";
@@ -71,7 +71,7 @@ export function useBorderConfig() {
       const widthSuffix = newWidth === "1" ? "" : `-${newWidth}`;
       const prefixes =
         widthType === "Custom"
-          ? widthTypes.current.map((type) => borderWidthPrefixMap[type]).flat()
+          ? widthTypes.current.flatMap((type) => borderWidthPrefixMap[type])
           : borderWidthPrefixMap[borderWidthType.current ?? borderWidthType.applied ?? "All"];
       const newClasses = prefixes.map((prefix) => `${prefix}${widthSuffix}`);
 

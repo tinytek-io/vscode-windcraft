@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RxTransparencyGrid } from "react-icons/rx";
-import { ColorName, ColorType, createColor, getColorSearchName } from "../../../types/color";
+import { type ColorName, type ColorType, createColor, getColorSearchName } from "../../../types/color";
 import { NumberInput } from "../NumberInput";
 import { SearchColorList } from "./SearchColorList";
 import { ColorButton } from "./ColorButton";
@@ -33,8 +33,8 @@ export function ColorInput({ colorName, appliedColorName, onChange }: ColorInput
           min={0}
           max={100}
           placeholder="Opacity"
-          value={parseInt(colorOpacity ?? "100", 10)}
-          applied={parseInt(appliedColorOpacity ?? "100", 10)}
+          value={Number.parseInt(colorOpacity ?? "100", 10)}
+          applied={Number.parseInt(appliedColorOpacity ?? "100", 10)}
           onChange={(value) => {
             onChange?.(createColor(colorId, `${value}`));
           }}

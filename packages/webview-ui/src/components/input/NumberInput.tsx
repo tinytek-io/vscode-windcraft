@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { cn } from "../../lib/cn";
 import { useWheelSelectIndex } from "../hooks/useWheelSelectIndex";
-import { IconType } from "react-icons";
+import type { IconType } from "react-icons";
 
 export type NumberInputProps = {
   icon?: IconType;
@@ -47,7 +47,7 @@ export function NumberInput({
         max={max}
         placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange(parseInt(e.target.value, 10))}
+        onChange={(e) => onChange(Number.parseInt(e.target.value, 10))}
         onFocus={onFocus}
         className={cn("number-input w-full bg-transparent", value !== applied ? "changed" : null)}
       />

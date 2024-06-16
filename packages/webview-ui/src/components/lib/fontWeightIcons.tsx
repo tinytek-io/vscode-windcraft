@@ -1,5 +1,5 @@
-import { FontWeight } from "../../types/fontWeight";
-import { IconType } from "react-icons";
+import type { FontWeight } from "../../types/fontWeight";
+import type { IconType } from "react-icons";
 import { RiFontSize2 } from "react-icons/ri";
 
 export const fontWeightIcons: Record<FontWeight, IconType> = {

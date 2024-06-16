@@ -1,6 +1,6 @@
 import { PiArrowsHorizontalFill, PiArrowsVerticalFill } from "react-icons/pi";
 import { Select } from "../input/Select";
-import { PositionType, positionValues, usePosition } from "../hooks/usePosition";
+import { type PositionType, positionValues, usePosition } from "../hooks/usePosition";
 import { pascalCase } from "../../lib/pascalCase";
 import { SectionHeader } from "../layout/SectionHeader";
 import { horizontalConstraintNone, horizontalConstraintOptions } from "../../types/constraintHorizontal";

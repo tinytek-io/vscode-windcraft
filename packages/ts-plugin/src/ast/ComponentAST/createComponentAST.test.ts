@@ -3,7 +3,7 @@ import * as ts from "typescript";
 import { createTestProgram, testFile001 } from "../../test/createTestProgram";
 import { getJsxAST } from "./createComponentAST";
 import { buttonJsxAST } from "./test/buttonJsxAST";
-import { JsxAST } from "./JsxAST";
+import type { JsxAST } from "./JsxAST";
 
 /*
   "end": 181,

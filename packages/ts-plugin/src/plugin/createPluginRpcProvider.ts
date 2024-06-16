@@ -1,4 +1,4 @@
-import ts from "typescript/lib/tsserverlibrary";
+import type ts from "typescript/lib/tsserverlibrary";
 import { getSimpleAST } from "../ast/SimpleAST/getSimpleAST";
 import { getClassNames } from "../ast/ClassNames/getClassNames";
 import { logger } from "@windcraft/utilities/logger/logger";

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import { CurrentAppliedType } from "../../types/general";
+import type { CurrentAppliedType } from "../../types/general";
 import { useValue } from "./useValue";
 import { useGap } from "./useGap";
 import { gapClasses, gapNone, gapValues } from "../../types/gap";

@@ -2,7 +2,7 @@ import { CompressTailwindStyles } from "../CompressTailwindStyles/CompressTailwi
 import { DecompressTailwindStyles } from "../DecompressTailwindStyles/DecompressTailwindStyles";
 import { isTailwindStyle } from "./isTailwindStyle";
 import { uniqueArray } from "../../lib/uniqueArray";
-import { DeviceMode, deviceModes } from "../../components/sections/DynamicSection";
+import { type DeviceMode, deviceModes } from "../../components/sections/DynamicSection";
 import { sortClassList } from "../designSystem";
 
 /**

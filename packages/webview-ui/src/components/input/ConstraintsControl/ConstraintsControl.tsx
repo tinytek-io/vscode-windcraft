@@ -1,5 +1,5 @@
-import { HorizontalConstraintsState, HorizontalSelectValue } from "../../../types/constraintHorizontal";
-import { VerticalConstraintsState, VerticalSelectValue } from "../../../types/constraintVertical";
+import type { HorizontalConstraintsState, HorizontalSelectValue } from "../../../types/constraintHorizontal";
+import type { VerticalConstraintsState, VerticalSelectValue } from "../../../types/constraintVertical";
 import { HorizontalButton, VerticalButton } from "./ConstraintButton";
 import { EventTriangle } from "./EventTriangle";
 

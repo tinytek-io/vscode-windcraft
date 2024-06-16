@@ -35,14 +35,14 @@ export function usePadding() {
       const px = left.current ?? right.current ?? left.applied ?? right.applied ?? paddingNone;
       const py = top.current ?? bottom.current ?? top.applied ?? bottom.applied ?? paddingNone;
       updateCurrentStyles(
-        paddingValues.map((p) => [`pl-${p}`, `pr-${p}`, `pt-${p}`, `pb-${p}`]).flat(),
+        paddingValues.flatMap((p) => [`pl-${p}`, `pr-${p}`, `pt-${p}`, `pb-${p}`]),
         [[`px-${px}`], [`py-${py}`]].flat()
       );
     } else {
       const px = x.current ?? x.applied ?? paddingNone;
       const py = y.current ?? y.applied ?? paddingNone;
       updateCurrentStyles(
-        paddingValues.map((p) => [`px-${p}`, `py-${p}`]).flat(),
+        paddingValues.flatMap((p) => [`px-${p}`, `py-${p}`]),
         [
           [`pl-${px}`, `pr-${px}`],
           [`pt-${py}`, `pb-${py}`]

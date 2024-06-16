@@ -1,7 +1,7 @@
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import { CurrentAppliedType } from "../../types/general";
+import type { CurrentAppliedType } from "../../types/general";
 import { useCallback, useMemo } from "react";
-import { ColorName } from "../../types/color";
+import type { ColorName } from "../../types/color";
 
 export function useColor(prefix: "bg-" | "text-" | "border-") {
   const { updateCurrentStyles, getColorByPrefix } = useExtensionState();

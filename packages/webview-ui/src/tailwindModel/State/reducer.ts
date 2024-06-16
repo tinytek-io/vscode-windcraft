@@ -1,9 +1,9 @@
 import { uniqueArray } from "../../lib/uniqueArray";
 import { sortClassList } from "../designSystem";
 import {
-  CustomStyle,
-  TailwindStyle,
-  TailwindValue,
+  type CustomStyle,
+  type TailwindStyle,
+  type TailwindValue,
   addStylesToCurrent,
   appliedTailwindStylesFilter,
   createScopedStyleState,
@@ -13,7 +13,7 @@ import {
   removeStylesFromCurrent,
   scopeTailwindStylesFilter
 } from "../lib/styleHelpers";
-import { Action } from "./actions";
+import type { Action } from "./actions";
 
 export interface StyleState {
   currentClassName: string | null;

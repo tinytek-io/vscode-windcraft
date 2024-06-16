@@ -3,7 +3,7 @@ import { RxShadow, RxShadowOuter } from "react-icons/rx";
 import { cn } from "../../lib/cn";
 import { LuMinus } from "react-icons/lu";
 import { useMemo } from "react";
-import { IconType } from "react-icons";
+import type { IconType } from "react-icons";
 import { ImBrightnessContrast } from "react-icons/im";
 import { IoMdColorPalette } from "react-icons/io";
 import { IoInvertModeOutline } from "react-icons/io5";
@@ -11,7 +11,7 @@ import { MdBlurOn } from "react-icons/md";
 import { RiContrastFill } from "react-icons/ri";
 import { TbColorSwatch } from "react-icons/tb";
 import { TfiCamera } from "react-icons/tfi";
-import { LayerEffectType } from "../../types/layerEffects";
+import type { LayerEffectType } from "../../types/layerEffects";
 import { useLayerEffectValue } from "../hooks/useLayerEffects";
 
 export type EffectInputProps = {

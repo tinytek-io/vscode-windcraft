@@ -1,10 +1,10 @@
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import { CurrentAppliedType, getCurrentAppliedType } from "../../types/general";
+import { type CurrentAppliedType, getCurrentAppliedType } from "../../types/general";
 import {
-  HorizontalConstraintsState,
-  HorizontalConstraints,
-  HorizontalConstraintOption,
-  HorizontalSelectValue,
+  type HorizontalConstraintsState,
+  type HorizontalConstraints,
+  type HorizontalConstraintOption,
+  type HorizontalSelectValue,
   isHorizontalConstraintOption
 } from "../../types/constraintHorizontal";
 import { useKeyboardShift } from "./useKeyboardShift";

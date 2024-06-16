@@ -1,5 +1,5 @@
 import { ImSubscript2, ImSuperscript2 } from "react-icons/im";
-import { IconType } from "react-icons";
+import type { IconType } from "react-icons";
 import { MdVerticalAlignCenter } from "react-icons/md";
 import { AiOutlineVerticalAlignTop, AiOutlineVerticalAlignBottom } from "react-icons/ai";
 import { RxAlignBaseline, RxTextAlignTop, RxTextAlignBottom } from "react-icons/rx";

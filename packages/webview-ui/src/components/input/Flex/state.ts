@@ -1,4 +1,4 @@
-import { LayoutGridType, LayoutGridValue } from "./types";
+import type { LayoutGridType, LayoutGridValue } from "./types";
 
 export const layoutGridValues: LayoutGridValue[] = [
   "items-start",

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import { CurrentAppliedType } from "../../types/general";
+import type { CurrentAppliedType } from "../../types/general";
 
 export function useValue<V extends string>(needles: V[], defaultValue: NoInfer<V>): CurrentAppliedType<V> {
   const { styleState } = useExtensionState();

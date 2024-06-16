@@ -2,7 +2,7 @@ import { LuDot } from "react-icons/lu";
 import { getLayoutGridType } from "./types";
 import { layoutGrids } from "./grid";
 import { useExtensionState } from "../../../tailwindModel/State/ExtensionStateProvider";
-import { FlexDirection, useFlex } from "../../hooks/useFlex";
+import { type FlexDirection, useFlex } from "../../hooks/useFlex";
 import { useGap } from "../../hooks/useGap";
 import { flexCoord, layoutGridValues } from "./state";
 import { gapNone } from "../../../types/gap";

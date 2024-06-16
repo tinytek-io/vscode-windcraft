@@ -1,5 +1,5 @@
 import { logger } from "@windcraft/utilities/logger/logger";
-import ts from "typescript/lib/tsserverlibrary";
+import type ts from "typescript/lib/tsserverlibrary";
 
 export type DisposeFunction = () => void;
 

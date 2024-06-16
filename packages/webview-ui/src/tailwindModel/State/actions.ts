@@ -1,4 +1,4 @@
-import { TailwindModifierState, TailwindStyle } from "../lib/styleHelpers";
+import type { TailwindModifierState, TailwindStyle } from "../lib/styleHelpers";
 
 export type Action =
   | CodeSelection

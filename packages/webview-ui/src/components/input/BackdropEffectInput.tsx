@@ -3,7 +3,7 @@ import { RxShadow } from "react-icons/rx";
 import { cn } from "../../lib/cn";
 import { LuMinus } from "react-icons/lu";
 import { useMemo } from "react";
-import { IconType } from "react-icons";
+import type { IconType } from "react-icons";
 import { ImBrightnessContrast } from "react-icons/im";
 import { IoMdColorPalette } from "react-icons/io";
 import { IoInvertModeOutline } from "react-icons/io5";
@@ -12,7 +12,7 @@ import { RiContrastFill } from "react-icons/ri";
 import { TbColorSwatch } from "react-icons/tb";
 import { TfiCamera } from "react-icons/tfi";
 import { useBackdropEffectValue } from "../hooks/useBackdropEffects";
-import { BackdropEffectType } from "../../types/backdropEffects";
+import type { BackdropEffectType } from "../../types/backdropEffects";
 
 export type EffectInputProps = {
   type: BackdropEffectType;

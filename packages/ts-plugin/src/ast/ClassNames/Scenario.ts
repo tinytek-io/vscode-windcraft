@@ -1,5 +1,5 @@
 import { testFile001 } from "../../test/createTestProgram";
-import { ClassName, ClassNamesResult } from "./getClassNames";
+import type { ClassName, ClassNamesResult } from "./getClassNames";
 
 export type Scenario = {
   name: string;

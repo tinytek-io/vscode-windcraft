@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import { LayerEffectType, isLayerEffect, layerEffectMap, layerEffects } from "../../types/layerEffects";
+import { type LayerEffectType, isLayerEffect, layerEffectMap, layerEffects } from "../../types/layerEffects";
 
 export function useLayerEffects() {
   const { updateCurrentStyles, getValueOneOf } = useExtensionState();

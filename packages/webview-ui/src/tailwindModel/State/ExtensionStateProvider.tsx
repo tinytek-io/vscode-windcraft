@@ -1,10 +1,10 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer } from "react";
-import { StyleState, createInitialState, reducer } from "./reducer";
-import { Action } from "./actions";
-import { TailwindStyle, addStylesToCurrent, createClassName, removeStylesFromCurrent } from "../lib/styleHelpers";
+import { type StyleState, createInitialState, reducer } from "./reducer";
+import type { Action } from "./actions";
+import { type TailwindStyle, addStylesToCurrent, createClassName, removeStylesFromCurrent } from "../lib/styleHelpers";
 import { bridge } from "../../utilities/Bridge";
-import { ColorName, parseColorName } from "../../types/color";
-import { OptionalTailwindStyle, CurrentAppliedType, KeySuffixMap, UIValue, TailwindSuffix } from "../../types/general";
+import { type ColorName, parseColorName } from "../../types/color";
+import type { OptionalTailwindStyle, CurrentAppliedType, KeySuffixMap, UIValue, TailwindSuffix } from "../../types/general";
 
 type ExtensionMessageTypes =
   | {
@@ -237,7 +237,7 @@ export function useExtensionState() {
   return useContext(ExtensionStateContext);
 }
 
-function getValueOneOfStyle(styles: TailwindStyle[], options: string[], endOfStyles: string = "") {
+function getValueOneOfStyle(styles: TailwindStyle[], options: string[], endOfStyles = "") {
   const indexOfEnd = styles.indexOf(endOfStyles);
   const haystack = indexOfEnd === -1 ? styles : styles.slice(0, indexOfEnd + 1);
   return haystack.find((s) => options.includes(s));

@@ -1,5 +1,5 @@
 import type * as ts from "typescript/lib/tsserverlibrary";
-import { JsxAST } from "./JsxAST";
+import type { JsxAST } from "./JsxAST";
 
 export function getJsxAST(fileName: string, program: ts.Program, typescript: typeof ts): JsxAST.File | undefined {
   const file = program.getSourceFile(fileName);

@@ -1,4 +1,4 @@
-import { IconType } from "react-icons";
+import type { IconType } from "react-icons";
 import { useRef } from "react";
 import { cn } from "../../lib/cn";
 import { useWheelSelect } from "../hooks/useWheelSelect";

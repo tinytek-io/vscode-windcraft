@@ -1,6 +1,6 @@
 export function uuid() {
   let d2 = performance.now() * 1000;
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
     let r = Math.random() * 16;
     r = ((d2 + r) % 16) | 0;
     d2 = Math.floor(d2 / 16);

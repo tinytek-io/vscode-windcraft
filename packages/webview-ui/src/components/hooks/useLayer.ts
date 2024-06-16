@@ -3,7 +3,7 @@ import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvi
 import {
   getMixBlendInputValue,
   opacityNone,
-  MixBlendInputValue,
+  type MixBlendInputValue,
   isMixBlendInputValue,
   mixBlendNone,
   getMixBlendClassName

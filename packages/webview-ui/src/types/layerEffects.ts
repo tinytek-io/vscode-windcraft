@@ -1,4 +1,4 @@
-import { TailwindFieldInfo } from "../tailwindModel/lib/styleHelpers";
+import type { TailwindFieldInfo } from "../tailwindModel/lib/styleHelpers";
 
 export type LayerEffectType =
   | "Blur"

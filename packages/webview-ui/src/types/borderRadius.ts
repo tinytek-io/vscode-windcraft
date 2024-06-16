@@ -1,4 +1,4 @@
-import { KeySuffixMap } from "./general";
+import type { KeySuffixMap } from "./general";
 
 export const borderRadiusNone = "none";
 export const borderRadiusMap: KeySuffixMap = new Map([

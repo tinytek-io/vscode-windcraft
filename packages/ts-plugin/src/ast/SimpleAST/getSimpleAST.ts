@@ -1,5 +1,5 @@
 import type * as ts from "typescript/lib/tsserverlibrary";
-import { SimpleAST } from "./SimpleAST";
+import type { SimpleAST } from "./SimpleAST";
 
 export function getSimpleAST(fileName: string, program: ts.Program, typescript: typeof ts) {
   const file = program.getSourceFile(fileName);

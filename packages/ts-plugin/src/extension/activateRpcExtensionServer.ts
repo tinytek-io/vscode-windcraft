@@ -1,5 +1,5 @@
 import { RpcServerSocket } from "@windcraft/utilities/rpc/RpcServerSocket";
-import * as vscode from "vscode";
+import type * as vscode from "vscode";
 import { extensionRpcProvider } from "./createExtensionRpcProvider";
 import type { PluginRpcProvider, PluginRpcProviderEvent } from "../plugin/createPluginRpcProvider";
 import { configurePlugin } from "./configurePlugin";

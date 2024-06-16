@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useWheelSelect } from "../../hooks/useWheelSelect";
-import { ColorType, getColorSearchName, colors, formatColorName } from "../../../types/color";
+import { type ColorType, getColorSearchName, colors, formatColorName } from "../../../types/color";
 import { cn } from "../../../lib/cn";
 
 export type ColorButtonProps = {

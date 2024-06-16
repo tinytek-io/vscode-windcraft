@@ -1,4 +1,4 @@
-import { JsxAST } from "../JsxAST";
+import type { JsxAST } from "../JsxAST";
 
 export const buttonJsxAST: JsxAST.Component = {
   type: "component",

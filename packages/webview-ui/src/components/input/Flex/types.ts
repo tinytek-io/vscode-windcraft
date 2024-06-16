@@ -1,5 +1,5 @@
-import { IconType } from "react-icons";
-import { FlexDirection } from "../../hooks/useFlex";
+import type { IconType } from "react-icons";
+import type { FlexDirection } from "../../hooks/useFlex";
 
 export type LayoutGridType = "row" | "row-auto" | "column" | "column-auto" | "wrap" | "wrap-auto";
 

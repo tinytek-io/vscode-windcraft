@@ -6,7 +6,7 @@ import {
   MdOutlineAlignHorizontalCenter,
   MdAlignHorizontalRight
 } from "react-icons/md";
-import { LayoutGrids } from "./types";
+import type { LayoutGrids } from "./types";
 import { BsGrid3X2GapFill } from "react-icons/bs";
 import {
   PiAlignBottomFill,

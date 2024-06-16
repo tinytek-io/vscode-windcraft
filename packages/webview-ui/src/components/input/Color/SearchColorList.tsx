@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { VscClose } from "react-icons/vsc";
-import { ColorType, formatColorName } from "../../../types/color";
+import { type ColorType, formatColorName } from "../../../types/color";
 import { colorSearch } from "./ColorButton";
 
 export type SearchColorListProps = {

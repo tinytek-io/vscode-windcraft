@@ -5,7 +5,7 @@ import { FileLogger } from "@windcraft/utilities/logger/FileLogger";
 import { setCurrentLogger, logger } from "@windcraft/utilities/logger/logger";
 import type { PluginConfiguration } from "./PluginConfiguration";
 import { startPollProgramCompilation } from "./startPollProgramCompilation";
-import { PluginRpcProviderEvent, createPluginRpcProvider } from "./createPluginRpcProvider";
+import { type PluginRpcProviderEvent, createPluginRpcProvider } from "./createPluginRpcProvider";
 import type { ExtensionRpcProvider } from "../extension/createExtensionRpcProvider";
 
 const LANGUAGE_SERVICE_MODE_SEMANTIC = 0;

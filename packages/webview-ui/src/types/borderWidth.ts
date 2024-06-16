@@ -1,5 +1,5 @@
-import { TailwindFieldInfo } from "../tailwindModel/lib/styleHelpers";
-import { IconType } from "react-icons";
+import type { TailwindFieldInfo } from "../tailwindModel/lib/styleHelpers";
+import type { IconType } from "react-icons";
 import { CgBorderAll, CgBorderTop, CgBorderRight, CgBorderBottom, CgBorderLeft } from "react-icons/cg";
 import { VscSettings } from "react-icons/vsc";
 
@@ -37,5 +37,4 @@ export function isBorderWidthNormalType(type: string): type is BorderWidthAllTyp
 }
 
 export const allBorderWidthStyles = ["border", "border-t", "border-r", "border-b", "border-l"]
-  .map((prefix) => borderWidthValues.map((v) => (v === "1" ? prefix : `${prefix}-${v}`)))
-  .flat();
+  .flatMap((prefix) => borderWidthValues.map((v) => (v === "1" ? prefix : `${prefix}-${v}`)));

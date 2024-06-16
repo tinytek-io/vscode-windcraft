@@ -1,5 +1,5 @@
-import { Range, TextDocument } from "vscode";
-import { ClassName, ClassNamesResult } from "../ast/ClassNames/getClassNames";
+import { Range, type TextDocument } from "vscode";
+import type { ClassName, ClassNamesResult } from "../ast/ClassNames/getClassNames";
 
 export type ClassNamePosition = ClassName & {
   range: Range;
