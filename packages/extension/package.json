@@ -13,7 +13,8 @@
     "pretest": "npm run compile-tests && npm run compile && npm run check",
     "test": "vscode-test",
     "check": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "lint": "biome lint --write"
   },
   "dependencies": {
     "@windcraft/ts-plugin": "*",

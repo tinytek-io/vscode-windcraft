@@ -22,6 +22,9 @@
     "format": {
       "dependsOn": ["^format"]
     },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
     "check:types": {
       "dependsOn": ["^check:types"]
     },

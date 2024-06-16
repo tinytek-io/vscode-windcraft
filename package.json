@@ -10,6 +10,7 @@
     "test": "turbo test",
     "check": "turbo check",
     "format": "turbo format",
+    "lint": "turbo lint",
     "check:types": "turbo check:types",
     "tail:log": "tail -f ./packages/ts-plugin/log.txt",
     "package": "npm install && turbo build && vsce package --pre-release"

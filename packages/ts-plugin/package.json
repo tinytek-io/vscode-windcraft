@@ -15,7 +15,8 @@
     "dryrun": "node ./plugin.dryrun.js",
     "clean": "rm -rf ./dist",
     "check": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "lint": "biome lint --write"
   },
   "devDependencies": {
     "@types/bun": "latest",
