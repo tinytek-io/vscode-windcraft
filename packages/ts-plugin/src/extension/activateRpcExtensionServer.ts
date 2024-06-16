@@ -7,6 +7,7 @@ import type {
 } from "../plugin/createPluginRpcProvider";
 import { configurePlugin } from "./configurePlugin";
 import { CurrentLogger } from "@windcraft/utilities/logger/logger";
+import { TimeSpan } from "@windcraft/utilities/lib/TimeSpan";
 
 const logger = new CurrentLogger("[activateRpcExtensionServer]");
 
@@ -28,7 +29,7 @@ export async function activateRpcExtensionServer(
     const timeout = setTimeout(() => {
       release();
       reject(new Error("Client did not connect"));
-    }, 5000);
+    }, TimeSpan.fromSeconds(10).toMilliseconds());
 
     release = rpcServerSocket.on("clientReady", () => {
       clearTimeout(timeout);
