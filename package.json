@@ -16,12 +16,7 @@
     "package": "npm install && turbo build && vsce package --pre-release"
   },
   "packageManager": "npm@10.2.4",
-  "workspaces": [
-    "packages/utilities",
-    "packages/ts-plugin",
-    "packages/webview-ui",
-    "packages/extension"
-  ],
+  "workspaces": ["packages/utilities", "packages/ts-plugin", "packages/webview-ui", "packages/extension"],
   "dependencies": {
     "@windcraft/ts-plugin": "*",
     "zod": "^3.23.8"
@@ -36,7 +31,7 @@
     "@rspack/core": "^0.7.0",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "ts-node": "^10.9.2",
-    "turbo": "^2.0.3",
+    "turbo": "^2.0.4",
     "typescript": "^5.4.5"
   },
   "displayName": "WindCraft",
@@ -71,13 +66,8 @@
   "categories": ["Other"],
   "keywords": ["tailwind", "css", "design", "ui", "windcraft", "design"],
   "main": "./dist/extension.js",
-  "activationEvents": [
-    "onLanguage:typescript",
-    "onLanguage:typescriptreact"
-  ],
-  "extensionDependencies": [
-    "vscode.typescript-language-features"
-  ],
+  "activationEvents": ["onLanguage:typescript", "onLanguage:typescriptreact"],
+  "extensionDependencies": ["vscode.typescript-language-features"],
   "contributes": {
     "typescriptServerPlugins": [
       {
