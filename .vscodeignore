@@ -20,3 +20,6 @@
 # Keep the @windcraft/utilities folder
 !node_modules/@windcraft/utilities/dist/
 !node_modules/@windcraft/utilities/package.json
+
+# Required for the package to work
+!node_modules/zod/
