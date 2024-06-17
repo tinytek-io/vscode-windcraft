@@ -1,4 +1,4 @@
-import { JsxAST } from "../JsxAST";
+import type { JsxAST } from "../JsxAST";
 
 export const buttonJsxAST: JsxAST.Component = {
   type: "component",
@@ -6,23 +6,23 @@ export const buttonJsxAST: JsxAST.Component = {
   isExported: true,
   position: {
     start: 0,
-    end: 100,
+    end: 100
   },
   props: {
     onClick: {
       value: "() => void",
       position: {
         start: 0,
-        end: 100,
-      },
+        end: 100
+      }
     },
     children: {
       value: "React.ReactNode",
       position: {
         start: 0,
-        end: 100,
-      },
-    },
+        end: 100
+      }
+    }
   },
   return: [
     {
@@ -30,23 +30,23 @@ export const buttonJsxAST: JsxAST.Component = {
       name: "button",
       position: {
         start: 0,
-        end: 100,
+        end: 100
       },
       props: {
         className: {
           value: "flex",
           position: {
             start: 0,
-            end: 100,
-          },
+            end: 100
+          }
         },
         onClick: {
           value: "onClick",
           position: {
             start: 0,
-            end: 100,
-          },
-        },
+            end: 100
+          }
+        }
       },
       children: [
         {
@@ -54,16 +54,16 @@ export const buttonJsxAST: JsxAST.Component = {
           name: "div",
           position: {
             start: 0,
-            end: 100,
+            end: 100
           },
           props: {
             className: {
               value: "flex flex-col",
               position: {
                 start: 0,
-                end: 100,
-              },
-            },
+                end: 100
+              }
+            }
           },
           children: [
             {
@@ -71,44 +71,44 @@ export const buttonJsxAST: JsxAST.Component = {
               value: "test",
               position: {
                 start: 0,
-                end: 100,
-              },
-            },
-          ],
+                end: 100
+              }
+            }
+          ]
         },
         {
           type: "element",
           name: "img",
           position: {
             start: 0,
-            end: 100,
+            end: 100
           },
           props: {
             src: {
               value: "test",
               position: {
                 start: 0,
-                end: 100,
-              },
+                end: 100
+              }
             },
             className: {
               value: "w-full",
               position: {
                 start: 0,
-                end: 100,
-              },
-            },
-          },
+                end: 100
+              }
+            }
+          }
         },
         {
           type: "expression",
           expression: "children",
           position: {
             start: 0,
-            end: 100,
-          },
-        },
-      ],
-    },
-  ],
+            end: 100
+          }
+        }
+      ]
+    }
+  ]
 };

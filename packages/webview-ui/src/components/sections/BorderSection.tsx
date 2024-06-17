@@ -13,15 +13,9 @@ export function BorderSection() {
     <div className="flex flex-col">
       <SectionHeader title="Border">
         {hasBorder ? (
-          <LuMinus
-            className="btn"
-            onClick={removeBorder}
-          />
+          <LuMinus className="btn" onClick={removeBorder} />
         ) : (
-          <LuPlus
-            className="btn"
-            onClick={addBorder}
-          />
+          <LuPlus className="btn" onClick={addBorder} />
         )}
       </SectionHeader>
       {hasBorder && (

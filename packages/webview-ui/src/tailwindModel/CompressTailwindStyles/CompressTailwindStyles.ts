@@ -1,4 +1,4 @@
-import { TailwindStyle } from "../lib/styleHelpers";
+import type { TailwindStyle } from "../lib/styleHelpers";
 
 /**
  * We compress the tailwind styles to their shortest form
@@ -8,8 +8,6 @@ import { TailwindStyle } from "../lib/styleHelpers";
  *
  * The UI should be able to handle the shortest form of tailwind styles
  */
-export function CompressTailwindStyles(
-  styles: TailwindStyle[]
-): TailwindStyle[] {
+export function CompressTailwindStyles(styles: TailwindStyle[]): TailwindStyle[] {
   return styles;
 }

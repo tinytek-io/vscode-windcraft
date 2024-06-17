@@ -3,7 +3,6 @@ import { ColorInput } from "../input/Color/ColorInput";
 import { SectionHeader } from "../layout/SectionHeader";
 import { useColor } from "../hooks/useColor";
 
-
 export function BackgroundSection() {
   const background = useColor("bg-");
   const hasBackground = (background.color.current ?? background.color.applied) != null;
@@ -34,7 +33,8 @@ export function BackgroundSection() {
             appliedColorName={background.color.applied ?? "transparent"}
             onChange={(newColor) => {
               background.setColor(newColor);
-            }} />
+            }}
+          />
         </div>
       )}
     </div>

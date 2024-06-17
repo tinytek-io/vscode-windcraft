@@ -2,8 +2,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["ES2023"],
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
@@ -11,18 +11,10 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "outDir": "dist/client",
+    "outDir": "dist",
     "declaration": true,
-    "declarationDir": "dist/client"
+    "declarationDir": "dist"
   },
-  "include": [
-      "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "src/test",
-    "**/*.test.ts",
-    "**/*.test.tsx"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "src/test", "**/*.test.ts", "**/*.test.tsx"]
 }

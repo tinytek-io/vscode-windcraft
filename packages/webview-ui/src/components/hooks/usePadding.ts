@@ -15,20 +15,10 @@ export function usePadding() {
   const top = getValueByPrefix("pt-");
   const bottom = getValueByPrefix("pb-");
 
-  const currentAdvanced = [
-    left.current,
-    right.current,
-    top.current,
-    bottom.current,
-  ].filter(Boolean).length
+  const currentAdvanced = [left.current, right.current, top.current, bottom.current].filter(Boolean).length
     ? true
     : undefined;
-  const appliedAdvanced = [
-    left.applied,
-    right.applied,
-    top.applied,
-    bottom.applied,
-  ].filter(Boolean).length
+  const appliedAdvanced = [left.applied, right.applied, top.applied, bottom.applied].filter(Boolean).length
     ? true
     : undefined;
   const currentSimple = x.current || y.current ? false : undefined;
@@ -42,36 +32,24 @@ export function usePadding() {
 
   const toggleMode = useCallback(() => {
     if (isAdvanced) {
-      const px =
-        left.current ??
-        right.current ??
-        left.applied ??
-        right.applied ??
-        paddingNone;
-      const py =
-        top.current ??
-        bottom.current ??
-        top.applied ??
-        bottom.applied ??
-        paddingNone;
+      const px = left.current ?? right.current ?? left.applied ?? right.applied ?? paddingNone;
+      const py = top.current ?? bottom.current ?? top.applied ?? bottom.applied ?? paddingNone;
       updateCurrentStyles(
-        paddingValues
-          .map((p) => [`pl-${p}`, `pr-${p}`, `pt-${p}`, `pb-${p}`])
-          .flat(),
+        paddingValues.flatMap((p) => [`pl-${p}`, `pr-${p}`, `pt-${p}`, `pb-${p}`]),
         [[`px-${px}`], [`py-${py}`]].flat()
       );
     } else {
       const px = x.current ?? x.applied ?? paddingNone;
       const py = y.current ?? y.applied ?? paddingNone;
       updateCurrentStyles(
-        paddingValues.map((p) => [`px-${p}`, `py-${p}`]).flat(),
+        paddingValues.flatMap((p) => [`px-${p}`, `py-${p}`]),
         [
           [`pl-${px}`, `pr-${px}`],
-          [`pt-${py}`, `pb-${py}`],
+          [`pt-${py}`, `pb-${py}`]
         ].flat()
       );
     }
-  }, [x, y, left, right, top, bottom, updateCurrentStyles]);
+  }, [x, y, left, right, top, bottom, updateCurrentStyles, isAdvanced]);
 
   const updateX = useCallback(
     (newPadding: string) => {
@@ -191,6 +169,6 @@ export function usePadding() {
     updateTop,
     updateBottom,
     updateLeft,
-    updateRight,
+    updateRight
   };
 }

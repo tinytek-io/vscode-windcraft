@@ -10,17 +10,10 @@ export function LayerEffectSection() {
   return (
     <div>
       <SectionHeader title="Layer effecs">
-        <LuPlus
-          className={cn("btn", availableLayerEffects.length === 0 && "disabled")}
-          onClick={addNextLayerEffect}
-        />
+        <LuPlus className={cn("btn", availableLayerEffects.length === 0 && "disabled")} onClick={addNextLayerEffect} />
       </SectionHeader>
       {configuredLayerEffects.map((type) => (
-        <LayerEffectInput
-          key={type}
-          type={type}
-          availableTypes={availableLayerEffects}
-        />
+        <LayerEffectInput key={type} type={type} availableTypes={availableLayerEffects} />
       ))}
     </div>
   );

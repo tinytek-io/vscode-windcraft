@@ -6,7 +6,7 @@ export function CurrentDecorationType() {
     // backgroundColor: "var(--vscode-editor-selectionBackground)",
     border: "1px solid var(--vscode-interactive-activeCodeBorder)",
     borderRadius: "2px",
-    cursor: "pointer",
+    cursor: "pointer"
   });
 }
 
@@ -18,11 +18,11 @@ export function CurrentEmptyDecorationType() {
     borderRadius: "2px",
     cursor: "pointer",
     before: {
-      contentText: ' className="',
+      contentText: ' className="'
     },
     after: {
-      contentText: '"',
-    },
+      contentText: '"'
+    }
   });
 }
 
@@ -31,6 +31,6 @@ export function ScopeDecorationType() {
     // backgroundColor: "var(--vscode-editor-inactiveSelectionBackground)",
     border: "1px solid var(--vscode-interactive-inactiveCodeBorder)",
     borderRadius: "2px",
-    cursor: "pointer",
+    cursor: "pointer"
   });
 }

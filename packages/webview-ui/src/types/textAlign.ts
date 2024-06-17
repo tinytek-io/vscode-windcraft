@@ -1,32 +1,25 @@
-import { IconType } from "react-icons";
-import {
-  FaAlignLeft,
-  FaAlignCenter,
-  FaAlignRight,
-  FaAlignJustify,
-} from "react-icons/fa";
+import type { IconType } from "react-icons";
+import { FaAlignLeft, FaAlignCenter, FaAlignRight, FaAlignJustify } from "react-icons/fa";
 import { MdAlignHorizontalLeft, MdAlignHorizontalRight } from "react-icons/md";
 
-export type TextAlign =
-  | "left"
-  | "center"
-  | "right"
-  | "justify"
-  | "start"
-  | "end";
+export type TextAlign = "left" | "center" | "right" | "justify" | "start" | "end";
 export const textAlignMap: Record<TextAlign, string> = {
   left: "text-left",
   center: "text-center",
   right: "text-right",
   justify: "text-justify",
   start: "text-start",
-  end: "text-end",
+  end: "text-end"
 };
 export const textAlignClasses = [...Object.values(textAlignMap)];
 export const textAlignValues = Object.keys(textAlignMap);
-export const classTextAlignMap: Record<string, TextAlign> = Object.entries(
-  textAlignMap
-).reduce((acc, [key, value]) => ({ ...acc, [value]: key }), {});
+export const classTextAlignMap = Object.entries(textAlignMap).reduce(
+  (acc, [key, value]) => {
+    acc[value] = key as TextAlign;
+    return acc;
+  },
+  {} as Record<string, TextAlign>
+);
 export function isTextAlign(value: string): value is TextAlign {
   return value in textAlignMap;
 }
@@ -36,7 +29,7 @@ export const textAlignIcons: Record<TextAlign, IconType> = {
   right: FaAlignRight,
   justify: FaAlignJustify,
   start: MdAlignHorizontalLeft,
-  end: MdAlignHorizontalRight,
+  end: MdAlignHorizontalRight
 };
 
 export function getTextAlign(value: string): TextAlign {

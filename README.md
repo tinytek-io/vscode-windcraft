@@ -29,9 +29,14 @@ This extension contributes the following settings:
 
 Preview release of WindCraft - a visual Tailwind CSS editor.
 
-### 0.0.5
+### 0.0.6
 
-* Fixes issue on WSL where the extension was not working due to timeouts while waiting for the TypeScript Language Server Plugin to start - this has been fixed by increasing the attempts to connect to the server and wait for vs to start up.
+* Rewritten the communication layer between the extension and the TypeScript Language Server Plugin to improve performance and reliability.
+* Added generalized utility functionality to create Rpc calls, for now over Sockets but can be extended to other communication channels.
+* Configured Turborepo to manage the monorepo structure and dependencies.
+* Configured Changesets to manage the versioning and changelog generation. *(preparing for automation)*
+
+We now have two dependencies less in the project and a simpler build setup + type safety for the communication layer 🍻
 
 ### Next Release
 

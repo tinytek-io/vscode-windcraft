@@ -3,7 +3,7 @@ import * as ts from "typescript";
 import { createTestProgram, testFile001 } from "../../test/createTestProgram";
 import { getJsxAST } from "./createComponentAST";
 import { buttonJsxAST } from "./test/buttonJsxAST";
-import { JsxAST } from "./JsxAST";
+import type { JsxAST } from "./JsxAST";
 
 /*
   "end": 181,
@@ -22,7 +22,7 @@ describe.skip("JsxAST", () => {
 
       expect(jsxASTFile).toBeDefined();
 
-      const button = jsxASTFile!.components.find((c) => c.name === "Button");
+      const button = jsxASTFile?.components.find((c) => c.name === "Button");
       expect(button).toEqual(buttonJsxAST);
     });
   });

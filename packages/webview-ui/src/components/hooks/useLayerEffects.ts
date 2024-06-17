@@ -1,19 +1,13 @@
 import { useCallback, useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import {
-  LayerEffectType,
-  isLayerEffect,
-  layerEffectMap,
-  layerEffects,
-} from "../../types/layerEffects";
+import { type LayerEffectType, isLayerEffect, layerEffectMap, layerEffects } from "../../types/layerEffects";
 
 export function useLayerEffects() {
   const { updateCurrentStyles, getValueOneOf } = useExtensionState();
 
   const addLayerEffect = useCallback(
     (type: LayerEffectType) => {
-      const className =
-        layerEffectMap[type].valueMap[layerEffectMap[type].none];
+      const className = layerEffectMap[type].valueMap[layerEffectMap[type].none];
       updateCurrentStyles([], [className]);
     },
     [updateCurrentStyles]
@@ -35,10 +29,7 @@ export function useLayerEffects() {
     () => layerEffects.filter((e) => !configuredLayerEffects.includes(e)),
     [configuredLayerEffects]
   );
-  const nextLayerEffect: LayerEffectType | undefined = useMemo(
-    () => availableLayerEffects[0],
-    [availableLayerEffects]
-  );
+  const nextLayerEffect: LayerEffectType | undefined = useMemo(() => availableLayerEffects[0], [availableLayerEffects]);
 
   const addNextLayerEffect = useCallback(() => {
     if (nextLayerEffect) {
@@ -53,7 +44,7 @@ export function useLayerEffects() {
     nextLayerEffect,
     // Actions
     addLayerEffect,
-    addNextLayerEffect,
+    addNextLayerEffect
   };
 }
 
@@ -67,47 +58,40 @@ export function useLayerEffectValue(type: LayerEffectType) {
     const value = getValueOneOf(allClassNames);
     return {
       current: value.current ?? value.applied ?? effect.none,
-      applied: value.applied ?? effect.none,
+      applied: value.applied ?? effect.none
     };
-  }, [getValueOneOf, allClassNames]);
+  }, [getValueOneOf, allClassNames, effect]);
   const value = useMemo(
     () => ({
-      current:
-        allValues[allClassNames.indexOf(className.current)] ??
-        effect.valueMap[effect.none],
-      applied:
-        allValues[allClassNames.indexOf(className.applied)] ??
-        effect.valueMap[effect.none],
+      current: allValues[allClassNames.indexOf(className.current)] ?? effect.valueMap[effect.none],
+      applied: allValues[allClassNames.indexOf(className.applied)] ?? effect.valueMap[effect.none]
     }),
     [effect, allValues, allClassNames, className]
   );
 
   const setValue = useCallback(
     (newValue: string) => {
-      const newClassName =
-        layerEffectMap[type].valueMap[newValue] ?? layerEffectMap[type].none;
+      const newClassName = layerEffectMap[type].valueMap[newValue] ?? layerEffectMap[type].none;
       updateCurrentStyles([className.current], [newClassName]);
     },
-    [updateCurrentStyles]
+    [updateCurrentStyles, className, type]
   );
 
   const removeValue = useCallback(() => {
     updateCurrentStyles([className.current], []);
-  }, [updateCurrentStyles]);
+  }, [updateCurrentStyles, className]);
 
   const changeType = useCallback(
     (newType: string) => {
       if (isLayerEffect(newType)) {
-        const defaultClassName =
-          layerEffectMap[newType].valueMap[layerEffectMap[newType].none];
-        const newClassName =
-          layerEffectMap[newType].valueMap[value.current] ?? defaultClassName;
+        const defaultClassName = layerEffectMap[newType].valueMap[layerEffectMap[newType].none];
+        const newClassName = layerEffectMap[newType].valueMap[value.current] ?? defaultClassName;
         updateCurrentStyles([className.current], [newClassName]);
       } else {
         console.error(`Invalid layer effect type: ${newType}`);
       }
     },
-    [updateCurrentStyles]
+    [updateCurrentStyles, className, value]
   );
 
   return {
@@ -117,6 +101,6 @@ export function useLayerEffectValue(type: LayerEffectType) {
     // Methods
     setValue,
     removeValue,
-    changeType,
+    changeType
   };
 }

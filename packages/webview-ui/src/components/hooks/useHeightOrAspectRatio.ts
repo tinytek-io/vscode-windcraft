@@ -1,13 +1,8 @@
 import { useCallback, useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import { CurrentAppliedType } from "../../types/general";
+import type { CurrentAppliedType } from "../../types/general";
 import { heightClasses, heightNone, heightPrefix } from "../../types/height";
-import {
-  aspectRatioClasses,
-  aspectRatioNone,
-  aspectRatioPrefix,
-  getAspectRatioValue,
-} from "../../types/aspectRatio";
+import { aspectRatioClasses, aspectRatioNone, aspectRatioPrefix, getAspectRatioValue } from "../../types/aspectRatio";
 
 export function useHeightOrAspectRatio() {
   const { updateCurrentStyles, getValueOneOf } = useExtensionState();
@@ -30,14 +25,11 @@ export function useHeightOrAspectRatio() {
       return false;
     }
     return false;
-  }, [aspectRatio]);
+  }, [aspectRatio, height]);
 
   const isAspectRatioToggled = useMemo(() => {
-    return (
-      !!(aspectRatio.current && height.applied) ||
-      !!(height.current && aspectRatio.applied)
-    );
-  }, [aspectRatio]);
+    return !!(aspectRatio.current && height.applied) || !!(height.current && aspectRatio.applied);
+  }, [aspectRatio, height]);
 
   const setHeight = useCallback(
     (newHeight: string) => {
@@ -58,9 +50,7 @@ export function useHeightOrAspectRatio() {
       if (newAspectRatio === appliedAspectRatio) {
         updateCurrentStyles(aspectRatioClasses, []);
       } else {
-        updateCurrentStyles(aspectRatioClasses, [
-          `${aspectRatioPrefix}${newAspectRatio}`,
-        ]);
+        updateCurrentStyles(aspectRatioClasses, [`${aspectRatioPrefix}${newAspectRatio}`]);
       }
     },
     [aspectRatio, updateCurrentStyles]
@@ -73,15 +63,14 @@ export function useHeightOrAspectRatio() {
     } else {
       // Set aspect ratio mode
       const oldValue = aspectRatio.applied ?? aspectRatioNone;
-      const newValue =
-        aspectRatio.current ?? aspectRatio.applied ?? aspectRatioNone;
+      const newValue = aspectRatio.current ?? aspectRatio.applied ?? aspectRatioNone;
       if (newValue === oldValue) {
         updateCurrentStyles(heightClasses, []);
       } else {
         updateCurrentStyles(heightClasses, [getAspectRatioValue(newValue)]);
       }
     }
-  }, [updateCurrentStyles, aspectRatio]);
+  }, [updateCurrentStyles, aspectRatio, isAspectRatio]);
 
   return {
     isAspectRatio,
@@ -90,7 +79,7 @@ export function useHeightOrAspectRatio() {
     aspectRatio,
     setHeight,
     setAspectRatio,
-    toggleHeightOrAspectRatio,
+    toggleHeightOrAspectRatio
   };
 }
 
@@ -99,11 +88,7 @@ function getPrefixValue(
   value: CurrentAppliedType<string | undefined>
 ): CurrentAppliedType<string | undefined> {
   return {
-    current: value.current?.startsWith(prefix)
-      ? value.current.slice(prefix.length)
-      : undefined,
-    applied: value.applied?.startsWith(prefix)
-      ? value.applied.slice(prefix.length)
-      : undefined,
+    current: value.current?.startsWith(prefix) ? value.current.slice(prefix.length) : undefined,
+    applied: value.applied?.startsWith(prefix) ? value.applied.slice(prefix.length) : undefined
   };
 }

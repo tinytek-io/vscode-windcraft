@@ -1,13 +1,8 @@
-import { Range, TextEditor, Position, DecorationOptions } from "vscode";
+import type { Range, TextEditor } from "vscode";
 import { ScopeDecorationType, CurrentDecorationType, CurrentEmptyDecorationType } from "./decorations";
-import { ClassNamePosition } from "@windcraft/ts-plugin/client/classNameFile";
+import type { ClassNamePosition } from "@windcraft/ts-plugin/extension/getClassNamesPosition";
 
-const enabledLanguages = [
-  "javascript",
-  "javascriptreact",
-  "typescript",
-  "typescriptreact",
-];
+const enabledLanguages = ["javascript", "javascriptreact", "typescript", "typescriptreact"];
 
 export class Decorator {
   activeEditor: TextEditor | null = null;
@@ -46,7 +41,7 @@ export class Decorator {
     }
 
     // Check if the current class name is empty / className is not set
-    const emptyClassName = (newClassName == null && newRange?.start.compareTo(newRange.end) === 0);
+    const emptyClassName = newClassName == null && newRange?.start.compareTo(newRange.end) === 0;
 
     // Activate the decorations
     this.activeEditor.setDecorations(
@@ -55,8 +50,8 @@ export class Decorator {
         ? [
             {
               range: newRange,
-              hoverMessage: "Current WindCraft selection",
-            },
+              hoverMessage: "Current WindCraft selection"
+            }
           ]
         : []
     );
@@ -66,8 +61,8 @@ export class Decorator {
         ? [
             {
               range: newRange,
-              hoverMessage: "Current WindCraft selection",
-            },
+              hoverMessage: "Current WindCraft selection"
+            }
           ]
         : []
     );
@@ -82,10 +77,7 @@ export class Decorator {
   /**
    * Update the scope decorations and the current class name decoration
    */
-  updateDecorations(
-    current: ClassNamePosition | undefined,
-    scope: ClassNamePosition[]
-  ) {
+  updateDecorations(current: ClassNamePosition | undefined, scope: ClassNamePosition[]) {
     if (!this.activeEditor) {
       return;
     }

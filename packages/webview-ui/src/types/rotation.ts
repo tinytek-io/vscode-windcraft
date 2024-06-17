@@ -1,4 +1,3 @@
-
 export const rotationPrefix = "rotate-";
 export const rotationNone = "0";
 export const rotationValues = [
@@ -11,6 +10,6 @@ export const rotationValues = [
   "12",
   "45",
   "90",
-  "180",
+  "180"
 ];
 export const rotationClasses = rotationValues.map((v) => `${rotationPrefix}${v}`);

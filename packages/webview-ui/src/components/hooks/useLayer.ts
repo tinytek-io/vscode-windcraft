@@ -1,28 +1,26 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
 import {
   getMixBlendInputValue,
   opacityNone,
-  MixBlendInputValue,
+  type MixBlendInputValue,
   isMixBlendInputValue,
   mixBlendNone,
-  getMixBlendClassName,
+  getMixBlendClassName
 } from "../../types/layer";
 
 export function useLayer() {
-  const {
-    getValueByPrefix,
-    hasExactValue,
-    updateCurrentStyles,
-    getValueOneOf,
-  } = useExtensionState();
+  const { getValueByPrefix, updateCurrentStyles, getValueOneOf } = useExtensionState();
 
   const mixBlend = getMixBlendInputValue(getValueByPrefix("mix-blend-"));
   const opacities = getValueByPrefix("opacity-");
-  const opacity = {
-    current: opacities.current ?? opacities.applied ?? opacityNone,
-    applied: opacities.applied ?? opacityNone,
-  };
+  const opacity = useMemo(
+    () => ({
+      current: opacities.current ?? opacities.applied ?? opacityNone,
+      applied: opacities.applied ?? opacityNone
+    }),
+    [opacities]
+  );
 
   const hiddenValue = getValueOneOf(["visible", "invisible"]);
 
@@ -30,20 +28,13 @@ export function useLayer() {
    * hidden is true if the element is hidden, false if it is visible, and
    * undefined if it is neither hidden nor visible.
    */
-  const hidden = {
-    current:
-      hiddenValue.current === "visible"
-        ? false
-        : hiddenValue.current === "invisible"
-        ? true
-        : undefined,
-    applied:
-      hiddenValue.applied === "visible"
-        ? false
-        : hiddenValue.applied === "invisible"
-        ? true
-        : undefined,
-  };
+  const hidden = useMemo(
+    () => ({
+      current: hiddenValue.current === "visible" ? false : hiddenValue.current === "invisible" ? true : undefined,
+      applied: hiddenValue.applied === "visible" ? false : hiddenValue.applied === "invisible" ? true : undefined
+    }),
+    [hiddenValue]
+  );
 
   const setMixBlend = useCallback(
     (value: string | MixBlendInputValue) => {
@@ -64,10 +55,7 @@ export function useLayer() {
       if (value === opacityNone || value === opacity.applied) {
         updateCurrentStyles([`opacity-${opacity.current}`], []);
       } else {
-        updateCurrentStyles(
-          [`opacity-${opacity.current}`],
-          [`opacity-${value}`]
-        );
+        updateCurrentStyles([`opacity-${opacity.current}`], [`opacity-${value}`]);
       }
     },
     [updateCurrentStyles, opacity]
@@ -93,6 +81,6 @@ export function useLayer() {
     // Methods
     setMixBlend,
     setOpacity,
-    toggleHidden,
+    toggleHidden
   };
 }

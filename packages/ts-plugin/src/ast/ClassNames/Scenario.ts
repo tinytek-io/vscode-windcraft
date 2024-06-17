@@ -1,5 +1,5 @@
 import { testFile001 } from "../../test/createTestProgram";
-import { ClassName, ClassNamesResult } from "./getClassNames";
+import type { ClassName, ClassNamesResult } from "./getClassNames";
 
 export type Scenario = {
   name: string;
@@ -14,30 +14,30 @@ export const classNames: Record<string, ClassName> = {
     className: "flex",
     position: {
       start: 175,
-      end: 181,
-    },
+      end: 181
+    }
   },
   div: {
     className: "flex flex-col",
     position: {
       start: 222,
-      end: 237,
-    },
+      end: 237
+    }
   },
   img: {
     className: "w-full",
     position: {
       start: 281,
-      end: 289,
-    },
+      end: 289
+    }
   },
   emptyDiv: {
     className: undefined,
     position: {
       start: 303,
-      end: 303,
-    },
-  },
+      end: 303
+    }
+  }
 };
 
 export const scenarios: Scenario[] = [
@@ -48,8 +48,8 @@ export const scenarios: Scenario[] = [
     end: 248,
     expected: {
       fileName: testFile001.button,
-      classNames: [],
-    },
+      classNames: []
+    }
   },
   {
     name: "inside of the first button class name",
@@ -58,8 +58,8 @@ export const scenarios: Scenario[] = [
     end: 181,
     expected: {
       fileName: testFile001.button,
-      classNames: [classNames.button],
-    },
+      classNames: [classNames.button]
+    }
   },
   {
     name: "inside of the div class names",
@@ -68,8 +68,8 @@ export const scenarios: Scenario[] = [
     end: 237,
     expected: {
       fileName: testFile001.button,
-      classNames: [classNames.button, classNames.div],
-    },
+      classNames: [classNames.button, classNames.div]
+    }
   },
   {
     name: "inside of the self-closing img class name",
@@ -78,8 +78,8 @@ export const scenarios: Scenario[] = [
     end: 292,
     expected: {
       fileName: testFile001.button,
-      classNames: [classNames.button, classNames.img],
-    },
+      classNames: [classNames.button, classNames.img]
+    }
   },
   {
     name: "inside of the empty div class name",
@@ -88,7 +88,7 @@ export const scenarios: Scenario[] = [
     end: 323,
     expected: {
       fileName: testFile001.button,
-      classNames: [classNames.button, classNames.emptyDiv],
-    },
-  },
+      classNames: [classNames.button, classNames.emptyDiv]
+    }
+  }
 ];

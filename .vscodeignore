@@ -12,5 +12,14 @@
 !images/
 !docs/images/logo/
 
-# Keep the windcraft-ts-plugin folder
-!node_modules/@windcraft/ts-plugin/
+# Keep the @windcraft/ts-plugin folder
+!node_modules/@windcraft/ts-plugin/dist/
+!node_modules/@windcraft/ts-plugin/plugin.export.js
+!node_modules/@windcraft/ts-plugin/package.json
+
+# Keep the @windcraft/utilities folder
+!node_modules/@windcraft/utilities/dist/
+!node_modules/@windcraft/utilities/package.json
+
+# Required for the package to work
+!node_modules/zod/

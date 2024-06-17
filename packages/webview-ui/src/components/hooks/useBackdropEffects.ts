@@ -1,11 +1,11 @@
 import { useCallback, useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import { CurrentAppliedType } from "../../types/general";
+import type { CurrentAppliedType } from "../../types/general";
 import {
-  BackdropEffectType,
+  type BackdropEffectType,
   backdropEffectMap,
   backdropEffects,
-  isBackdropEffect,
+  isBackdropEffect
 } from "../../types/backdropEffects";
 
 export function useBackdropEffects() {
@@ -13,8 +13,7 @@ export function useBackdropEffects() {
 
   const addBackdropEffect = useCallback(
     (type: BackdropEffectType) => {
-      const className =
-        backdropEffectMap[type].valueMap[backdropEffectMap[type].none];
+      const className = backdropEffectMap[type].valueMap[backdropEffectMap[type].none];
       updateCurrentStyles([], [className]);
     },
     [updateCurrentStyles]
@@ -54,7 +53,7 @@ export function useBackdropEffects() {
     nextBackdropEffect,
     // Actions
     addBackdropEffect,
-    addNextBackdropEffect,
+    addNextBackdropEffect
   };
 }
 
@@ -68,50 +67,41 @@ export function useBackdropEffectValue(type: BackdropEffectType) {
     const value = getValueOneOf(allClassNames);
     return {
       current: value.current ?? value.applied ?? effect.none,
-      applied: value.applied ?? effect.none,
+      applied: value.applied ?? effect.none
     };
-  }, [getValueOneOf, allClassNames]);
+  }, [getValueOneOf, allClassNames, effect]);
 
   const value: CurrentAppliedType<string> = useMemo(
     () => ({
-      current:
-        allValues[allClassNames.indexOf(className.current)] ??
-        effect.valueMap[effect.none],
-      applied:
-        allValues[allClassNames.indexOf(className.applied)] ??
-        effect.valueMap[effect.none],
+      current: allValues[allClassNames.indexOf(className.current)] ?? effect.valueMap[effect.none],
+      applied: allValues[allClassNames.indexOf(className.applied)] ?? effect.valueMap[effect.none]
     }),
     [effect, allValues, allClassNames, className]
   );
 
   const setValue = useCallback(
     (newValue: string) => {
-      const newClassName =
-        backdropEffectMap[type].valueMap[newValue] ??
-        backdropEffectMap[type].none;
+      const newClassName = backdropEffectMap[type].valueMap[newValue] ?? backdropEffectMap[type].none;
       updateCurrentStyles([className.current], [newClassName]);
     },
-    [updateCurrentStyles]
+    [updateCurrentStyles, className, type]
   );
 
   const removeValue = useCallback(() => {
     updateCurrentStyles([className.current], []);
-  }, [updateCurrentStyles]);
+  }, [updateCurrentStyles, className]);
 
   const changeType = useCallback(
     (newType: string) => {
       if (isBackdropEffect(newType)) {
-        const defaultClassName =
-          backdropEffectMap[newType].valueMap[backdropEffectMap[newType].none];
-        const newClassName =
-          backdropEffectMap[newType].valueMap[value.current] ??
-          defaultClassName;
+        const defaultClassName = backdropEffectMap[newType].valueMap[backdropEffectMap[newType].none];
+        const newClassName = backdropEffectMap[newType].valueMap[value.current] ?? defaultClassName;
         updateCurrentStyles([className.current], [newClassName]);
       } else {
         console.error(`Invalid backdrop effect type: ${newType}`);
       }
     },
-    [updateCurrentStyles]
+    [updateCurrentStyles, className, value]
   );
 
   return {
@@ -121,6 +111,6 @@ export function useBackdropEffectValue(type: BackdropEffectType) {
     // Methods
     setValue,
     removeValue,
-    changeType,
+    changeType
   };
 }

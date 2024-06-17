@@ -3,7 +3,7 @@ import { RxShadow } from "react-icons/rx";
 import { cn } from "../../lib/cn";
 import { LuMinus } from "react-icons/lu";
 import { useMemo } from "react";
-import { IconType } from "react-icons";
+import type { IconType } from "react-icons";
 import { ImBrightnessContrast } from "react-icons/im";
 import { IoMdColorPalette } from "react-icons/io";
 import { IoInvertModeOutline } from "react-icons/io5";
@@ -12,8 +12,7 @@ import { RiContrastFill } from "react-icons/ri";
 import { TbColorSwatch } from "react-icons/tb";
 import { TfiCamera } from "react-icons/tfi";
 import { useBackdropEffectValue } from "../hooks/useBackdropEffects";
-import { BackdropEffectType } from "../../types/backdropEffects";
-
+import type { BackdropEffectType } from "../../types/backdropEffects";
 
 export type EffectInputProps = {
   type: BackdropEffectType;
@@ -36,19 +35,18 @@ export function BackdropEffectInput({ type, availableTypes }: Readonly<EffectInp
         options={[type, ...availableTypes].toSorted()}
         onChange={changeType}
         title="Backdrop effect type"
-        disabled={availableTypes.length === 0} />
+        disabled={availableTypes.length === 0}
+      />
       <Select
         icon={Icon}
         value={value.current ?? value.applied}
         applied={value.applied}
         options={allValues}
         onChange={setValue}
-        title={`Backdrop effect value`} />
+        title={"Backdrop effect value"}
+      />
       <LuMinus
-        className={cn(
-          "btn",
-          isChanged ? "" : "disabled",
-        )}
+        className={cn("btn", isChanged ? "" : "disabled")}
         onClick={isChanged ? removeValue : undefined}
         title="Remove backdrop effect"
       />
@@ -65,5 +63,5 @@ const backdropEffectIcons: Record<BackdropEffectType, IconType> = {
   Invert: IoInvertModeOutline,
   Opacity: MdOpacity,
   Saturate: IoMdColorPalette,
-  Sepia: TfiCamera,
+  Sepia: TfiCamera
 };

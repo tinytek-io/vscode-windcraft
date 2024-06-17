@@ -1,11 +1,9 @@
-import { CurrentAppliedType } from "./general";
+import type { CurrentAppliedType } from "./general";
 
 /**
  * Check if the value is a MixBlendInputValue
  */
-export function isMixBlendInputValue(
-  value: string | MixBlendInputValue
-): value is MixBlendInputValue {
+export function isMixBlendInputValue(value: string | MixBlendInputValue): value is MixBlendInputValue {
   return mixBlendInputMap[value as MixBlendInputValue] !== undefined;
 }
 
@@ -13,12 +11,10 @@ export function isMixBlendInputValue(
  * Get the class name for the mix-blend-mode value
  * e.g. "Normal" -> "mix-blend-normal"
  */
-export function getMixBlendClassName(
-  value: CurrentAppliedType<MixBlendInputValue>
-): CurrentAppliedType<string> {
+export function getMixBlendClassName(value: CurrentAppliedType<MixBlendInputValue>): CurrentAppliedType<string> {
   return {
     current: `mix-blend-${mixBlendInputMap[value.current]}`,
-    applied: `mix-blend-${mixBlendInputMap[value.applied]}`,
+    applied: `mix-blend-${mixBlendInputMap[value.applied]}`
   };
 }
 
@@ -31,16 +27,12 @@ export function getMixBlendInputValue(
   classValue: CurrentAppliedType<string | undefined>
 ): CurrentAppliedType<MixBlendInputValue> {
   return {
-    current: getMixBlendInputValueHelper(
-      classValue.current ?? classValue.applied
-    ),
-    applied: getMixBlendInputValueHelper(classValue.applied),
+    current: getMixBlendInputValueHelper(classValue.current ?? classValue.applied),
+    applied: getMixBlendInputValueHelper(classValue.applied)
   };
 }
 
-export function getMixBlendInputValueHelper(
-  classValue?: string
-): MixBlendInputValue {
+export function getMixBlendInputValueHelper(classValue?: string): MixBlendInputValue {
   if (!classValue) {
     return mixBlendNone;
   }
@@ -72,11 +64,9 @@ export const mixBlendInputMap = {
   Color: "color",
   Luminosity: "luminosity",
   "Plus darker": "plus-darker",
-  "Plus lighter": "plus-lighter",
+  "Plus lighter": "plus-lighter"
 };
-export const mixBlendInputValues = Object.keys(
-  mixBlendInputMap
-) as MixBlendInputValue[];
+export const mixBlendInputValues = Object.keys(mixBlendInputMap) as MixBlendInputValue[];
 
 export type OpacityValue = string;
 export const opacityNone: OpacityValue = "100";
@@ -101,5 +91,5 @@ export const opacityValues = [
   "85",
   "90",
   "95",
-  "100",
+  "100"
 ];

@@ -1,1 +1,0 @@
-export const LANGUAGE_SERVICE_MODE_SEMANTIC = 0;

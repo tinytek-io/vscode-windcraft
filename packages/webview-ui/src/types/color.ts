@@ -48,8 +48,8 @@ export type ColorObject = {
 
 export function parseColorName(value: string): ColorObject | null {
   const [colorType, opacity = "100"] = value.split("/");
-  const opacityValue = parseInt(opacity, 10);
-  if (!isColorType(colorType) || isNaN(opacityValue)) {
+  const opacityValue = Number.parseInt(opacity, 10);
+  if (!isColorType(colorType) || Number.isNaN(opacityValue)) {
     return null;
   }
 
@@ -307,5 +307,5 @@ export const colors = {
   "rose-700": "#be123c",
   "rose-800": "#9f1239",
   "rose-900": "#881337",
-  "rose-950": "#4c0519",
+  "rose-950": "#4c0519"
 };

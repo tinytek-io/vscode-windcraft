@@ -26,13 +26,17 @@ export const fontSizeMap: Record<FontSize, string> = {
   "6xl": "text-6xl",
   "7xl": "text-7xl",
   "8xl": "text-8xl",
-  "9xl": "text-9xl",
+  "9xl": "text-9xl"
 };
 export const fontSizeClasses = [...Object.values(fontSizeMap)];
 export const fontSizeValues = Object.keys(fontSizeMap);
-export const classFontSizeMap: Record<string, FontSize> = Object.entries(
-  fontSizeMap
-).reduce((acc, [key, value]) => ({ ...acc, [value]: key }), {});
+export const classFontSizeMap: Record<string, FontSize> = Object.entries(fontSizeMap).reduce(
+  (acc, [key, value]) => {
+    acc[value] = key as FontSize;
+    return acc;
+  },
+  {} as Record<string, FontSize>
+);
 export function isFontSize(value: string): value is FontSize {
   return value in fontSizeMap;
 }

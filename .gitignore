@@ -28,3 +28,6 @@ log.txt
 
 # Turbo repo
 .turbo
+
+# Windcraft output test folder
+windcraft-test/

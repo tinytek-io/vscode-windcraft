@@ -1,4 +1,4 @@
-import { TailwindModifierState, TailwindStyle } from "../lib/styleHelpers";
+import type { TailwindModifierState, TailwindStyle } from "../lib/styleHelpers";
 
 export type Action =
   | CodeSelection
@@ -11,8 +11,8 @@ export type Action =
 export interface CodeSelection {
   type: "CODE_SELECTION";
   payload: {
-    currentClassName: string,
-    scopeClassNames: string[] | null,
+    currentClassName: string;
+    scopeClassNames: string[] | null;
   };
 }
 

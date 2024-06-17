@@ -1,4 +1,4 @@
-import { IconType } from "react-icons";
+import type { IconType } from "react-icons";
 import { cn } from "../../lib/cn";
 
 export type IconButtonProps = {
@@ -10,12 +10,5 @@ export type IconButtonProps = {
 };
 
 export function IconButton({ icon: Icon, selected, disabled, onClick, className }: IconButtonProps) {
-  return (
-    <Icon onClick={onClick}
-      className={cn(
-        "btn",
-        selected ? "selected" : null,
-        disabled ? "disabled" : null,
-      )} />
-  );
+  return <Icon onClick={onClick} className={cn("btn", selected ? "selected" : null, disabled ? "disabled" : null)} />;
 }

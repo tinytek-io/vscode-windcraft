@@ -17,6 +17,7 @@ vscode-icon-foreground
   border-color: var(--vscode-button-border);
   cursor: pointer;
   /* background: var(--vscode-button-secondaryBackground); */
+  background-color: transparent;
   color: var(--vscode-button-secondaryForeground);
 }
 

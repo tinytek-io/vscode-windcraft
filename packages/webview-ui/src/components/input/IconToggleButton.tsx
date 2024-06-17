@@ -1,4 +1,4 @@
-import { IconType } from "react-icons";
+import type { IconType } from "react-icons";
 import { cn } from "../../lib/cn";
 
 export type IconToggleButtonProps = {
@@ -20,7 +20,7 @@ export function IconToggleButton({
   disabled,
   onClick,
   className,
-  title,
+  title
 }: IconToggleButtonProps) {
   const Icon = checked ? checkedIcon ?? icon : icon;
   return (
@@ -29,12 +29,8 @@ export function IconToggleButton({
       className={cn(
         "btn",
         checked && !checkedIcon ? "selected" : null,
-        disabled
-          ? "disabled"
-          : checked !== undefined && checked !== appliedChecked
-            ? "changed"
-            : null,
-        className,
+        disabled ? "disabled" : checked !== undefined && checked !== appliedChecked ? "changed" : null,
+        className
       )}
       title={title}
     />

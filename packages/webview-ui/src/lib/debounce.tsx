@@ -1,7 +1,6 @@
-
-export function debounce(fn: Function, delay: number) {
+export function debounce<A extends []>(fn: (...args: A) => void, delay: number) {
   let timeout: Timer | null = null;
-  return function (...args: any[]) {
+  return (...args: A) => {
     if (timeout) {
       clearTimeout(timeout);
     }

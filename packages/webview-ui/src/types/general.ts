@@ -1,4 +1,4 @@
-import { TailwindStyle } from "../tailwindModel/lib/styleHelpers";
+import type { TailwindStyle } from "../tailwindModel/lib/styleHelpers";
 
 /**
  * UIValue is a string that represents a UI value, it also acts as a key in a KeySuffixMap
@@ -39,6 +39,6 @@ export type CurrentAppliedType<T> = {
 export function getCurrentAppliedType<T>(value: T): CurrentAppliedType<T> {
   return {
     current: value,
-    applied: value,
+    applied: value
   };
 }

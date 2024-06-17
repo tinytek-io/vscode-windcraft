@@ -1,30 +1,28 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
-import { CurrentAppliedType } from "../../types/general";
-import { useValue } from "./useValue";
+import type { CurrentAppliedType } from "../../types/general";
 import { useGap } from "./useGap";
-import { gapClasses, gapNone, gapValues } from "../../types/gap";
+import { gapClasses, gapNone } from "../../types/gap";
 
 export type FlexDirection = "flex-row" | "flex-col" | "flex-wrap";
 
-const allClasses = [
-  ...gapClasses,
-  ...["flex-row", "flex-col", "flex-wrap"],
-].flat();
+const allClasses = [...gapClasses, ...["flex-row", "flex-col", "flex-wrap"]].flat();
 
 export function useFlex() {
-  const { styleState, updateCurrentStyles, hasExactValue, getValueOneOf } =
-    useExtensionState();
+  const { styleState, updateCurrentStyles, hasExactValue, getValueOneOf } = useExtensionState();
   const gap = useGap();
 
   const enabled = hasExactValue("flex");
 
   const rawDir = getValueOneOf(["flex-wrap", "flex-col", "flex-row"]);
 
-  const direction: CurrentAppliedType<string | undefined> = {
-    current: rawDir.current ?? rawDir.applied,
-    applied: rawDir.applied,
-  };
+  const direction: CurrentAppliedType<string | undefined> = useMemo(
+    () => ({
+      current: rawDir.current ?? rawDir.applied,
+      applied: rawDir.applied
+    }),
+    [rawDir]
+  );
 
   const addFlex = useCallback(() => {
     updateCurrentStyles([], ["flex"]);
@@ -64,7 +62,7 @@ export function useFlex() {
           gapNone;
         updateCurrentStyles(allClasses, [
           direction.applied !== "flex-col" ? "flex-col" : null,
-          newGap !== gapNone ? `gap-${newGap}` : null,
+          newGap !== gapNone ? `gap-${newGap}` : null
         ]);
       }
 
@@ -80,28 +78,18 @@ export function useFlex() {
           gapNone;
         updateCurrentStyles(allClasses, [
           direction.applied !== "flex-row" ? "flex-row" : null,
-          newGap !== gapNone ? `gap-${newGap}` : null,
+          newGap !== gapNone ? `gap-${newGap}` : null
         ]);
       }
 
       if (newDirection === "flex-wrap") {
         // Set gap x and y using specific or general value
-        const newGapX =
-          gap.x.current ??
-          gap.value.current ??
-          gap.x.applied ??
-          gap.value.applied ??
-          gapNone;
-        const newGapY =
-          gap.y.current ??
-          gap.value.current ??
-          gap.y.applied ??
-          gap.value.applied ??
-          gapNone;
+        const newGapX = gap.x.current ?? gap.value.current ?? gap.x.applied ?? gap.value.applied ?? gapNone;
+        const newGapY = gap.y.current ?? gap.value.current ?? gap.y.applied ?? gap.value.applied ?? gapNone;
         updateCurrentStyles(allClasses, [
           direction.applied !== "flex-wrap" ? "flex-wrap" : null,
           newGapX !== gapNone ? `gap-x-${newGapX}` : null,
-          newGapY !== gapNone ? `gap-y-${newGapY}` : null,
+          newGapY !== gapNone ? `gap-y-${newGapY}` : null
         ]);
       }
     },
@@ -115,6 +103,6 @@ export function useFlex() {
     // Methods
     addFlex,
     removeFlex,
-    setDirection,
+    setDirection
   };
 }

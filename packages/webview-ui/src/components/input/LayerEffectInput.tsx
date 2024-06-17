@@ -3,7 +3,7 @@ import { RxShadow, RxShadowOuter } from "react-icons/rx";
 import { cn } from "../../lib/cn";
 import { LuMinus } from "react-icons/lu";
 import { useMemo } from "react";
-import { IconType } from "react-icons";
+import type { IconType } from "react-icons";
 import { ImBrightnessContrast } from "react-icons/im";
 import { IoMdColorPalette } from "react-icons/io";
 import { IoInvertModeOutline } from "react-icons/io5";
@@ -11,9 +11,8 @@ import { MdBlurOn } from "react-icons/md";
 import { RiContrastFill } from "react-icons/ri";
 import { TbColorSwatch } from "react-icons/tb";
 import { TfiCamera } from "react-icons/tfi";
-import { LayerEffectType } from "../../types/layerEffects";
+import type { LayerEffectType } from "../../types/layerEffects";
 import { useLayerEffectValue } from "../hooks/useLayerEffects";
-
 
 export type EffectInputProps = {
   type: LayerEffectType;
@@ -36,19 +35,18 @@ export function LayerEffectInput({ type, availableTypes }: EffectInputProps) {
         options={[type, ...availableTypes].toSorted()}
         onChange={changeType}
         title="Layer effect type"
-        disabled={availableTypes.length === 0} />
+        disabled={availableTypes.length === 0}
+      />
       <Select
         icon={Icon}
         value={value.current ?? value.applied}
         applied={value.applied}
         options={allValues}
         onChange={setValue}
-        title={`Layer effect value`} />
+        title={"Layer effect value"}
+      />
       <LuMinus
-        className={cn(
-          "btn",
-          isChanged ? "" : "disabled",
-        )}
+        className={cn("btn", isChanged ? "" : "disabled")}
         onClick={isChanged ? removeValue : undefined}
         title="Remove layer effect"
       />
@@ -64,5 +62,5 @@ const layerEffectIcons: Record<LayerEffectType, IconType> = {
   HueRotate: TbColorSwatch,
   Invert: IoInvertModeOutline,
   Saturate: IoMdColorPalette,
-  Sepia: TfiCamera,
+  Sepia: TfiCamera
 };

@@ -22,12 +22,10 @@ export type CallMethodResponse<R> =
       error: string;
     };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 type AsyncFunction = (...args: any[]) => Promise<any>;
 
-export class Bridge<
-  M extends Record<string, F>,
-  F extends AsyncFunction = AsyncFunction,
-> {
+export class Bridge<M extends Record<string, F>, F extends AsyncFunction = AsyncFunction> {
   private readonly vsCodeApi: WebviewApi<unknown> | undefined;
   public readonly remoteMethods: M;
 
@@ -42,7 +40,7 @@ export class Bridge<
           return (...args: unknown[]) => {
             return this.callMethod(name, ...args);
           };
-        },
+        }
       }
     ) as M;
   }
@@ -60,19 +58,11 @@ export class Bridge<
     return new Promise((resolve, reject) => {
       const listener = (event: MessageEvent) => {
         const message = event.data as CallMethodResponse<R>;
-        if (
-          message.type === "callMethodResult" &&
-          message.name === name &&
-          message.id === id
-        ) {
+        if (message.type === "callMethodResult" && message.name === name && message.id === id) {
           window.removeEventListener("message", listener);
           resolve(message.result);
         }
-        if (
-          message.type === "callMethodError" &&
-          message.name === name &&
-          message.id === id
-        ) {
+        if (message.type === "callMethodError" && message.name === name && message.id === id) {
           window.removeEventListener("message", listener);
           reject(message.error);
         }
@@ -84,7 +74,7 @@ export class Bridge<
         type: "callMethod",
         id,
         name,
-        args,
+        args
       };
       if (this.vsCodeApi) {
         this.vsCodeApi.postMessage(message);

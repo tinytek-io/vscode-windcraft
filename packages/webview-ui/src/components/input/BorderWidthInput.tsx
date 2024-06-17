@@ -2,13 +2,18 @@ import { Select } from "./Select";
 import { CgBorderTop, CgBorderRight, CgBorderBottom, CgBorderLeft } from "react-icons/cg";
 import { RxBorderWidth } from "react-icons/rx";
 import { cn } from "../../lib/cn";
-import { borderWidthIconsMap, borderWidthValues, borderWidthTypes, BorderWidthValue } from "../../types/borderWidth";
+import {
+  borderWidthIconsMap,
+  borderWidthValues,
+  borderWidthTypes,
+  type BorderWidthValue
+} from "../../types/borderWidth";
 import { useBorderConfig } from "../hooks/useBorderConfig";
-import { CurrentAppliedType } from "../../types/general";
-
+import type { CurrentAppliedType } from "../../types/general";
 
 export function BorderWidthInput() {
-  const { borderWidthType, borderWidth, setBorderType, setBorderWidth, borderWidthMap, toggleBorder } = useBorderConfig();
+  const { borderWidthType, borderWidth, setBorderType, setBorderWidth, borderWidthMap, toggleBorder } =
+    useBorderConfig();
 
   const Icon = borderWidthIconsMap[borderWidthType.current ?? borderWidthType.applied ?? "All"];
 
@@ -19,48 +24,61 @@ export function BorderWidthInput() {
         value={borderWidth.current ?? borderWidth.applied ?? "1"}
         applied={borderWidth.applied ?? "1"}
         options={borderWidthValues}
-        onChange={setBorderWidth} />
+        onChange={setBorderWidth}
+      />
       <Select
         icon={Icon}
         iconClassName="w-4 h-4"
         value={borderWidthType.current ?? borderWidthType.applied ?? "All"}
         applied={borderWidthType.applied ?? "All"}
         options={borderWidthTypes}
-        onChange={setBorderType} />
+        onChange={setBorderType}
+      />
       {(borderWidthType.current ?? borderWidthType.applied) === "Custom" && (
         <>
           <div className="flex gap-1 items-center">
-            <CgBorderLeft className={cn(
-              "btn w-4 h-4",
-              isBorderSelected(borderWidthMap.Left) ? "selected" : null,
-              isBorderChanged(borderWidthMap.Left) ? "changed" : null,
-            )}
-              onClick={() => toggleBorder("Left")} /> Left
+            <CgBorderLeft
+              className={cn(
+                "btn w-4 h-4",
+                isBorderSelected(borderWidthMap.Left) ? "selected" : null,
+                isBorderChanged(borderWidthMap.Left) ? "changed" : null
+              )}
+              onClick={() => toggleBorder("Left")}
+            />{" "}
+            Left
           </div>
           <div className="flex gap-1 items-center">
-            <CgBorderTop className={cn(
-              "btn w-4 h-4",
-              isBorderSelected(borderWidthMap.Top) ? "selected" : null,
-              isBorderChanged(borderWidthMap.Top) ? "changed" : null,
-            )}
-              onClick={() => toggleBorder("Top")} /> Top
+            <CgBorderTop
+              className={cn(
+                "btn w-4 h-4",
+                isBorderSelected(borderWidthMap.Top) ? "selected" : null,
+                isBorderChanged(borderWidthMap.Top) ? "changed" : null
+              )}
+              onClick={() => toggleBorder("Top")}
+            />{" "}
+            Top
           </div>
           <div className="flex gap-1 items-center">
-            <CgBorderRight className={cn(
-              "btn w-4 h-4",
-              isBorderSelected(borderWidthMap.Right) ? "selected" : null,
-              isBorderChanged(borderWidthMap.Right) ? "changed" : null,
-            )}
-              onClick={() => toggleBorder("Right")} /> Right
+            <CgBorderRight
+              className={cn(
+                "btn w-4 h-4",
+                isBorderSelected(borderWidthMap.Right) ? "selected" : null,
+                isBorderChanged(borderWidthMap.Right) ? "changed" : null
+              )}
+              onClick={() => toggleBorder("Right")}
+            />{" "}
+            Right
           </div>
           <div className="flex gap-1 items-center">
-            <CgBorderBottom className={cn(
-              "btn w-4 h-4",
-              isBorderSelected(borderWidthMap.Bottom) ? "selected" : null,
-              isBorderChanged(borderWidthMap.Bottom) ? "changed" : null,
-            )}
+            <CgBorderBottom
+              className={cn(
+                "btn w-4 h-4",
+                isBorderSelected(borderWidthMap.Bottom) ? "selected" : null,
+                isBorderChanged(borderWidthMap.Bottom) ? "changed" : null
+              )}
               onClick={() => toggleBorder("Bottom")}
-            /> Bottom
+            />{" "}
+            Bottom
           </div>
         </>
       )}

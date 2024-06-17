@@ -10,36 +10,38 @@ export default defineConfig({
     // @ts-ignore
     pluginTypeCheck({
       forkTsCheckerOptions: {
-        async: true,
-      },
+        async: true
+      }
     }),
-    pluginReact(),
+    pluginReact()
   ],
-  entry: {
-    main: "./src/index.tsx",
+  source: {
+    entry: {
+      index: "./src/index.tsx"
+    }
   },
   output: {
     distPath: {
-      root: "../../dist/webview-ui",
+      root: "../../dist/webview-ui"
     },
     cleanDistPath: true,
-    filenameHash: false,
+    filenameHash: false
   },
   server: {
     strictPort: true,
-    port,
+    port
   },
   dev: {
     assetPrefix: `http://${host}:${port}/`,
     writeToDisk: true,
     client: {
       host,
-      port: `${port}`,
-    },
+      port: `${port}`
+    }
   },
   performance: {
     chunkSplit: {
-      strategy: "all-in-one",
-    },
-  },
+      strategy: "all-in-one"
+    }
+  }
 });

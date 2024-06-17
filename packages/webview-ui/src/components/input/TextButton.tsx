@@ -9,26 +9,15 @@ export type TextButtonProps = {
   disabled?: boolean;
 };
 
-export function TextButton({
-  selected = false,
-  onClick,
-  className,
-  title,
-  disabled,
-  children,
-}: TextButtonProps) {
+export function TextButton({ selected = false, onClick, className, title, disabled, children }: TextButtonProps) {
   return (
-    <div
-      className={cn(
-        "btn text-center",
-        className,
-        selected ? "selected" : null,
-        disabled ? "disabled" : null
-      )}
+    <button
+      type="button"
+      className={cn("btn text-center", className, selected ? "selected" : null, disabled ? "disabled" : null)}
       onClick={onClick}
       title={title}
     >
       {children}
-    </div>
+    </button>
   );
 }

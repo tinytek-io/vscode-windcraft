@@ -3,7 +3,7 @@ import { z } from "zod";
 export namespace JsxAST {
   export const positionSchema = z.object({
     start: z.number(),
-    end: z.number(),
+    end: z.number()
   });
 
   export type Position = z.infer<typeof positionSchema>;
@@ -11,20 +11,20 @@ export namespace JsxAST {
   const expressionSchema = z.object({
     type: z.literal("expression"),
     expression: z.string(),
-    position: positionSchema,
+    position: positionSchema
   });
 
   const textSchema = z.object({
     type: z.literal("text"),
     value: z.string(),
-    position: positionSchema,
+    position: positionSchema
   });
 
   const elementPropsSchema = z.record(
     z.string(),
     z.object({
       value: z.string(),
-      position: positionSchema,
+      position: positionSchema
     })
   );
 
@@ -34,7 +34,7 @@ export namespace JsxAST {
     type: z.literal("element"),
     name: z.string(),
     position: positionSchema,
-    props: elementPropsSchema,
+    props: elementPropsSchema
   });
 
   type Expression = z.infer<typeof expressionSchema>;
@@ -46,18 +46,14 @@ export namespace JsxAST {
   };
 
   const elementSchema: z.ZodType<Element> = elementBaseSchema.extend({
-    children: z
-      .lazy(() =>
-        z.union([expressionSchema, textSchema, elementSchema]).array()
-      )
-      .optional(),
+    children: z.lazy(() => z.union([expressionSchema, textSchema, elementSchema]).array()).optional()
   });
 
   const propDefinitionSchema = z.record(
     z.string(),
     z.object({
       value: z.string(),
-      position: positionSchema,
+      position: positionSchema
     })
   );
 
@@ -69,7 +65,7 @@ export namespace JsxAST {
     isExported: z.boolean(),
     position: positionSchema,
     props: propDefinitionSchema,
-    return: elementSchema.array(),
+    return: elementSchema.array()
   });
 
   export type Component = z.infer<typeof componentSchema>;
@@ -77,7 +73,7 @@ export namespace JsxAST {
   const fileSchema = z.object({
     fileName: z.string(),
     position: positionSchema,
-    components: componentSchema.array(),
+    components: componentSchema.array()
   });
 
   export type File = z.infer<typeof fileSchema>;

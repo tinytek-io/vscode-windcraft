@@ -19,15 +19,19 @@ export const fontWeightMap: Record<FontWeight, string> = {
   Semibold: "font-semibold",
   Bold: "font-bold",
   Extrabold: "font-extrabold",
-  Black: "font-black",
+  Black: "font-black"
 };
 
 export const fontWeightClasses = [...Object.values(fontWeightMap)];
 export const fontWeightOptions = Object.keys(fontWeightMap);
 
-export const classFontWeightMap: Record<string, FontWeight> = Object.entries(
-  fontWeightMap
-).reduce((acc, [key, value]) => ({ ...acc, [value]: key }), {});
+export const classFontWeightMap: Record<string, FontWeight> = Object.entries(fontWeightMap).reduce(
+  (acc, [key, value]) => {
+    acc[value] = key as FontWeight;
+    return acc;
+  },
+  {} as Record<string, FontWeight>
+);
 
 export function isFontWeight(value: string): value is FontWeight {
   return value in fontWeightMap;

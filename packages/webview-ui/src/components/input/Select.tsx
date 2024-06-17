@@ -1,4 +1,4 @@
-import { IconType } from "react-icons";
+import type { IconType } from "react-icons";
 import { useRef } from "react";
 import { cn } from "../../lib/cn";
 import { useWheelSelect } from "../hooks/useWheelSelect";
@@ -26,7 +26,7 @@ export function Select({
   disabled,
   className,
   style,
-  onChange,
+  onChange
 }: SelectProps) {
   const resizeRef = useRef<HTMLSpanElement | null>(null);
 
@@ -35,7 +35,7 @@ export function Select({
     options,
     onChange,
     disabled,
-    resizeRef,
+    resizeRef
   });
 
   return (

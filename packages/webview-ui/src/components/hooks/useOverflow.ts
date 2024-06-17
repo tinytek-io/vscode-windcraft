@@ -1,7 +1,6 @@
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
 import { useCallback } from "react";
 
-
 export function useOverflow() {
   const { getValueOneOf, updateCurrentStyles } = useExtensionState();
   const clipContent = getValueOneOf(["overflow-hidden", "overflow-auto"]);
@@ -20,10 +19,10 @@ export function useOverflow() {
       // New value is the same as the applied value
       updateCurrentStyles(["overflow-hidden", "overflow-auto"], []);
     }
-  }, [clipContent]);
+  }, [updateCurrentStyles, clipContent]);
 
   return {
     clipContent,
-    toggleClipContent,
+    toggleClipContent
   };
 }

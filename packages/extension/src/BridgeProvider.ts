@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import { getNonce } from "./utilities/getNonce";
 import { getUri } from "./utilities/getUri";
 import { ExtensionBridge } from "./bridge";
-import { ClassNamePosition } from "@windcraft/ts-plugin/client/classNameFile";
+import type { ClassNamePosition } from "@windcraft/ts-plugin/extension/getClassNamesPosition";
 
 export interface Position {
   line: number;
@@ -20,10 +20,7 @@ export type UpdateMessage = {
 
 type OnReadyCallback = () => void;
 
-export type UpdateClassNameCallback = (
-  className: string | undefined,
-  range: vscode.Range
-) => void;
+export type UpdateClassNameCallback = (className: string | undefined, range: vscode.Range) => void;
 
 export class BridgeProvider implements vscode.WebviewViewProvider {
   public static readonly viewType = "windcraft.tailwindView";
@@ -48,7 +45,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
       // Allow scripts in the webview
       enableScripts: true,
 
-      localResourceRoots: [this._extensionUri],
+      localResourceRoots: [this._extensionUri]
     };
 
     new ExtensionBridge(webviewView, {
@@ -59,7 +56,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
       },
       setClassName: async (className: string) => {
         return this.updateSelectionClassName(className);
-      },
+      }
     });
 
     webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
@@ -73,7 +70,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     this._updateClassNameCallback = callback;
   }
 
-  private async updateSelectionClassName(className: string, quote: string = '"') {
+  private async updateSelectionClassName(className: string, quote = '"') {
     if (this._selectionPosition == null) {
       throw new Error("Selection not initialized");
     }
@@ -90,28 +87,15 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
 
     const result = await vscode.window.activeTextEditor?.edit((editBuilder) => {
       const literalStringRange = new vscode.Range(
-        new vscode.Position(
-          currentRange.start.line,
-          currentRange.start.character - 1
-        ),
-        new vscode.Position(
-          currentRange.end.line,
-          currentRange.end.character + 1
-        )
+        new vscode.Position(currentRange.start.line, currentRange.start.character - 1),
+        new vscode.Position(currentRange.end.line, currentRange.end.character + 1)
       );
 
-      const literalString =
-        vscode.window.activeTextEditor?.document.getText(literalStringRange);
+      const literalString = vscode.window.activeTextEditor?.document.getText(literalStringRange);
 
       const message = `Replacing ${literalString} with "${className}" - "${currentSelection}" -> "${className}"`;
-      if (
-        currentSelection == null &&
-        currentRange.start.isEqual(currentRange.end)
-      ) {
-        const insertPosition = new vscode.Position(
-          currentRange.start.line,
-          currentRange.start.character + 1
-        );
+      if (currentSelection == null && currentRange.start.isEqual(currentRange.end)) {
+        const insertPosition = new vscode.Position(currentRange.start.line, currentRange.start.character + 1);
 
         // If there is no selection, insert the class name
         editBuilder.insert(insertPosition, ` className=${quote}${className}${quote}`);
@@ -150,10 +134,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     return className;
   }
 
-  public async initializeSelection(
-    { className, literalRange }: ClassNamePosition,
-    scopeClassNames: string[]
-  ) {
+  public async initializeSelection({ className, literalRange }: ClassNamePosition, scopeClassNames: string[]) {
     if (this._view) {
       // Initialize internal state
       this._currentSelection = className;
@@ -162,7 +143,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
       this._view.webview.postMessage({
         type: "INITIALIZE_SELECTION",
         currentClassName: this._currentSelection,
-        scopeClassNames,
+        scopeClassNames
       });
     }
   }
@@ -178,7 +159,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
     this._selectionPosition = null;
     if (this._view) {
       this._view.webview.postMessage({
-        type: "CLEAR_SELECTION",
+        type: "CLEAR_SELECTION"
       });
     }
   }
@@ -186,7 +167,7 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
   public clearTailwindStyles() {
     if (this._view) {
       this._view.webview.postMessage({
-        type: "CLEAR_TAILWIND_STYLES",
+        type: "CLEAR_TAILWIND_STYLES"
       });
     }
   }
@@ -198,24 +179,12 @@ export class BridgeProvider implements vscode.WebviewViewProvider {
 
     // The CSS file from the React build output
     const stylesUri = production
-      ? getUri(webview, this._extensionUri, [
-          "dist",
-          "webview-ui",
-          "static",
-          "css",
-          "index.css",
-        ])
+      ? getUri(webview, this._extensionUri, ["dist", "webview-ui", "static", "css", "index.css"])
       : `http://${localServer}/static/css/index.css`;
 
     // The JS file from the React build output
     const scriptUri = production
-      ? getUri(webview, this._extensionUri, [
-          "dist",
-          "webview-ui",
-          "static",
-          "js",
-          "index.js",
-        ])
+      ? getUri(webview, this._extensionUri, ["dist", "webview-ui", "static", "js", "index.js"])
       : `http://${localServer}/static/js/index.js`;
 
     // Use a nonce to only allow a specific script to be run.

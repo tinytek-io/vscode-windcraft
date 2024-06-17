@@ -2,10 +2,7 @@ import { CompressTailwindStyles } from "../CompressTailwindStyles/CompressTailwi
 import { DecompressTailwindStyles } from "../DecompressTailwindStyles/DecompressTailwindStyles";
 import { isTailwindStyle } from "./isTailwindStyle";
 import { uniqueArray } from "../../lib/uniqueArray";
-import {
-  DeviceMode,
-  deviceModes,
-} from "../../components/sections/DynamicSection";
+import { type DeviceMode, deviceModes } from "../../components/sections/DynamicSection";
 import { sortClassList } from "../designSystem";
 
 /**
@@ -62,31 +59,22 @@ export function createStyleState(className: string | undefined): StyleStateResul
   const styles = className?.split(" ") ?? [];
   return {
     customStyles: styles.filter((style) => !isTailwindStyle(style)),
-    tailwindStyles: DecompressTailwindStyles(
-      styles.filter((style) => isTailwindStyle(style))
-    ),
+    tailwindStyles: DecompressTailwindStyles(styles.filter((style) => isTailwindStyle(style)))
   };
 }
 
-export function createScopedStyleState(
-  scopeClassNames: string[]
-): TailwindStyle[][] {
+export function createScopedStyleState(scopeClassNames: string[]): TailwindStyle[][] {
   return scopeClassNames.map(createStyleState).map((s) => s.tailwindStyles);
 }
 
 export function createClassName(styleState: StyleStateResult): string {
   // TODO: Compress and sort tailwind styles
   return sortClassList(
-    [
-      ...styleState.customStyles,
-      ...CompressTailwindStyles(styleState.tailwindStyles),
-    ].filter(Boolean)
+    [...styleState.customStyles, ...CompressTailwindStyles(styleState.tailwindStyles)].filter(Boolean)
   ).join(" ");
 }
 
-export function getCurrentTailwindStyles(
-  tailwindStyles: TailwindStyle[]
-): TailwindStyle[] {
+export function getCurrentTailwindStyles(tailwindStyles: TailwindStyle[]): TailwindStyle[] {
   // TODO: Filter out unused tailwind styles
   return tailwindStyles;
 }
@@ -95,16 +83,11 @@ export function getCurrentTailwindStyles(
  * Match TailwindStyle against exact current tailwind modifier state.
  * e.g. "dark:hover:bg-red-500" matches "dark:hover" but not "dark"
  */
-export function currentTailwindStylesFilter(
-  modifierState: TailwindModifierState
-) {
+export function currentTailwindStylesFilter(modifierState: TailwindModifierState) {
   return (s: TailwindStyle) => getTailwindState(s) === modifierState;
 }
 
-export function sortAppliedTailwindStylesByModifier(
-  a: TailwindModifierState,
-  b: TailwindModifierState
-): -1 | 0 | 1 {
+export function sortAppliedTailwindStylesByModifier(a: TailwindModifierState, b: TailwindModifierState): -1 | 0 | 1 {
   const aIndex = deviceModes.indexOf(getDeviceModeFromModifierState(a));
   const bIndex = deviceModes.indexOf(getDeviceModeFromModifierState(b));
   if (aIndex < bIndex) {
@@ -133,9 +116,7 @@ export function sortAppliedTailwindStylesByModifier(
   return 0;
 }
 
-export function scopeTailwindStylesFilter(
-  modifierState: TailwindModifierState
-): (s: TailwindStyle) => boolean {
+export function scopeTailwindStylesFilter(modifierState: TailwindModifierState): (s: TailwindStyle) => boolean {
   return (s) => {
     if (isCascadedTailwindStyle(s) === false) {
       // This style should not be inherited
@@ -144,10 +125,7 @@ export function scopeTailwindStylesFilter(
     if (s.includes(":")) {
       // This is a modifier state and all states should be applied
       // And if the current device mode is a subset of the applied device mode
-      return (
-        isAppliedTailwindStyle(modifierState, s) &&
-        isDeviceAppliedTailwindStyle(modifierState, s)
-      );
+      return isAppliedTailwindStyle(modifierState, s) && isDeviceAppliedTailwindStyle(modifierState, s);
     }
 
     return true;
@@ -161,9 +139,7 @@ export function scopeTailwindStylesFilter(
  * "bg-red-500", "dark:bg-red-500", "hover:bg-red-500" are all matched
  * but "dark:hover:bg-red-500" is not matched as it match the exact current state
  */
-export function appliedTailwindStylesFilter(
-  modifierState: TailwindModifierState
-): (s: TailwindStyle) => boolean {
+export function appliedTailwindStylesFilter(modifierState: TailwindModifierState): (s: TailwindStyle) => boolean {
   const isCurrentTailwindStyle = currentTailwindStylesFilter(modifierState);
   return (s) => {
     if (isCurrentTailwindStyle(s)) {
@@ -174,10 +150,7 @@ export function appliedTailwindStylesFilter(
     if (s.includes(":")) {
       // This is a modifier state and all states should be applied
       // And if the current device mode is a subset of the applied device mode
-      return (
-        isAppliedTailwindStyle(modifierState, s) &&
-        isDeviceAppliedTailwindStyle(modifierState, s)
-      );
+      return isAppliedTailwindStyle(modifierState, s) && isDeviceAppliedTailwindStyle(modifierState, s);
     }
 
     return true;
@@ -197,27 +170,17 @@ export function isDeviceAppliedTailwindStyle(
   modifierState: TailwindModifierState,
   tailwindStyle: TailwindStyle
 ): boolean {
-  const currentIndex = deviceModes.indexOf(
-    getDeviceModeFromModifierState(modifierState)
-  );
-  const appliedIndex = deviceModes.indexOf(
-    getDeviceModeFromModifierState(tailwindStyle)
-  );
+  const currentIndex = deviceModes.indexOf(getDeviceModeFromModifierState(modifierState));
+  const appliedIndex = deviceModes.indexOf(getDeviceModeFromModifierState(tailwindStyle));
 
   return appliedIndex <= currentIndex;
 }
 
-function getDeviceModeFromModifierState(
-  modifierState: TailwindModifierState
-): DeviceMode {
+function getDeviceModeFromModifierState(modifierState: TailwindModifierState): DeviceMode {
   if (modifierState === "") {
     return "xs";
   }
-  return (
-    (modifierState
-      .split(":")
-      .find((mod) => deviceModes.includes(mod)) as DeviceMode) ?? "xs"
-  );
+  return (modifierState.split(":").find((mod) => deviceModes.includes(mod)) as DeviceMode) ?? "xs";
 }
 
 /**
@@ -228,10 +191,7 @@ function getDeviceModeFromModifierState(
  *
  * Note: Device modes are ignored - supply with `isDeviceAppliedTailwindStyle`
  */
-export function isAppliedTailwindStyle(
-  modifierState: TailwindModifierState,
-  tailwindStyle: TailwindStyle
-): boolean {
+export function isAppliedTailwindStyle(modifierState: TailwindModifierState, tailwindStyle: TailwindStyle): boolean {
   const appliedState = modifierState.split(":");
   return getTailwindState(tailwindStyle)
     .split(":")
@@ -249,15 +209,29 @@ export function isCascadedTailwindStyle(tailwindStyle: TailwindStyle): boolean {
   const value = getTailwindValue(tailwindStyle);
   // Match on prefix
   if (
-    ["flex", "rotate", "gap", "p", "w", "h", "rounded", "top", "bottom", "left", "right", "inset", "overflow"].find((prefix) =>
-      value.startsWith(`${prefix}-`)
-    )
+    [
+      "flex",
+      "rotate",
+      "gap",
+      "p",
+      "w",
+      "h",
+      "rounded",
+      "top",
+      "bottom",
+      "left",
+      "right",
+      "inset",
+      "overflow",
+      "!outline",
+      "outline"
+    ].find((prefix) => value.startsWith(`${prefix}-`))
   ) {
     return false;
   }
   // Match on exact value
   if (
-    ["flex", "rounded", "absolute", "relative", "fixed", "sticky"].find(
+    ["flex", "rounded", "absolute", "relative", "fixed", "sticky", "!outline", "outline"].find(
       (exact) => value === exact
     )
   ) {
@@ -272,9 +246,7 @@ export function isCascadedTailwindStyle(tailwindStyle: TailwindStyle): boolean {
  * e.g. "dark:bg-red-500" -> "dark"
  * e.g. "md:dark:bg-red-500" -> "md:dark"
  */
-export function getTailwindState(
-  tailwindStyle: TailwindStyle
-): TailwindModifierState {
+export function getTailwindState(tailwindStyle: TailwindStyle): TailwindModifierState {
   return tailwindStyle.split(":").slice(0, -1).join(":");
 }
 
@@ -284,7 +256,11 @@ export function getTailwindState(
  * e.g. "md:dark:bg-red-500" -> "bg-red-500"
  */
 export function getTailwindValue(tailwindStyle: TailwindStyle): TailwindValue {
-  return tailwindStyle.split(":").pop()!;
+  const value = tailwindStyle.split(":").pop();
+  if (value === undefined) {
+    throw new Error("Tailwind style does not have a value");
+  }
+  return value;
 }
 
 /**
@@ -293,14 +269,8 @@ export function getTailwindValue(tailwindStyle: TailwindStyle): TailwindValue {
  *
  * e.g. "dark:bg-red-500 hover:bg-red-500 md:dark:bg-black" -> ["dark", "hover", "md:dark"]
  */
-export function getAllTailwindModifierStates(
-  className: string
-): TailwindModifierState[] {
-  return [
-    ...new Set(
-      className.split(" ").filter(isTailwindStyle).map(getTailwindState)
-    ),
-  ];
+export function getAllTailwindModifierStates(className: string): TailwindModifierState[] {
+  return [...new Set(className.split(" ").filter(isTailwindStyle).map(getTailwindState))];
 }
 
 /**
@@ -312,10 +282,7 @@ export function addStylesToCurrent(
   styles: TailwindStyle[],
   modifierState: TailwindModifierState
 ): TailwindStyle[] {
-  return uniqueArray([
-    ...currentStyles,
-    ...styles.map((s) => (modifierState === "" ? s : `${modifierState}:${s}`)),
-  ]);
+  return uniqueArray([...currentStyles, ...styles.map((s) => (modifierState === "" ? s : `${modifierState}:${s}`))]);
 }
 
 /**
@@ -328,10 +295,7 @@ export function removeStylesFromCurrent(
   modifierState: TailwindModifierState
 ): TailwindStyle[] {
   return currentStyles.filter(
-    (style) =>
-      !styles
-        .map((s) => (modifierState === "" ? s : `${modifierState}:${s}`))
-        .includes(style)
+    (style) => !styles.map((s) => (modifierState === "" ? s : `${modifierState}:${s}`)).includes(style)
   );
 }
 
@@ -339,9 +303,6 @@ export function removeStylesFromCurrent(
  * Remove all styles with a prefix from the current styles.
  * e.g. ["bg-red-500", "hover:bg-red-500", "dark:bg-red-500"] - "dark" -> ["bg-red-500", "hover:bg-red-500"]
  */
-export function removeStylesFromCurrentByPrefix(
-  currentStyles: TailwindStyle[],
-  prefix: string
-): TailwindStyle[] {
+export function removeStylesFromCurrentByPrefix(currentStyles: TailwindStyle[], prefix: string): TailwindStyle[] {
   return currentStyles.filter((style) => !style.startsWith(prefix));
 }

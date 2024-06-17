@@ -45,12 +45,8 @@ export const placementValues = [
   "1/4",
   "2/4",
   "3/4",
-  "full",
+  "full"
 ];
 
-export const placementXClasses = placementValues.map(
-  (x) => `${placementXPrefix}${x}`
-);
-export const placementYClasses = placementValues.map(
-  (y) => `${placementYPrefix}${y}`
-);
+export const placementXClasses = placementValues.map((x) => `${placementXPrefix}${x}`);
+export const placementYClasses = placementValues.map((y) => `${placementYPrefix}${y}`);

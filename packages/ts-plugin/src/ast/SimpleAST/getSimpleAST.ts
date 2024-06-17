@@ -1,12 +1,7 @@
 import type * as ts from "typescript/lib/tsserverlibrary";
-import { log } from "../../lib/log";
-import { SimpleAST } from "./SimpleAST";
+import type { SimpleAST } from "./SimpleAST";
 
-export function getSimpleAST(
-  fileName: string,
-  program: ts.Program,
-  typescript: typeof ts
-) {
+export function getSimpleAST(fileName: string, program: ts.Program, typescript: typeof ts) {
   const file = program.getSourceFile(fileName);
   if (!file) {
     return undefined;
@@ -19,8 +14,8 @@ export function getSimpleAST(
       kind: typescript.SyntaxKind[node.kind],
       position: {
         start: node.getStart(),
-        end: node.getEnd(),
-      },
+        end: node.getEnd()
+      }
     };
 
     iLog(`kind: ${result.kind}`);
@@ -56,7 +51,7 @@ export function getSimpleAST(
       if (!result.children) {
         result.children = [];
       }
-      result.children.push(nodeWalker(n, indent + "  "));
+      result.children.push(nodeWalker(n, `${indent}  `));
     });
 
     return result;

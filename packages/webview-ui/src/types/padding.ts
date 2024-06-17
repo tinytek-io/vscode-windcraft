@@ -34,5 +34,5 @@ export const paddingValues = [
   "64",
   "72",
   "80",
-  "96",
+  "96"
 ];

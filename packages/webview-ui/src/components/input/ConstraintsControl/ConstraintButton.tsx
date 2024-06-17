@@ -8,9 +8,7 @@ export type ButtonProps = {
   applied?: boolean;
   onClick?: () => void;
 };
-export function VerticalButton({
-  className, style, selected, applied, onClick,
-}: ButtonProps = {}) {
+export function VerticalButton({ className, style, selected, applied, onClick }: ButtonProps = {}) {
   const currentValue = selected ?? false;
   const appliedValue = applied ?? false;
   return (
@@ -22,12 +20,11 @@ export function VerticalButton({
         className
       )}
       style={{ ...style }}
-      onClick={onClick} />
+      onClick={onClick}
+    />
   );
 }
-export function HorizontalButton({
-  className, style, selected, applied, onClick,
-}: ButtonProps = {}) {
+export function HorizontalButton({ className, style, selected, applied, onClick }: ButtonProps = {}) {
   const currentValue = selected ?? false;
   const appliedValue = applied ?? false;
 
@@ -40,6 +37,7 @@ export function HorizontalButton({
         className
       )}
       style={{ ...style }}
-      onClick={onClick} />
+      onClick={onClick}
+    />
   );
 }

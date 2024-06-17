@@ -1,22 +1,10 @@
 import { useColor } from "./useColor";
 import { useExtensionState } from "../../tailwindModel/State/ExtensionStateProvider";
 import { useCallback } from "react";
-import {
-  verticalAlignClasses,
-  isVerticalAlign,
-  verticalAlignMap,
-} from "../../types/verticalAlign";
-import {
-  textAlignClasses,
-  isTextAlign,
-  textAlignMap,
-} from "../../types/textAlign";
+import { verticalAlignClasses, isVerticalAlign, verticalAlignMap } from "../../types/verticalAlign";
+import { textAlignClasses, isTextAlign, textAlignMap } from "../../types/textAlign";
 import { fontSizeClasses, isFontSize, fontSizeMap } from "../../types/fontSize";
-import {
-  fontWeightClasses,
-  isFontWeight,
-  fontWeightMap,
-} from "../../types/fontWeight";
+import { fontWeightClasses, isFontWeight, fontWeightMap } from "../../types/fontWeight";
 
 export function useTextSettings() {
   const { updateCurrentStyles, getValueOneOf } = useExtensionState();
@@ -41,16 +29,10 @@ export function useTextSettings() {
 
   const removeTextSettings = useCallback(() => {
     updateCurrentStyles(
-      [
-        fontWeight.current,
-        fontSize.current,
-        textAlign.current,
-        verticalAlign.current,
-        color.colorClassName.current,
-      ],
+      [fontWeight.current, fontSize.current, textAlign.current, verticalAlign.current, color.colorClassName.current],
       []
     );
-  }, [updateCurrentStyles]);
+  }, [updateCurrentStyles, fontWeight, fontSize, textAlign, verticalAlign, color.colorClassName]);
 
   const addTextSettings = useCallback(() => {
     updateCurrentStyles([], ["text-current"]);
@@ -86,9 +68,7 @@ export function useTextSettings() {
   const setVerticalAlign = useCallback(
     (newVerticalAlign: string) => {
       if (isVerticalAlign(newVerticalAlign)) {
-        updateCurrentStyles(verticalAlignClasses, [
-          verticalAlignMap[newVerticalAlign],
-        ]);
+        updateCurrentStyles(verticalAlignClasses, [verticalAlignMap[newVerticalAlign]]);
       }
     },
     [updateCurrentStyles]
@@ -106,6 +86,6 @@ export function useTextSettings() {
     removeTextSettings,
     addTextSettings,
     setTextAlign,
-    setVerticalAlign,
+    setVerticalAlign
   };
 }

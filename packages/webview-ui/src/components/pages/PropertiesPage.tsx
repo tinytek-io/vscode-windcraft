@@ -65,7 +65,6 @@ export function PropertiesPage() {
       <BackdropEffectSection />
 
       <VSCodeDivider />
-
     </>
   );
 }

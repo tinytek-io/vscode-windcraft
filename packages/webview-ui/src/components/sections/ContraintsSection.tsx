@@ -1,6 +1,6 @@
 import { PiArrowsHorizontalFill, PiArrowsVerticalFill } from "react-icons/pi";
 import { Select } from "../input/Select";
-import { PositionType, positionValues, usePosition } from "../hooks/usePosition";
+import { type PositionType, positionValues, usePosition } from "../hooks/usePosition";
 import { pascalCase } from "../../lib/pascalCase";
 import { SectionHeader } from "../layout/SectionHeader";
 import { horizontalConstraintNone, horizontalConstraintOptions } from "../../types/constraintHorizontal";
@@ -11,8 +11,10 @@ import { useVerticalConstraint } from "../hooks/useVerticalConstraint";
 
 export function ConstraintsSection() {
   const { position, hasPosition, setPosition } = usePosition();
-  const { verticalConstraints, verticalOption, verticalConstraintOptionChange, verticalConstraintValueChange } = useVerticalConstraint();
-  const { horizontalConstraints, horizontalOption, horizontalConstraintOptionChange, horizontalConstraintValueChange } = useHorizontalConstraint();
+  const { verticalConstraints, verticalOption, verticalConstraintOptionChange, verticalConstraintValueChange } =
+    useVerticalConstraint();
+  const { horizontalConstraints, horizontalOption, horizontalConstraintOptionChange, horizontalConstraintValueChange } =
+    useHorizontalConstraint();
 
   if (!hasPosition) {
     return null;

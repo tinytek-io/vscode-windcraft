@@ -2,11 +2,7 @@ export const aspectRatioPrefix = "aspect-";
 export const aspectRatioNone = "auto";
 
 export const aspectRatioValues = ["auto", "square", "video"];
-export const aspectRatioClasses = [
-  "aspect-auto",
-  "aspect-square",
-  "aspect-video",
-];
+export const aspectRatioClasses = ["aspect-auto", "aspect-square", "aspect-video"];
 
 export function getAspectRatioValue(value: string) {
   const index = aspectRatioValues.indexOf(value);
