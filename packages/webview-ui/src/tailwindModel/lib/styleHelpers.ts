@@ -209,14 +209,32 @@ export function isCascadedTailwindStyle(tailwindStyle: TailwindStyle): boolean {
   const value = getTailwindValue(tailwindStyle);
   // Match on prefix
   if (
-    ["flex", "rotate", "gap", "p", "w", "h", "rounded", "top", "bottom", "left", "right", "inset", "overflow"].find(
-      (prefix) => value.startsWith(`${prefix}-`)
-    )
+    [
+      "flex",
+      "rotate",
+      "gap",
+      "p",
+      "w",
+      "h",
+      "rounded",
+      "top",
+      "bottom",
+      "left",
+      "right",
+      "inset",
+      "overflow",
+      "!outline",
+      "outline"
+    ].find((prefix) => value.startsWith(`${prefix}-`))
   ) {
     return false;
   }
   // Match on exact value
-  if (["flex", "rounded", "absolute", "relative", "fixed", "sticky"].find((exact) => value === exact)) {
+  if (
+    ["flex", "rounded", "absolute", "relative", "fixed", "sticky", "!outline", "outline"].find(
+      (exact) => value === exact
+    )
+  ) {
     return false;
   }
 
