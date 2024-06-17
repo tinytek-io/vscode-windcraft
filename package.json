@@ -13,7 +13,8 @@
     "lint": "turbo lint",
     "check:types": "turbo check:types",
     "tail:log": "tail -f ./packages/ts-plugin/log.txt",
-    "package": "npm install && turbo build && vsce package --pre-release"
+    "package": "git clean -xdf && npm install && turbo build && vsce package --pre-release && npm run unzip",
+    "unzip": "cp windcraft-*.vsix windcraft.zip && unzip windcraft.zip -d windcraft-test && rm windcraft.zip"
   },
   "packageManager": "npm@10.2.4",
   "workspaces": ["packages/utilities", "packages/ts-plugin", "packages/webview-ui", "packages/extension"],
